@@ -1,19 +1,12 @@
 {
-  "name": "webpack-react",
+  "name": "rslang",
   "version": "1.0.0",
-  "description": "webpack react",
-  "main": "index.tsx",
   "scripts": {
     "build": "webpack",
     "start": "webpack serve --open",
     "lint": "eslint src/ --fix",
     "lint:js": "eslint src/"
   },
-  "keywords": [
-    "webpack-react"
-  ],
-  "author": "Akulau Aliaksei",
-  "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.13.10",
     "@babel/node": "^7.13.10",
