@@ -1,0 +1,80 @@
+.footer {
+    height: 80px;
+    background-color: #0d0d0d;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    padding: 0rem 3rem 1rem;
+    align-items: flex-end;
+
+    .text-wrapper {
+        display: flex;
+        flex-direction: column;
+
+
+        .git_links {
+            font-size: 0.8rem;
+
+            .git_link {
+                padding: 0 0.5rem;
+                text-decoration: none;
+                font-size: 0.8rem;
+                color: #A1A1AA;
+
+                &:hover {
+                    color: #ffb400;
+                }
+            }
+        }
+
+        .year {
+            color: #61616C;
+            font-size: 0.8rem;
+        }
+    }
+
+    .logo__img {
+        height: 50px;
+        width: 68px;
+        opacity: 0.5;
+        filter: invert(1);
+
+        &:hover {
+            opacity: 0.8;
+       }
+    }
+}
+
+.footer-not-found {
+    position: absolute;
+    bottom: 0;
+    width: -webkit-fill-available;
+}
+
+
+@media (max-width: 500px) {
+    .footer {
+        .text-wrapper {
+            .git_links {
+                font-size: 0.6rem;
+
+                .git_link {
+                    padding: 0 0.3rem;
+                    font-size: 0.6rem;
+            }
+
+
+        }
+
+
+        .year {
+            font-size: 0.6rem;
+        }
+    }
+
+    .logo__img {
+        height: 30px;
+        width: 55px;
+    }
+}
+}
