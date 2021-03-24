@@ -25,3 +25,12 @@ export interface IOption {
   word: string;
   onClick: (id: string) => void;
 }
+
+export interface ILifeIcon {
+  disabled: boolean;
+}
+
+export interface ILives {
+  number: number;
+  disabled: number[];
+}

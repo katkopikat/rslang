@@ -1,0 +1,21 @@
+.lives {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &>* {
+    margin: 0 2px;
+  }
+}
+
+.life-icon {
+  background-image: url('../../../../assets/img/life.png');
+  background-size: cover;
+  width: 20px;
+  height: 20px;
+  transition: all 0.5s ease-in-out;
+}
+
+.life-icon__disabled {
+  opacity: 0.3;
+}

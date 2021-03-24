@@ -3,6 +3,7 @@ import shuffle from '../../../commonFunc/shuffle';
 import randomInteger from '../../../commonFunc/random';
 import { IWord, IOption, ISavanna } from './interfaces';
 import './Savanna.scss';
+import Lives from './LivesIndicator/Lives';
 
 const NUMBER_OF_THE_WORDS: number = 20;
 const NUMBER_OF_THE_OPTIONS: number = 4;
@@ -19,13 +20,15 @@ const TranslateOption: React.FC<IOption> = ({ id, index, word, onClick }) => {
 const Savanna: React.FC<ISavanna> = ({ group }) => {
   const [words, setWords] = useState<IWord[]>([]);
   const [currentWord, setCurrentWord] = useState<IWord>();
-  const [NewCurrentWord, setNewCurrentWord] = useState<boolean>(false);
+  const [newCurrentWord, setNewCurrentWord] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
   const [translateOptions, setTranslateOptions] = useState<IWord[]>([]);
   const [isClick, setIsClick] = useState<boolean>(false);
+  const [isWrong, setIsWrong] = useState<boolean>(false);
   const [isEnd, setIsEnd] = useState<boolean>(false);
   const [backgroundPosition, setBackgroundPosition] = useState(50);
-  const [lives, setLives] = useState<number>(LIVES);
+  const [lostLives, setLostLives] = useState<number>(0);
+  const [lostLivesArray, setLostLivesArray] = useState<number[]>([]);
 
   const page = randomInteger(0, 29);
 
@@ -46,6 +49,7 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
     }
     const timer = setTimeout(() => {
       setNewCurrentWord(true);
+      setIsWrong(false);
     }, 0);
     return () => clearTimeout(timer);
   }, [words, isClick]);
@@ -62,8 +66,8 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
   }, [currentWord]);
 
   useEffect(() => {
-    lives <= 0 ? setIsEnd(true) : null;
-  }, [lives]);
+    lostLives >= LIVES ? setIsEnd(true) : null;
+  }, [lostLives]);
 
   const setNewWord = () => {
     setIsClick(!isClick);
@@ -71,12 +75,19 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
     setNewCurrentWord(false);
   };
 
-  const handleClick = (id: string) => {
+  const setWrongAnswer = () => {
+    setLostLives(lostLives + 1);
+    setLostLivesArray([...lostLivesArray, lostLives]);
     setNewWord();
+  };
+
+  const handleClick = (id: string) => {
     if (id == currentWord?.id) {
+      setNewWord();
       setBackgroundPosition(backgroundPosition + 2);
     } else {
-      setLives(lives - 1);
+      setIsWrong(true);
+      setWrongAnswer();
     }
   };
 
@@ -87,15 +98,15 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
       }}
       className='savanna'
     >
+      <Lives number={LIVES} disabled={lostLivesArray} />
       {!isEnd && (
         <div className='savanna__field'>
-          {NewCurrentWord && (
+          {newCurrentWord && (
             <div
               onAnimationEnd={() => {
-                setNewWord();
-                setLives(lives - 1);
+                setWrongAnswer();
               }}
-              className='current-word animation'
+              className={`current-word animation ${isWrong ? 'wrong' : ''}`}
             >
               {currentWord && currentWord?.word.toLowerCase()}
             </div>
@@ -112,7 +123,6 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
                 />
               ))}
           </div>
-          <div>Lives: {lives}</div>
         </div>
       )}
       {isEnd && <div>End</div>}
