@@ -1,0 +1,59 @@
+.savanna {
+  width: 100%;
+  height: 100vh;
+  background-image: url('../../../assets/img/bg-savanna.jpg');
+  background-size: auto 150%;
+  background-position: 50% 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  user-select: none;
+  position: relative;
+  transition: background-position 1s ease-in-out;
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__options {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    &>* {
+      padding: 20px 30px;
+
+      &:hover {
+        cursor: pointer;
+        background-color: rgba(255,255,255,0.3);
+      }
+    }
+  }
+}
+
+.current-word {
+  font-size: 2rem;
+  position: absolute;
+  top: -10vh;
+  left: auto;
+}
+
+.animation {
+  animation: falling-down 7s linear;
+}
+
+@keyframes falling-down {
+  0% {
+    transform: translateY(-10vh);
+    
+  }
+  100% {
+    transform: translateY(110vh);
+  }
+}
