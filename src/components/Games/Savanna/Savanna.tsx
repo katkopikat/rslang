@@ -1,13 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import shuffle from '../../../commonFunc/shuffle';
 import randomInteger from '../../../commonFunc/random';
-import { IWord, IOption, ISavanna } from './interfaces';
+import { IWord } from './interfaces';
 import './Savanna.scss';
 import Lives from './LivesIndicator/Lives';
 
 const NUMBER_OF_THE_WORDS: number = 20;
 const NUMBER_OF_THE_OPTIONS: number = 4;
 const LIVES: number = 5;
+
+export interface IOption {
+  id: string;
+  index: number;
+  word: string;
+  onClick: (id: string) => void;
+  isAnswer: boolean;
+}
+
+export interface ISavanna {
+  group: number;
+}
 
 const TranslateOption: React.FC<IOption> = ({
   id,
@@ -28,8 +40,7 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
   const [currentWord, setCurrentWord] = useState<IWord>();
   const [newCurrentWord, setNewCurrentWord] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
-  const [translateOptions, setTranslateOptions] = useState<IWord[]>([]);
-  const [isClick, setIsClick] = useState<boolean>(false);
+  const [translateOptions, setTranslateOptions] = useState<IOption[]>([]);
   const [isWrong, setIsWrong] = useState<boolean>(false);
   const [isEnd, setIsEnd] = useState<boolean>(false);
   const [backgroundPosition, setBackgroundPosition] = useState(50);
@@ -87,7 +98,6 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
   };
 
   const handleClick = (id: string) => {
-    setIsClick(!isClick);
     if (id == currentWord?.id) {
       setNewWord();
       setBackgroundPosition(backgroundPosition + 2);
@@ -102,6 +112,18 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
     }
   };
 
+  useEffect(() => {
+    window.addEventListener<'keydown'>('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  });
+
+  const handleKeyPress: any = (event: React.KeyboardEvent) => {
+    event.key === '1' ? handleClick(translateOptions[0].id) : null;
+    event.key === '2' ? handleClick(translateOptions[1].id) : null;
+    event.key === '3' ? handleClick(translateOptions[2].id) : null;
+    event.key === '4' ? handleClick(translateOptions[3].id) : null;
+  };
+
   return (
     <div
       style={{
@@ -109,35 +131,37 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
       }}
       className='savanna'
     >
-      <Lives number={LIVES} disabled={lostLivesArray} />
-      {!isEnd && (
-        <div className='savanna__field'>
-          {newCurrentWord && (
-            <div
-              onAnimationEnd={() => {
-                setWrongAnswer();
-              }}
-              className={`current-word animation ${isWrong ? 'wrong' : ''}`}
-            >
-              {currentWord && currentWord?.word.toLowerCase()}
+      <div className='savanna__wrapper'>
+        <Lives number={LIVES} disabled={lostLivesArray} />
+        {!isEnd && (
+          <div className='savanna__field'>
+            {newCurrentWord && (
+              <div
+                onAnimationEnd={() => {
+                  setWrongAnswer();
+                }}
+                className={`current-word animation ${isWrong ? 'wrong' : ''}`}
+              >
+                {currentWord && currentWord?.word.toLowerCase()}
+              </div>
+            )}
+            <div className='savanna__options'>
+              {translateOptions.length &&
+                translateOptions.map((item: any, index: number) => (
+                  <TranslateOption
+                    key={item.id}
+                    index={index}
+                    word={item.wordTranslate}
+                    onClick={handleClick}
+                    id={item.id}
+                    isAnswer={showAnswer && item.id === currentWord?.id}
+                  />
+                ))}
             </div>
-          )}
-          <div className='savanna__options'>
-            {translateOptions.length &&
-              translateOptions.map((item: any, index: number) => (
-                <TranslateOption
-                  key={item.id}
-                  index={index}
-                  word={item.wordTranslate}
-                  onClick={handleClick}
-                  id={item.id}
-                  isAnswer={showAnswer && item.id === currentWord?.id}
-                />
-              ))}
           </div>
-        </div>
-      )}
-      {isEnd && <div>End</div>}
+        )}
+        {isEnd && <div>End</div>}
+      </div>
     </div>
   );
 };

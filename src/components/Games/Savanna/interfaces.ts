@@ -1,7 +1,3 @@
-export interface ISavanna {
-  group: number;
-}
-
 export interface IWord {
   id: string;
   group: number;
@@ -17,21 +13,4 @@ export interface IWord {
   wordTranslate: string;
   textMeaningTranslate: string;
   textExampleTranslate: string;
-}
-
-export interface IOption {
-  id: string;
-  index: number;
-  word: string;
-  onClick: (id: string) => void;
-  isAnswer: boolean;
-}
-
-export interface ILifeIcon {
-  disabled: boolean;
-}
-
-export interface ILives {
-  number: number;
-  disabled: number[];
 }

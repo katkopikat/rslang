@@ -1,6 +1,14 @@
 import React from 'react';
 import './Lives.scss';
-import { ILifeIcon, ILives } from '../interfaces';
+
+export interface ILifeIcon {
+  disabled: boolean;
+}
+
+export interface ILives {
+  number: number;
+  disabled: number[];
+}
 
 const LifeIcon: React.FC<ILifeIcon> = ({ disabled }) => {
   return (

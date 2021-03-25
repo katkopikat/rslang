@@ -4,18 +4,21 @@
   background-image: url('../../../assets/img/bg-savanna.jpg');
   background-size: auto 150%;
   background-position: 50% 50%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   overflow: hidden;
   user-select: none;
   position: relative;
   transition: background-position 1s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   &__wrapper {
-    width: 95%;
-    padding: 20px;
+    width: 90%;
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   &__field {
@@ -23,6 +26,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    height: 100%;
+    width: 100%;
   }
 
   &__options {
@@ -56,7 +61,6 @@
 
 .wrong {
   opacity: 0;
-  transform: scale(1.5);
   transition: all 0.5s ease-in-out;
   letter-spacing: 2rem;
 }
