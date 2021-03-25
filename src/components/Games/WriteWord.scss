@@ -1,0 +1,150 @@
+.write-game {
+    width: 100%;
+    height: 100vh;
+    background-image: url(https://res.cloudinary.com/travel-app/image/upload/v1616592710/rslang/bg.jpg);
+    background-size: cover;
+    background-position: 50% 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    user-select: none;
+    position: relative;
+    transition: background-position 1s ease-in-out;
+    font-family: -apple-system, BlinkMacSystemFont,
+                'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+                'Droid Sans', 'Helvetica Neue', sans-serif;
+
+     &::before {
+                    height: 100vh;
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    top: 0;
+                    z-index: 2;
+                    content: '';
+                    background: linear-gradient(
+                      to bottom,
+                      rgba(0, 0, 0, 0.81) 0%,
+                      rgba(0, 0, 0, 0.61) 58%,
+                      rgba(0, 0, 0, 0) 100%
+                    );
+     }
+
+     .MuiBadge-colorPrimary {
+        color: #fff;
+        background-color: #35c77f;
+    }
+
+    .btns-wrapper {
+        display: flex;
+        justify-content: center;
+    }
+
+
+    .write-game__input {
+        display:  flex;
+        flex-direction: column;
+
+        .MuiFilledInput-root {
+            background-color: rgb(255, 255, 255);
+            cursor: pointer;
+            border-radius: 4px;
+            
+        }
+
+        .MuiFilledInput-root:hover, .MuiFilledInput-root:focus {
+             border-color: rgb(62, 252, 157);
+             cursor: pointer;
+         }
+
+         .MuiFilledInput-underline {
+            border-bottom: 2px solid rgb(255, 255, 255);
+        }
+
+         .MuiFilledInput-underline:before {
+            border-bottom: 2px solid rgb(255, 255, 255);
+        }
+
+        .MuiFilledInput-input {
+            padding: 0.5rem 1rem;
+        }
+
+         input {
+            text-transform: uppercase;
+            font-size: 1.5rem;
+            letter-spacing: 0.1rem;
+         }
+
+         .answer {
+            position: absolute;
+            padding: 0.32rem 1.1rem;
+            z-index: 2;
+            text-transform: uppercase;
+            letter-spacing: -0.1rem;
+            font-size: 1.5rem;
+        
+
+            .correct {
+                color: #35c77f;
+            }
+            .error {
+                color: #f50057;
+            }
+         }
+    }
+
+
+}
+
+
+
+.write-game__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: rgb(248, 248, 248);
+    z-index: 3;
+
+    .hints__wrapper {
+        display: flex;
+        margin: 1rem;
+    }
+    
+    .write-game__hints {
+        margin-top: 3rem;
+    }
+ 
+
+    .write-game__hint {
+        font-size: 0.9rem;
+        color: white;
+        background-color: transparent;
+        border: none;
+        margin: 0.3rem;
+        cursor: pointer;
+        padding: 0.5rem 0.9rem;
+        border:#ffffff40 solid 1px;
+        border-radius: 35px;
+    }
+    .write-game__hint:focus {
+        border-radius: 35px;
+    }
+
+    .MuiButton-contained {
+        border-radius: 35px;
+        margin: 0.9rem;
+        width: 9rem;
+        font-size: 0.85rem;
+        flex-shrink: 0;
+    }
+
+    p {
+        padding: 3rem;
+        font-size: 1.5rem;
+    }
+}
+
+
