@@ -24,6 +24,7 @@ export interface IOption {
   index: number;
   word: string;
   onClick: (id: string) => void;
+  isAnswer: boolean;
 }
 
 export interface ILifeIcon {

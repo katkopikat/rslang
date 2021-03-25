@@ -9,9 +9,15 @@ const NUMBER_OF_THE_WORDS: number = 20;
 const NUMBER_OF_THE_OPTIONS: number = 4;
 const LIVES: number = 5;
 
-const TranslateOption: React.FC<IOption> = ({ id, index, word, onClick }) => {
+const TranslateOption: React.FC<IOption> = ({
+  id,
+  index,
+  word,
+  onClick,
+  isAnswer,
+}) => {
   return (
-    <div onClick={() => onClick(id)}>
+    <div className={`${isAnswer ? 'answer' : ''}`} onClick={() => onClick(id)}>
       {index + 1} {word.toLowerCase()}
     </div>
   );
@@ -29,7 +35,9 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
   const [backgroundPosition, setBackgroundPosition] = useState(50);
   const [lostLives, setLostLives] = useState<number>(0);
   const [lostLivesArray, setLostLivesArray] = useState<number[]>([]);
+  const [showAnswer, setShowAnswer] = useState<boolean>(false);
 
+  // TODO: add page number to props
   const page = randomInteger(0, 29);
 
   useEffect(() => {
@@ -47,12 +55,9 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
     if (words.length) {
       index < words.length ? setCurrentWord(words[index]) : setIsEnd(true);
     }
-    const timer = setTimeout(() => {
-      setNewCurrentWord(true);
-      setIsWrong(false);
-    }, 0);
-    return () => clearTimeout(timer);
-  }, [words, isClick]);
+    setNewCurrentWord(true);
+    setIsWrong(false);
+  }, [words, newCurrentWord]);
 
   useEffect(() => {
     const wrong: IWord[] = shuffle(words)
@@ -70,9 +75,9 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
   }, [lostLives]);
 
   const setNewWord = () => {
-    setIsClick(!isClick);
     setIndex(index + 1);
     setNewCurrentWord(false);
+    setShowAnswer(false);
   };
 
   const setWrongAnswer = () => {
@@ -82,12 +87,18 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
   };
 
   const handleClick = (id: string) => {
+    setIsClick(!isClick);
     if (id == currentWord?.id) {
       setNewWord();
       setBackgroundPosition(backgroundPosition + 2);
     } else {
       setIsWrong(true);
-      setWrongAnswer();
+      setShowAnswer(true);
+      setLostLives(lostLives + 1);
+      setLostLivesArray([...lostLivesArray, lostLives]);
+      setTimeout(() => {
+        setNewWord();
+      }, 1000);
     }
   };
 
@@ -120,6 +131,7 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
                   word={item.wordTranslate}
                   onClick={handleClick}
                   id={item.id}
+                  isAnswer={showAnswer && item.id === currentWord?.id}
                 />
               ))}
           </div>

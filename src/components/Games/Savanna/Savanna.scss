@@ -32,7 +32,8 @@
     flex-wrap: wrap;
 
     &>* {
-      padding: 20px 30px;
+      padding: 10px 7px;
+      margin: 10px;
 
       &:hover {
         cursor: pointer;
@@ -40,6 +41,10 @@
       }
     }
   }
+}
+
+.answer {
+  border: 2px solid rgba(255,255,255,0.3);
 }
 
 .current-word {
@@ -51,9 +56,9 @@
 
 .wrong {
   opacity: 0;
-  transform: scale(1.7);
-  transition: all 0.5s ease-in-out 0.8s;
-  letter-spacing: 2.5rem;
+  transform: scale(1.5);
+  transition: all 0.5s ease-in-out;
+  letter-spacing: 2rem;
 }
 
 .animation {
