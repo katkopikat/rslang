@@ -16,6 +16,7 @@
     "@babel/preset-react": "^7.12.13",
     "@babel/preset-typescript": "^7.13.0",
     "@babel/runtime": "^7.13.10",
+    "@types/d3-ease": "^2.0.0",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.2",
     "@types/webpack": "^4.41.26",
@@ -51,8 +52,11 @@
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@types/react-router-dom": "^5.1.7",
+    "d3-ease": "^2.0.0",
     "react": "^17.0.1",
+    "react-circular-progressbar": "^2.0.3",
     "react-dom": "^17.0.1",
+    "react-move": "^6.4.0",
     "react-router-dom": "^5.2.0"
   }
 }

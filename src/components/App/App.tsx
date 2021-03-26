@@ -9,7 +9,7 @@ const App: React.FC = () => (
   <Router>
     {/* <Header />
     <Footer /> */}
-    <Savanna group={1}/>
+    <Savanna group={1}/>   
   </Router>
 );
 

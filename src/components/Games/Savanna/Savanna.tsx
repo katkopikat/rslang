@@ -4,6 +4,7 @@ import randomInteger from '../../../commonFunc/random';
 import { IWord } from './interfaces';
 import './Savanna.scss';
 import Lives from './LivesIndicator/Lives';
+import GameResults from '../GameResults/GameResults';
 
 const NUMBER_OF_THE_WORDS: number = 20;
 const NUMBER_OF_THE_OPTIONS: number = 4;
@@ -92,8 +93,14 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
     setTranslateOptions(options);
   }, [currentWord]);
 
-  useEffect(() => {
-    lostLives >= LIVES ? setIsEnd(true) : null;
+  useEffect(() => {   
+    let timer: any;
+    if (lostLives >= LIVES) {
+      timer = setTimeout(() => {
+        setIsEnd(true);
+      }, 1000)
+    }
+    return () => clearTimeout(timer);
   }, [lostLives]);
 
   const setNewWord = () => {
@@ -128,7 +135,7 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
   };
 
   useEffect(() => {
-    window.addEventListener<'keydown'>('keydown', handleKeyPress);
+    !isEnd ? window.addEventListener<'keydown'>('keydown', handleKeyPress) : null;
     return () => window.removeEventListener('keydown', handleKeyPress);
   });
 
@@ -147,9 +154,9 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
       }}
       className='savanna'
     >
-      <div className='savanna__wrapper'>
-        <Lives number={LIVES} disabled={lostLivesArray} />
-        {!isEnd && (
+      {!isEnd && (
+        <div className='savanna__wrapper'>
+          <Lives number={LIVES} disabled={lostLivesArray} />
           <div className='savanna__field'>
             {newCurrentWord && (
               <div
@@ -177,9 +184,9 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
                 ))}
             </div>
           </div>
-        )}
-        {isEnd && <div>End</div>}
-      </div>
+        </div>
+      )}
+      {isEnd && <GameResults />}
     </div>
   );
 };
