@@ -15,6 +15,8 @@ export interface IOption {
   word: string;
   onClick: (id: string) => void;
   isAnswer: boolean;
+  isWrongAnswer: boolean;
+  isPressed: boolean;
 }
 
 export interface ISavanna {
@@ -27,9 +29,16 @@ const TranslateOption: React.FC<IOption> = ({
   word,
   onClick,
   isAnswer,
+  isWrongAnswer,
+  isPressed,
 }) => {
   return (
-    <div className={`${isAnswer ? 'answer' : ''}`} onClick={() => onClick(id)}>
+    <div
+      className={`${isAnswer ? 'answer' : ''} 
+      ${isWrongAnswer ? 'wrong-answer' : ''}
+      ${isPressed ? 'pressed' : ''}`}
+      onClick={() => onClick(id)}
+    >
       {index + 1} {word.toLowerCase()}
     </div>
   );
@@ -46,7 +55,9 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
   const [backgroundPosition, setBackgroundPosition] = useState(50);
   const [lostLives, setLostLives] = useState<number>(0);
   const [lostLivesArray, setLostLivesArray] = useState<number[]>([]);
+  const [currentAnswerId, setCurrentAnswerId] = useState<string>('');
   const [showAnswer, setShowAnswer] = useState<boolean>(false);
+  const [isPressed, setIsPressed] = useState<boolean>(false);
 
   // TODO: add page number to props
   const page = randomInteger(0, 29);
@@ -89,6 +100,7 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
     setIndex(index + 1);
     setNewCurrentWord(false);
     setShowAnswer(false);
+    setIsPressed(false);
   };
 
   const setWrongAnswer = () => {
@@ -98,9 +110,12 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
   };
 
   const handleClick = (id: string) => {
+    setCurrentAnswerId(id);
     if (id == currentWord?.id) {
-      setNewWord();
       setBackgroundPosition(backgroundPosition + 2);
+      setTimeout(() => {
+        setNewWord();
+      }, 500);
     } else {
       setIsWrong(true);
       setShowAnswer(true);
@@ -118,6 +133,7 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
   });
 
   const handleKeyPress: any = (event: React.KeyboardEvent) => {
+    setIsPressed(true);
     event.key === '1' ? handleClick(translateOptions[0].id) : null;
     event.key === '2' ? handleClick(translateOptions[1].id) : null;
     event.key === '3' ? handleClick(translateOptions[2].id) : null;
@@ -155,6 +171,8 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
                     onClick={handleClick}
                     id={item.id}
                     isAnswer={showAnswer && item.id === currentWord?.id}
+                    isWrongAnswer={showAnswer && item.id === currentAnswerId}
+                    isPressed={isPressed && item.id === currentAnswerId}
                   />
                 ))}
             </div>

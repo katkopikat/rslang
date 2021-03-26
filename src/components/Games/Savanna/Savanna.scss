@@ -40,7 +40,7 @@
       padding: 10px 7px;
       margin: 10px;
 
-      &:hover {
+      &:hover, :focus {
         cursor: pointer;
         background-color: rgba(255,255,255,0.3);
       }
@@ -48,8 +48,20 @@
   }
 }
 
+.pressed {
+  background-color: rgba(255,255,255,0.3); 
+}
+
 .answer {
   border: 2px solid rgba(255,255,255,0.3);
+}
+
+.wrong-answer {
+  background-color: rgba(186, 39, 39, 0.3); 
+
+  &:hover {
+    background-color: rgba(186, 39, 39, 0.3); 
+  }
 }
 
 .current-word {
