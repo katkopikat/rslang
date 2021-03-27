@@ -19,12 +19,15 @@ const Sprint: React.FC<ISpringSettings> = ({ group, page }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [countCorrect, setCountCorrect] = useState<number>(0);
   const [countError, setCountError] = useState<number>(0);
-  const [options, setOptions] = useState<IWord[]>([]);
+  const [correctAnswer, setCorrectAnswers] = useState<IWord[]>([]);
+  const [wrongAnswer, setWrongAnswer] = useState<IWord[]>([]);
+  const [currentTranslate, setCurrentTranslate] = useState<IWord>();
   const [isGameEnd, setIsGameEnd] = useState<boolean>(false);
+  const [isCurrentWorldCorrect, setIsCurrentWorldCorrect] = useState<boolean>(false);
   const [timeLeft, setTimeLeft] = useState<number>(30);
 
   useEffect(() => {
-    // write api or utils method for getting data for games
+    // TODO write api or utils method for getting data for games
     fetch(`${apiURL}${group}&page=${page}`)
       .then((response) => response.json())
       .then((data) => shuffleArray(data))
@@ -32,16 +35,33 @@ const Sprint: React.FC<ISpringSettings> = ({ group, page }) => {
         setWords(data);
       })
       .catch();
-    setIsGameEnd(false);
+    setCurrentIndex(0);
   }, []);
 
   useEffect(() => {
-    if (words.length && currentIndex < words.length && (isGameEnd === false)) {
-      setCurrentWord(words[currentIndex]);
-      const wrongWord = shuffleArray(words.filter((item) => item.id !== currentWord?.id))[0];
-      setOptions(shuffleArray([words[currentIndex], wrongWord]));
+    if (words.length) {
+      if (currentIndex < words.length) {
+        setCurrentWord(words[currentIndex]);
+      } else {
+        setIsGameEnd(true);
+      }
     }
   }, [words, currentIndex]);
+
+  useEffect(() => {
+    if (currentWord) {
+      const wrongWord = shuffleArray(words.filter((item) => item.id !== currentWord?.id))[0];
+      setCurrentTranslate(shuffleArray([currentWord, wrongWord])[0]);
+    }
+  }, [currentWord]);
+
+  useEffect(() => {
+    if (currentTranslate?.id === currentWord?.id) {
+      setIsCurrentWorldCorrect(true);
+    } else {
+      setIsCurrentWorldCorrect(false);
+    }
+  }, [currentTranslate]);
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
@@ -51,32 +71,49 @@ const Sprint: React.FC<ISpringSettings> = ({ group, page }) => {
       }, 1000);
     } else { setIsGameEnd(true); }
     return () => clearTimeout(timer);
-  }, [isGameEnd, timeLeft]);
+  }, [timeLeft]);
 
-  const CheckAnswer = (answer: string, word: string) => {
-    if (answer === word) {
+  const CheckAnswer = (answer: boolean) => {
+    if (answer === isCurrentWorldCorrect) {
       setCountCorrect(countCorrect + 1);
       setCurrentIndex(currentIndex + 1);
+      if (currentWord) setCorrectAnswers([...correctAnswer, currentWord]);
     } else {
       setCountError(countError + 1);
       setCurrentIndex(currentIndex + 1);
+      if (currentWord) setWrongAnswer([...wrongAnswer, currentWord]);
     }
-    if (currentIndex === words.length - 1) setIsGameEnd(true);
   };
+
+  const handleKey: any = (e:React.KeyboardEvent) => {
+    if (!isGameEnd) {
+      if (e.key === 'ArrowLeft') {
+        CheckAnswer(true);
+      } else if (e.key === 'ArrowRight') {
+        CheckAnswer(false);
+      }
+    }
+    e.preventDefault();
+  };
+
+  useEffect(() => {
+    if (!isGameEnd) window.addEventListener('keyup', handleKey);
+    return () => window.removeEventListener('keyup', handleKey);
+  });
 
   return (
     <div className="sprint">
       <div className="timer">{timeLeft}</div>
       <Card className="sprint_card">
         <Typography variant="h5" component="h2">{ currentWord?.word }</Typography>
-        <Typography>{ options[0]?.wordTranslate}</Typography>
+        <Typography>{ currentTranslate?.wordTranslate }</Typography>
         <div className="buttons">
           <Button
             type="button"
             id="0"
             style={{ color: 'green' }}
             variant="outlined"
-            onClick={() => (!isGameEnd ? CheckAnswer(options[0]?.id, currentWord ? currentWord.id : '') : null)}
+            onClick={() => (!isGameEnd ? CheckAnswer(true) : null)}
           >
             true
           </Button>
@@ -84,7 +121,7 @@ const Sprint: React.FC<ISpringSettings> = ({ group, page }) => {
             type="button"
             style={{ color: 'red' }}
             id="1"
-            onClick={() => (!isGameEnd ? CheckAnswer(options[1]?.id, currentWord ? currentWord.id : '') : null)}
+            onClick={() => (!isGameEnd ? CheckAnswer(false) : null)}
           >
             false
           </Button>
