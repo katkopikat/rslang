@@ -21,6 +21,7 @@ const Sprint: React.FC<ISpringSettings> = ({ group, page }) => {
   const [countError, setCountError] = useState<number>(0);
   const [options, setOptions] = useState<IWord[]>([]);
   const [isGameEnd, setIsGameEnd] = useState<boolean>(false);
+  const [timeLeft, setTimeLeft] = useState<number>(30);
 
   useEffect(() => {
     // write api or utils method for getting data for games
@@ -42,6 +43,16 @@ const Sprint: React.FC<ISpringSettings> = ({ group, page }) => {
     }
   }, [words, currentIndex]);
 
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+    if (isGameEnd === false && timeLeft > 0) {
+      timer = setTimeout(() => {
+        if (timeLeft > 0) setTimeLeft(timeLeft - 1);
+      }, 1000);
+    } else { setIsGameEnd(true); }
+    return () => clearTimeout(timer);
+  }, [isGameEnd, timeLeft]);
+
   const CheckAnswer = (answer: string, word: string) => {
     if (answer === word) {
       setCountCorrect(countCorrect + 1);
@@ -55,6 +66,7 @@ const Sprint: React.FC<ISpringSettings> = ({ group, page }) => {
 
   return (
     <div className="sprint">
+      <div className="timer">{timeLeft}</div>
       <Card className="sprint_card">
         <Typography variant="h5" component="h2">{ currentWord?.word }</Typography>
         <Typography>{ options[0]?.wordTranslate}</Typography>
