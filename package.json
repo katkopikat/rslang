@@ -52,11 +52,14 @@
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@types/react-router-dom": "^5.1.7",
+    "@types/react-swipeable-views": "^0.13.0",
     "d3-ease": "^2.0.0",
     "react": "^17.0.1",
     "react-circular-progressbar": "^2.0.3",
     "react-dom": "^17.0.1",
     "react-move": "^6.4.0",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "react-swipeable-views": "^0.13.9",
+    "use-sound": "^2.0.1"
   }
 }

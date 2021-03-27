@@ -1,3 +1,5 @@
+$modal-window-height: 400px;
+
 .modal-window {
   &__bg {
     position: fixed;
@@ -13,14 +15,14 @@
   }
 
   &__content {
-    max-width: 800px;
+    max-width: 700px;
     width: 90%;
-    height: 600px;
+    height: $modal-window-height;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background-color: #fff;
+    background-color: rgb(255, 255, 255);
     border-radius: 10px;
     box-shadow: 0px 2px 10px 5px rgba(13, 13, 13, 0.04);
     transition: all 1s ease-in-out;

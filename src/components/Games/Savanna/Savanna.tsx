@@ -47,18 +47,27 @@ const TranslateOption: React.FC<IOption> = ({
 
 const Savanna: React.FC<ISavanna> = ({ group }) => {
   const [words, setWords] = useState<IWord[]>([]);
-  const [currentWord, setCurrentWord] = useState<IWord>();
+  // TODO: fix type any
+  const [currentWord, setCurrentWord] = useState<any>();
+  const [translateOptions, setTranslateOptions] = useState<IOption[]>([]);
   const [newCurrentWord, setNewCurrentWord] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
-  const [translateOptions, setTranslateOptions] = useState<IOption[]>([]);
   const [isWrong, setIsWrong] = useState<boolean>(false);
   const [isEnd, setIsEnd] = useState<boolean>(false);
   const [backgroundPosition, setBackgroundPosition] = useState(50);
+
+  // for lives indicator
   const [lostLives, setLostLives] = useState<number>(0);
   const [lostLivesArray, setLostLivesArray] = useState<number[]>([]);
+
+  //for highlight words
   const [currentAnswerId, setCurrentAnswerId] = useState<string>('');
   const [showAnswer, setShowAnswer] = useState<boolean>(false);
   const [isPressed, setIsPressed] = useState<boolean>(false);
+
+  // for results
+  const [wrongAnswers, setWrongAnswers] = useState<IWord[]>([]);
+  const [correctAnswers, setCorrectAnswers] = useState<IWord[]>([]);
 
   // TODO: add page number to props
   const page = randomInteger(0, 29);
@@ -93,12 +102,12 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
     setTranslateOptions(options);
   }, [currentWord]);
 
-  useEffect(() => {   
+  useEffect(() => {
     let timer: any;
     if (lostLives >= LIVES) {
       timer = setTimeout(() => {
         setIsEnd(true);
-      }, 1000)
+      }, 1000);
     }
     return () => clearTimeout(timer);
   }, [lostLives]);
@@ -114,12 +123,14 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
     setLostLives(lostLives + 1);
     setLostLivesArray([...lostLivesArray, lostLives]);
     setNewWord();
+    setWrongAnswers([...wrongAnswers, currentWord]);
   };
 
   const handleClick = (id: string) => {
     setCurrentAnswerId(id);
     if (id == currentWord?.id) {
       setBackgroundPosition(backgroundPosition + 2);
+      setCorrectAnswers([...correctAnswers, currentWord]);
       setTimeout(() => {
         setNewWord();
       }, 500);
@@ -128,6 +139,7 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
       setShowAnswer(true);
       setLostLives(lostLives + 1);
       setLostLivesArray([...lostLivesArray, lostLives]);
+      setWrongAnswers([...wrongAnswers, currentWord]);
       setTimeout(() => {
         setNewWord();
       }, 1000);
@@ -135,7 +147,9 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
   };
 
   useEffect(() => {
-    !isEnd ? window.addEventListener<'keydown'>('keydown', handleKeyPress) : null;
+    !isEnd
+      ? window.addEventListener<'keydown'>('keydown', handleKeyPress)
+      : null;
     return () => window.removeEventListener('keydown', handleKeyPress);
   });
 
@@ -169,7 +183,7 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
               </div>
             )}
             <div className='savanna__options'>
-              {translateOptions.length &&
+              {translateOptions.length > 0 &&
                 translateOptions.map((item: any, index: number) => (
                   <TranslateOption
                     key={item.id}
@@ -186,7 +200,7 @@ const Savanna: React.FC<ISavanna> = ({ group }) => {
           </div>
         </div>
       )}
-      {isEnd && <GameResults />}
+      {isEnd && <GameResults wrong={wrongAnswers} correct={correctAnswers} />}
     </div>
   );
 };
