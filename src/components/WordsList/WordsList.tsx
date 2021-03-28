@@ -17,7 +17,7 @@ const WordsList = ({ words = [] }: IProps) => {
     <Grid container spacing={3}>
       <Grid container item spacing={3} xs={8}>
         { words.map((word) => (
-          <WordCardSmall word={word} onClick={() => setActiveWord(word)} />
+          <WordCardSmall word={word} onClick={() => setActiveWord(word)} key={word.id} />
         ))}
       </Grid>
       <Grid container item spacing={3} xs={4}>
