@@ -67,7 +67,7 @@ const ProgressBar: React.FC<IProgressBar> = ( { percentage } ) => {
                 value={value}
                 strokeWidth={25}
                 styles={buildStyles({
-                  pathColor: `rgba(96, 49, 235, ${value / 80})`,
+                  pathColor: `rgba(96, 49, 235, ${value / 100})`,
                   pathTransition: 'none',
                   strokeLinecap: 'butt',
                   rotation: (1 - value / 100) / 2,

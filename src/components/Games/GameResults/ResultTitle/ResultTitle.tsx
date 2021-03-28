@@ -24,11 +24,7 @@ const ResultTitle: React.FC<IResultTitle> = ({ percentage }) => {
     }
   }, []);
 
-  return (
-    <div className='result__title'>
-      <h2>{title}</h2>
-    </div>
-  );
+  return <div className='result__title'>{title}</div>;
 };
 
 export default ResultTitle;

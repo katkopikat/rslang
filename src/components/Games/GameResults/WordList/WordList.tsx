@@ -1,7 +1,9 @@
 import React from 'react';
-// import useSound from 'use-sound';
+import useSound from 'use-sound';
 import './WordList.scss';
 import { IWord } from '../../Savanna/interfaces';
+
+const AUDIO_LINK: string = 'https://rslang-team69.herokuapp.com/';
 
 interface IWordList {
   wrong: IWord[];
@@ -13,15 +15,17 @@ interface IWordItem {
 }
 
 const WordItem: React.FC<IWordItem> = ({ word }) => {
-  // TODO: fix error 404 (Not Found)
-  // const [play] = useSound(word.audio);
-  // const handleClick = () => {
-  //   play();
-  // }
+  const [play] = useSound(`${AUDIO_LINK}${word.audio}`);
+
+  const handleClick = () => {
+    play();
+  };
 
   return (
     <div className='word-item'>
-      <span className='word-item__sound material-icons'>volume_up</span>
+      <span className='word-item__sound material-icons' onClick={handleClick}>
+        volume_up
+      </span>
       <span className='word-item__word'>{word.word}&nbsp;</span>
       <span className='word-item__translate'> - {word.wordTranslate}</span>
     </div>

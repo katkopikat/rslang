@@ -58,7 +58,7 @@
 
 .react-swipeable-view-container {
   margin: auto;
-  max-height: $modal-window-height - 40px;
+  max-height: $modal-window-height - 100px;
 
   & > *:not(:last-child) {
     display: flex;

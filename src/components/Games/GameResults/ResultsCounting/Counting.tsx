@@ -5,9 +5,10 @@ import './Counting.scss';
 interface ICounting {
   correct: IWord[];
   wrong: IWord[];
+  onClick: () => void;
 }
 
-const Counting: React.FC<ICounting> = ({ correct, wrong }) => {
+const Counting: React.FC<ICounting> = ({ correct, wrong, onClick }) => {
   const [wordOne, setWordOne] = useState<string>('слов');
   const [wordTwo, setWordTwo] = useState('слов');
 
@@ -25,7 +26,7 @@ const Counting: React.FC<ICounting> = ({ correct, wrong }) => {
   });
 
   return (
-    <p className='results__counting'>
+    <p className='results__counting' onClick={onClick}>
       {`${correct.length} ${wordOne} изучено, ${wrong.length} ${wordTwo} на изучении`}
     </p>
   );

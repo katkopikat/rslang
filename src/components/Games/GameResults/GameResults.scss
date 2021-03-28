@@ -1,18 +1,26 @@
 .results-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 90%;
+  margin: auto;
+
   &__main {
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    width: 100%;
   }
 
   &__words {
-    display: flex;
-    flex-direction: column;
     align-items: flex-start;
-    justify-content: center;
-    width: 90%;
-    margin: auto;
   }
+}
+
+.results__buttons {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.MuiTabs-root {
+  height: 50px;
 }
