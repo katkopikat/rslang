@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -8,8 +9,13 @@ import WordsList from '../WordsList/WordsList';
 import { API_URL } from '../../constants';
 import GamesCards from '../GamesCards/GamesCards';
 import './Textbook.scss';
+import { IWord } from '../../interfaces';
 
-const Textbook: React.FC = () => {
+interface ITextbook {
+  setWordsInGames: (words: IWord[]) => void;
+}
+
+const Textbook: React.FC<ITextbook> = ({ setWordsInGames }) => {
   const [words, setWords] = useState([]);
   const [group, setGroup] = useState(0);
   const [page, setPage] = useState(0);
@@ -31,6 +37,10 @@ const Textbook: React.FC = () => {
     })();
   }, [wordsUrl]);
 
+  useEffect(() => {
+    setWordsInGames(words);
+  }, [words]);
+
   const handleGroupChange = (event: React.MouseEvent<HTMLElement>, value: number | null) => {
     if (value === null) return;
     setGroup(value);
@@ -51,9 +61,11 @@ const Textbook: React.FC = () => {
               ))}
           </ToggleButtonGroup>
         </Grid>
+
         <Grid item>
           <GamesCards />
         </Grid>
+
         <Grid item>
           <WordsList words={words} />
         </Grid>
