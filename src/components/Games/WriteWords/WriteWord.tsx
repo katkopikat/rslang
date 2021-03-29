@@ -206,7 +206,7 @@ const WriteWord: React.FC<IWriteWord> = ({ words }) => {
           </form>
         </div>
         )}
-        {/* {isEndGame && <GameResults wrong={wrongAnswers} correct={correctAnswers} />} */}
+        {isEndGame && <GameResults wrong={wrongAnswers} correct={correctAnswers} />}
       </div>
 
       <div className="bg" />
