@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import Letters from './Letters';
 import StatusBadge from './StatusBadge';
 import Hints from './Hints';
+import GameResults from '../GameResults/GameResults';
 import './WriteWord.scss';
 import { IWord } from '../../../interfaces';
 
@@ -153,56 +154,81 @@ const WriteWord: React.FC<IWriteWord> = ({ words }) => {
   }, [words, currentIndex]);
 
   return (
-    <div className="write-game">
-      <div className="write-game__wrapper">
-        <StatusBadge correct={countCorrect} error={countWrong} />
-        <Hints currentWord={currentWord} setUserWord={setUserWord} />
+    <>
+      <div className="write-game">
+        {!isEndGame && (
+        <div className="write-game__wrapper">
+          <StatusBadge correct={countCorrect} error={countWrong} />
+          <Hints currentWord={currentWord} setUserWord={setUserWord} />
 
-        <p>
-          {' '}
-          { sentence }
-          {' '}
-        </p>
+          <p>
+            {' '}
+            { sentence }
+            {' '}
+          </p>
 
-        <form className="write-game__input" noValidate autoComplete="off">
-          {wrongWord ? <Letters letterList={letterList} /> : null }
-          <TextField
-            id="standard-basic"
-            variant="filled"
-            value={userWord}
-            onChange={(e) => { setUserWord(e.target.value); }}
-            onFocus={() => handleFocus()}
-          />
+          <form className="write-game__input" noValidate autoComplete="off">
+            {wrongWord ? <Letters letterList={letterList} /> : null }
+            <TextField
+              id="standard-basic"
+              variant="filled"
+              value={userWord}
+              onChange={(e) => { setUserWord(e.target.value); }}
+              onFocus={() => handleFocus()}
+            />
 
-          { disableCheckBtn
-            ? (
-              <Button
-                variant="contained"
-                onClick={() => { setCurrentIndex(currentIndex + 1); }}
-              >
-                Далее
-              </Button>
-            )
-            : (
-              <div className="btns-wrapper">
+            { disableCheckBtn
+              ? (
                 <Button
                   variant="contained"
-                  onClick={() => { checkAnswer(userWord, currentWord.word); }}
+                  onClick={() => { setCurrentIndex(currentIndex + 1); }}
                 >
-                  Проверить
+                  Далее
                 </Button>
+              )
+              : (
+                <div className="btns-wrapper">
+                  <Button
+                    variant="contained"
+                    onClick={() => { checkAnswer(userWord, currentWord.word); }}
+                  >
+                    Проверить
+                  </Button>
 
-                <Button
-                  variant="contained"
-                  onClick={() => { showAnswer(); }}
-                >
-                  Не знаю
-                </Button>
-              </div>
-            ) }
-        </form>
+                  <Button
+                    variant="contained"
+                    onClick={() => { showAnswer(); }}
+                  >
+                    Не знаю
+                  </Button>
+                </div>
+              ) }
+          </form>
+        </div>
+        )}
+        {/* {isEndGame && <GameResults wrong={wrongAnswers} correct={correctAnswers} />} */}
       </div>
-    </div>
+
+      <div className="bg"/>
+    <div className="bg bg2"/>
+    <div className="bg bg3"/>
+
+      {/* <div className="wrapper">
+        <div className="ball" />
+        <div className="ball" />
+        <div className="ball" />
+      </div>
+
+      <svg>
+        <defs>
+          <filter id="filter">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="18" result="blur" />
+            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 28 -10" result="filter" />
+            <feComposite in="SourceGraphic" in2="filter" operator="atop" />
+          </filter>
+        </defs>
+      </svg> */}
+    </>
   );
 };
 
