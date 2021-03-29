@@ -1,0 +1,17 @@
+.results__counting {
+  border-bottom: dashed 1px rgb(57, 57, 57);
+  cursor: pointer;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.75;
+  white-space: normal;
+  letter-spacing: 0.02857em;
+  text-transform: uppercase;
+  margin: 20px;
+
+  &:focus,
+  :active {
+    outline: none;
+  }
+}
