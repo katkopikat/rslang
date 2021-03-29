@@ -10,19 +10,17 @@ export interface ILives {
   disabled: number[];
 }
 
-const LifeIcon: React.FC<ILifeIcon> = ({ disabled }) => {
-  return (
-    <div className={`life-icon ${disabled ? 'life-icon__disabled' : ''}`}></div>
-  );
-};
+const LifeIcon = ({ disabled }: ILifeIcon) => (
+  <div className={`life-icon ${disabled ? 'life-icon__disabled' : ''}`} />
+);
 
-const Lives: React.FC<ILives> = ({ number, disabled }) => {
+const Lives = ({ number, disabled }: ILives) => {
   const array = [];
-  for (let i: number = 0; i < number; i++) {
+  for (let i: number = 0; i < number; i += 1) {
     array.push(i);
   }
   return (
-    <div className='lives'>
+    <div className="lives">
       {array.map((el, index) => (
         <LifeIcon key={index} disabled={disabled.includes(index)} />
       ))}

@@ -9,17 +9,18 @@ import Hints from './Hints';
 import GameResults from '../GameResults/GameResults';
 import './WriteWord.scss';
 import { IWord } from '../../../interfaces';
+import initialState from '../wordInitialState';
 
 interface ILetterStatus {
   letter: string;
   status: string;
 }
 
-interface IStatistic {
-  date: Date;
-  correct: number;
-  correctSeries: number;
-}
+// interface IStatistic {
+//   date: Date;
+//   correct: number;
+//   correctSeries: number;
+// }
 
 interface IWriteWord {
   words: IWord[];
@@ -28,7 +29,7 @@ interface IWriteWord {
 const WriteWord: React.FC<IWriteWord> = ({ words }) => {
   // const [words, setWords] = useState<IWord[]>([]);
   const [sentence, setSentence] = useState<string>();
-  const [currentWord, setCurrentWord] = useState<IWord>();
+  const [currentWord, setCurrentWord] = useState<IWord>(initialState);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [userWord, setUserWord] = useState<string>('');
   const [isEndGame, setEndGame] = useState<boolean>(false);
@@ -41,7 +42,7 @@ const WriteWord: React.FC<IWriteWord> = ({ words }) => {
   const [countWrong, setCountWrong] = useState<number>(0);
   const [wrongAnswers, setWrongAnswers] = useState<IWord[]>([]);
   const [correctAnswers, setCorrectAnswers] = useState<IWord[]>([]);
-  const [correctSeries, setСorrectSeries] = useState<number>(0);
+  const [correctSeries, setCorrectSeries] = useState<number>(0);
 
   const replaceWordInSentence = (word: IWord) : string => {
     const { textMeaning } = word;
@@ -78,7 +79,7 @@ const WriteWord: React.FC<IWriteWord> = ({ words }) => {
     if (userAnswer === questWord) {
       setCountCorrect(countCorrect + 1);
       setCurrentIndex(currentIndex + 1);
-      setСorrectSeries(correctSeries + 1);
+      setCorrectSeries(correctSeries + 1);
       setUserWord('');
       setWrong(false);
       setCorrectAnswers([...correctAnswers, currentWord]);
@@ -129,10 +130,7 @@ const WriteWord: React.FC<IWriteWord> = ({ words }) => {
   };
 
   useEffect(() => {
-    !isEndGame
-      ? window.addEventListener<'keydown'>('keydown', handlePressEnter)
-      : null;
-
+    if (!isEndGame) window.addEventListener<'keydown'>('keydown', handlePressEnter);
     return () => window.removeEventListener('keydown', handlePressEnter);
   });
 

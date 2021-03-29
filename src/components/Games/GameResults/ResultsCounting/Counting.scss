@@ -9,4 +9,9 @@
   letter-spacing: 0.02857em;
   text-transform: uppercase;
   margin: 20px;
+
+  &:focus,
+  :active {
+    outline: none;
+  }
 }

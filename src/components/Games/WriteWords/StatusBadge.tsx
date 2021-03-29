@@ -17,7 +17,7 @@ interface IBadge {
   error: number;
 }
 
-const StatusBadge: React.FC<IBadge> = ({ correct, error }) => {
+const StatusBadge: React.FC<IBadge> = ({ correct, error }: IBadge) => {
   const classes = useStyles();
 
   return (

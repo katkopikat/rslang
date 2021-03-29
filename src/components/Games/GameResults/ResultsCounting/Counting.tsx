@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { IWord } from '../../Savanna/interfaces';
+import { IWord } from '../../../../interfaces';
 import './Counting.scss';
 
 interface ICounting {
@@ -8,7 +8,7 @@ interface ICounting {
   onClick: () => void;
 }
 
-const Counting: React.FC<ICounting> = ({ correct, wrong, onClick }) => {
+const Counting = ({ correct, wrong, onClick }: ICounting) => {
   const [wordOne, setWordOne] = useState<string>('слов');
   const [wordTwo, setWordTwo] = useState('слов');
 
@@ -23,12 +23,12 @@ const Counting: React.FC<ICounting> = ({ correct, wrong, onClick }) => {
     } else if (wrong.length > 1 && wrong.length < 5) {
       setWordTwo('слова');
     }
-  });
+  }, [correct.length, wrong.length]);
 
   return (
-    <p className='results__counting' onClick={onClick}>
+    <div role="link" tabIndex={0} className="results__counting" onClick={onClick} onKeyDown={onClick}>
       {`${correct.length} ${wordOne} изучено, ${wrong.length} ${wordTwo} на изучении`}
-    </p>
+    </div>
   );
 };
 

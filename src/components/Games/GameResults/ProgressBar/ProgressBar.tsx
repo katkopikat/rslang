@@ -12,7 +12,7 @@ interface IAnimated {
   valueStart: number;
   valueEnd: number;
   duration: number;
-  easingFunction?: any;
+  easingFunction: any;
   children: any;
 }
 
@@ -26,7 +26,7 @@ const AnimatedProgressProvider: React.FC<IAnimated> = ({
   duration,
   easingFunction,
   children,
-}) => {
+} : IAnimated) => {
   const [isAnimated, setIsAnimated] = useState(false);
 
   useEffect(() => {
@@ -51,45 +51,46 @@ const AnimatedProgressProvider: React.FC<IAnimated> = ({
   );
 };
 
-const ProgressBar: React.FC<IProgressBar> = ( { percentage } ) => {
-  return (
-      <div className='progress-bar__container'>
-        <AnimatedProgressProvider
-          valueStart={0}
-          valueEnd={percentage}
-          duration={1.4}
-          easingFunction={easeQuadInOut}
-        >
-          {(value: any) => {
-            const roundedValue = Math.round(value);
-            return (
-              <CircularProgressbarWithChildren
-                value={value}
-                strokeWidth={25}
-                styles={buildStyles({
-                  pathColor: `rgba(96, 49, 235, ${value / 100})`,
-                  pathTransition: 'none',
-                  strokeLinecap: 'butt',
-                  rotation: (1 - value / 100) / 2,
-                  trailColor: '#edeeea',
-                })}
-              >
-                <div className='progress-bar__label'>
-                  <div className='progress-bar__value'>
-                    <strong>{roundedValue}%</strong>
-                  </div>
-                  <div>
-                    изученных
-                    <br />
-                    слов
-                  </div>
-                </div>
-              </CircularProgressbarWithChildren>
-            );
-          }}
-        </AnimatedProgressProvider>
-      </div>
-  );
-};
+const ProgressBar: React.FC<IProgressBar> = ({ percentage }: IProgressBar) => (
+  <div className="progress-bar__container">
+    <AnimatedProgressProvider
+      valueStart={0}
+      valueEnd={percentage}
+      duration={1.4}
+      easingFunction={easeQuadInOut}
+    >
+      {(value: any) => {
+        const roundedValue = Math.round(value);
+        return (
+          <CircularProgressbarWithChildren
+            value={value}
+            strokeWidth={25}
+            styles={buildStyles({
+              pathColor: `rgba(96, 49, 235, ${value / 100})`,
+              pathTransition: 'none',
+              strokeLinecap: 'butt',
+              rotation: (1 - value / 100) / 2,
+              trailColor: '#edeeea',
+            })}
+          >
+            <div className="progress-bar__label">
+              <div className="progress-bar__value">
+                <strong>
+                  {roundedValue}
+                  %
+                </strong>
+              </div>
+              <div>
+                изученных
+                <br />
+                слов
+              </div>
+            </div>
+          </CircularProgressbarWithChildren>
+        );
+      }}
+    </AnimatedProgressProvider>
+  </div>
+);
 
 export default ProgressBar;

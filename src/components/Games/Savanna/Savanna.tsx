@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import shuffle from '../../../commonFunc/shuffle';
-// import randomInteger from '../../../commonFunc/random';
-import { IWord } from './interfaces';
+import { IWord } from '../../../interfaces';
 import './Savanna.scss';
 import Lives from './LivesIndicator/Lives';
 import GameResults from '../GameResults/GameResults';
+import initialState from '../wordInitialState';
 
-// const NUMBER_OF_THE_WORDS: number = 20;
 const NUMBER_OF_THE_OPTIONS: number = 4;
 const LIVES: number = 5;
 
@@ -24,7 +23,7 @@ export interface ISavanna {
   wordsList: IWord[];
 }
 
-const TranslateOption: React.FC<IOption> = ({
+const TranslateOption = ({
   id,
   index,
   word,
@@ -32,12 +31,15 @@ const TranslateOption: React.FC<IOption> = ({
   isAnswer,
   isWrongAnswer,
   isPressed,
-}) => (
+}: IOption) => (
   <div
+    role="button"
+    tabIndex={0}
     className={`${isAnswer ? 'answer' : ''} 
       ${isWrongAnswer ? 'wrong-answer' : ''}
       ${isPressed ? 'pressed' : ''}`}
     onClick={() => onClick(id)}
+    onKeyDown={() => onClick(id)}
   >
     {index + 1}
     {' '}
@@ -45,10 +47,9 @@ const TranslateOption: React.FC<IOption> = ({
   </div>
 );
 
-const Savanna: React.FC<ISavanna> = ({ wordsList }) => {
+const Savanna = ({ wordsList }: ISavanna) => {
   const [words, setWords] = useState<IWord[]>(wordsList);
-  // TODO: fix type any
-  const [currentWord, setCurrentWord] = useState<any>();
+  const [currentWord, setCurrentWord] = useState<IWord>(initialState);
   const [translateOptions, setTranslateOptions] = useState<IOption[]>([]);
   const [newCurrentWord, setNewCurrentWord] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
@@ -69,27 +70,18 @@ const Savanna: React.FC<ISavanna> = ({ wordsList }) => {
   const [wrongAnswers, setWrongAnswers] = useState<IWord[]>([]);
   const [correctAnswers, setCorrectAnswers] = useState<IWord[]>([]);
 
-  // TODO: add page number to props
-  // const page = randomInteger(0, 29);
-
-  // useEffect(() => {
-  //   fetch(
-  //     `https://rslang-team69.herokuapp.com/words?group=${group}&page=${page}`,
-  //   )
-  //     .then((response) => response.json())
-  //     .then((data) => data.slice(0, NUMBER_OF_THE_WORDS))
-  //     .then((data) => shuffle(data))
-  //     .then((data) => setWords(data))
-  //     .catch();
-  // }, []);
-
   useEffect(() => {
     setWords(wordsList);
   }, [wordsList]);
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (words.length) {
-      index < words.length ? setCurrentWord(words[index]) : setIsEnd(true);
+      if (index < words.length) {
+        setCurrentWord(words[index]);
+      } else {
+        setIsEnd(true);
+      }
     }
     setNewCurrentWord(true);
     setIsWrong(false);
@@ -104,7 +96,7 @@ const Savanna: React.FC<ISavanna> = ({ wordsList }) => {
     );
     const options = shuffle(wrong.concat(right));
     setTranslateOptions(options);
-  }, [currentWord]);
+  }, [words, currentWord]);
 
   useEffect(() => {
     let timer: any;
@@ -132,7 +124,7 @@ const Savanna: React.FC<ISavanna> = ({ wordsList }) => {
 
   const handleClick = (id: string) => {
     setCurrentAnswerId(id);
-    if (id == currentWord?.id) {
+    if (id === currentWord?.id) {
       setBackgroundPosition(backgroundPosition + 2);
       setCorrectAnswers([...correctAnswers, currentWord]);
       setTimeout(() => {
@@ -150,20 +142,18 @@ const Savanna: React.FC<ISavanna> = ({ wordsList }) => {
     }
   };
 
-  useEffect(() => {
-    !isEnd
-      ? window.addEventListener<'keydown'>('keydown', handleKeyPress)
-      : null;
-    return () => window.removeEventListener('keydown', handleKeyPress);
-  });
-
   const handleKeyPress: any = (event: React.KeyboardEvent) => {
     setIsPressed(true);
-    event.key === '1' ? handleClick(translateOptions[0].id) : null;
-    event.key === '2' ? handleClick(translateOptions[1].id) : null;
-    event.key === '3' ? handleClick(translateOptions[2].id) : null;
-    event.key === '4' ? handleClick(translateOptions[3].id) : null;
+    if (event.key === '1') handleClick(translateOptions[0].id);
+    if (event.key === '2') handleClick(translateOptions[1].id);
+    if (event.key === '3') handleClick(translateOptions[2].id);
+    if (event.key === '4') handleClick(translateOptions[3].id);
   };
+
+  useEffect(() => {
+    if (!isEnd) window.addEventListener<'keydown'>('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  });
 
   return (
     <div
@@ -188,10 +178,10 @@ const Savanna: React.FC<ISavanna> = ({ wordsList }) => {
             )}
             <div className="savanna__options">
               {translateOptions.length > 0
-                && translateOptions.map((item: any, index: number) => (
+                && translateOptions.map((item: any, idx: number) => (
                   <TranslateOption
                     key={item.id}
-                    index={index}
+                    index={idx}
                     word={item.wordTranslate}
                     onClick={handleClick}
                     id={item.id}

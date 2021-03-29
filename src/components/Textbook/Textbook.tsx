@@ -37,6 +37,7 @@ const Textbook: React.FC<ITextbook> = ({ setWordsInGames }) => {
     })();
   }, [wordsUrl]);
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     setWordsInGames(words);
   }, [words]);
