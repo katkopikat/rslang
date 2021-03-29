@@ -6,6 +6,8 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import WordsList from '../WordsList/WordsList';
 import { API_URL } from '../../constants';
+import GamesCards from '../GamesCards/GamesCards';
+import './Textbook.scss';
 
 const Textbook: React.FC = () => {
   const [words, setWords] = useState([]);
@@ -48,6 +50,9 @@ const Textbook: React.FC = () => {
                 <ToggleButton value={groupIndex} key={groupName}>{groupName}</ToggleButton>
               ))}
           </ToggleButtonGroup>
+        </Grid>
+        <Grid item>
+          <GamesCards />
         </Grid>
         <Grid item>
           <WordsList words={words} />
