@@ -8,6 +8,7 @@ import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import WordsList from '../WordsList/WordsList';
 import { API_URL } from '../../constants';
 import GamesCards from '../GamesCards/GamesCards';
+import LevelCard from '../LevelsCards/LevelCard';
 import './Textbook.scss';
 import { IWord } from '../../interfaces';
 
@@ -57,6 +58,15 @@ const Textbook: React.FC<ITextbook> = ({ setWordsInGames }) => {
       <div className="main-heading">
         <h1 className="main-heading--active"> Учебник </h1>
         <h1 className="main-heading--unactive"> Словарь </h1>
+      </div>
+
+      <div className="levels-wrapper">
+        <LevelCard />
+        <LevelCard />
+        <LevelCard />
+        <LevelCard />
+        <LevelCard />
+        <LevelCard />
       </div>
 
       <Grid container justify="center" spacing={6}>

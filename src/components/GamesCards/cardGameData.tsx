@@ -11,7 +11,7 @@ const cardGameData: IGameCard[] = [
     name: 'Саванна',
     description: 'Напиши слово, пропущенное в предложении.',
     badge: 'Перевод',
-    img: 'https://res.cloudinary.com/travel-app/image/upload/v1617123395/rslang/wr.png',
+    img: 'https://res.cloudinary.com/travel-app/image/upload/v1617137987/rslang/catch1.png',
     linkTo: '/games/savanna',
   },
   {
@@ -22,17 +22,17 @@ const cardGameData: IGameCard[] = [
     linkTo: '/games/writegame',
   },
   {
-    name: 'Аудиовызов',
+    name: 'Спринт',
     description: 'Напиши слово, пропущенное в предложении.',
-    badge: 'Слух',
-    img: 'https://res.cloudinary.com/travel-app/image/upload/v1617129730/rslang/11.png',
+    badge: 'Перевод на скорость',
+    img: 'https://res.cloudinary.com/travel-app/image/upload/v1617137987/rslang/run1.png',
     linkTo: '/games/writegame',
   },
   {
-    name: 'Спринт',
+    name: 'Аудиовызов',
     description: 'Напиши слово, пропущенное в предложении.',
-    badge: 'Перевод',
-    img: 'https://res.cloudinary.com/travel-app/image/upload/v1617123395/rslang/wr.png',
+    badge: 'Аудирование',
+    img: 'https://res.cloudinary.com/travel-app/image/upload/v1617129730/rslang/11.png',
     linkTo: '/games/writegame',
   },
 ];

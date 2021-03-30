@@ -14,8 +14,8 @@ const WordsList = ({ words = [] }: IProps) => {
   useEffect(() => setActiveWord(words[0]), [words]);
 
   return (
-    <Grid container spacing={3}>
-      <Grid container item spacing={3} xs={8}>
+    <Grid container spacing={2}>
+      <Grid container item spacing={1} xs={8}>
         { words.map((word) => (
           <WordCardSmall word={word} onClick={() => setActiveWord(word)} key={word.id} />
         ))}

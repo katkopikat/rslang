@@ -1,0 +1,83 @@
+.levels-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+
+.level-card {
+    height: 70px;
+    margin: 0.5rem;
+    width: 220px;
+    background-color: #f3f4f8;
+    display: flex;
+    border-radius: 0.5rem;
+    color: #2c2647;
+    font-size: 1rem;
+    font-family: 'Gilroy-Heavy';
+    justify-content: space-between;
+    padding: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1.2rem;
+    position: relative;
+    align-items: center;
+    overflow: hidden;
+
+    margin-bottom: 3rem;
+
+    margin-top: 2rem;
+
+    cursor: pointer;
+
+    &-left {
+        z-index: 2;
+
+        h2{ 
+            font-family: 'Gilroy-Bold';
+            font-size: 1.3rem;
+        }
+
+        p {
+            font-family: 'Gilroy-RegularItalic';
+            font-size: 0.8rem;
+        }
+    }
+
+    &-right {
+        z-index: 2;
+
+        h2{ 
+            font-family: 'Gilroy-Heavy';
+            font-size: 1.5rem;
+        }
+    }
+
+    .circle {
+        background-color: #ffdc74;
+        border-radius: 53px;
+        height: 110px;
+        width: 110px;
+        position: absolute;
+        top: -1rem;
+        right: -2rem;
+        overflow: hidden;
+    
+    }
+    
+}
+
+
+.level-card--unactive {
+    background-color: #f3f4f8;
+
+    .level-card-left {
+        color: #d0d0d0;
+    }
+
+    .level-card-right h2 {
+        color: #d6d3d3;
+    }
+
+    .circle {
+        background-color: #ececec;
+    }
+}

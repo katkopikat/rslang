@@ -117,16 +117,20 @@ h1 {
     background-color: #f3f4f8;
     border-radius: 0.5rem;
     width: 270px;
+    height: 320px;
     display: flex;
     justify-content: space-between;
     flex-direction: column-reverse;
     padding: 1rem;
     margin: 1rem;
     position: relative;
+    align-items: center;
 
     &-image {
         width: 250px;
     }
+
+   
 
     &-text {
         display: flex;
