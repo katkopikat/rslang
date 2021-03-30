@@ -4,8 +4,6 @@ import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import IconButton from '@material-ui/core/IconButton';
@@ -15,18 +13,7 @@ import { API_URL } from '../../constants';
 
 const useStyles = makeStyles(() => ({
   cardImage: {
-    height: 150,
-  },
-  cardHeader: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-  },
-  cardText: {
-    paddingBottom: 20,
-  },
-  cardExamples: {
-    paddingTop: 20,
+    height: 200,
   },
 }));
 
@@ -48,41 +35,42 @@ const WordCardDetails = ({ word }: IProps) => {
   if (!word) return (<></>);
 
   return (
-    <Card>
+    <Card id="card-details">
       <CardMedia
-        className={classes.cardImage}
+        className={`${classes.cardImage} word-image`}
         image={`${API_URL}/${word?.image}`}
       />
       <CardContent>
-        <div className={classes.cardHeader}>
-          <Typography variant="h4">{word?.word}</Typography>
-          &nbsp;&nbsp;
-          <Typography variant="h6">{word?.transcription}</Typography>
+        <div>
+          <h2 className="word-word">{word?.word}</h2>
+          <h3 className="word-translate">{word?.wordTranslate}</h3>
+          <span className="word-transcription">{word?.transcription}</span>
           <IconButton onClick={playWordAudio}><VolumeUpIcon /></IconButton>
         </div>
-        <Typography gutterBottom>
-          {word?.wordTranslate}
-        </Typography>
+
         <CardActions>
           <Button size="small" variant="outlined">+ в сложные слова</Button>
           <Button size="small" variant="outlined">удалить слово</Button>
         </CardActions>
-        <div className={classes.cardExamples}>
-          <Divider variant="middle" />
-          <Typography gutterBottom variant="body2">
+
+        <div className="word-description">
+          <h3 className="word-subheading"> Значение </h3>
+          <p>
             {word?.textMeaning}
-          </Typography>
-          <Typography className={classes.cardText} variant="body2">
+          </p>
+          <p>
             {word?.textMeaningTranslate}
-          </Typography>
-          <Divider variant="middle" />
-          <Typography gutterBottom variant="body2">
+          </p>
+
+          <h3 className="word-subheading">  Пример </h3>
+          <p>
             {word?.textExample}
-          </Typography>
-          <Typography variant="body2">
+          </p>
+          <p>
             {word?.textExampleTranslate}
-          </Typography>
+          </p>
         </div>
+
       </CardContent>
     </Card>
   );

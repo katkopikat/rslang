@@ -52,8 +52,15 @@ const Textbook: React.FC<ITextbook> = ({ setWordsInGames }) => {
   };
 
   return (
-    <Container>
+    <Container className="pre-publish">
+
+      <div className="main-heading">
+        <h1 className="main-heading--active"> Учебник </h1>
+        <h1 className="main-heading--unactive"> Словарь </h1>
+      </div>
+
       <Grid container justify="center" spacing={6}>
+        <h1>Слова</h1>
         <Grid item>
           <ToggleButtonGroup value={group} exclusive onChange={handleGroupChange}>
             {['easy1', 'easy2', 'medium1', 'medium2', 'hard1', 'hard2']
