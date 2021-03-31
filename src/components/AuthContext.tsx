@@ -35,15 +35,6 @@ const contextDefaults = {
   logout: () => null,
 };
 
-// const userLS = {
-//   userId: localStorage.getItem('userId') ? localStorage.getItem('userId') : '',
-//   userName: localStorage.getItem('userName') ? localStorage.getItem('userName') : '',
-//   userEmail: localStorage.getItem('userEmail') ? localStorage.getItem('userEmail') : '',
-//   token: localStorage.getItem('token') ? localStorage.getItem('token') : '',
-//   refreshToken: localStorage.getItem('refreshToken') ? localStorage.getItem('refreshToken') : '',
-//   avatarUrl: localStorage.getItem('avatarUrl') ? localStorage.getItem('avatarUrl') : '',
-// };
-
 const AuthContext = React.createContext<IAuthContext>(contextDefaults);
 
 const AuthProvider: React.FC = (props) => {
@@ -146,21 +137,7 @@ const AuthProvider: React.FC = (props) => {
       } = await data.json();
       localStorage.setItem('avatarUrl', avatarUrl);
       localStorage.setItem('userId', id);
-      // setUser({
-      //   token: '',
-      //   refreshToken: '',
-      //   userId: id,
-      //   userName: name || '',
-      //   avatarUrl,
-      //   userEmail: email,
-      // });
       signIn(email, password);
-      // localStorage.setItem('token', data.newUser.token);
-      // setUser({
-      //   userName: data.newUser.login,
-      //   userName: data.newUser.name || '',
-      //   avatarUrl,
-      // });
       return true;
     }
     return false;

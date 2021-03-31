@@ -7,7 +7,7 @@ interface IReqParams {
   };
   withCredentials?: boolean;
   body?: {};
-};
+}
 
 const request = async (method: string, url: string, body: {}|boolean = false, token: string = '') => {
   const reqParams: IReqParams = {

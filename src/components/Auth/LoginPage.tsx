@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const LoginPage: React.FC<ILoginPage> = ({ history }) => {
+const LoginPage: React.FC<ILoginPage> = ({ history }: ILoginPage) => {
   const classes = useStyles();
   const emailInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);

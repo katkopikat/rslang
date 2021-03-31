@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RegistrationPage: React.FC<ILoginPage> = ({ history }) => {
+const RegistrationPage: React.FC<ILoginPage> = ({ history }: ILoginPage) => {
   const classes = useStyles();
   const emailInput = useRef<HTMLInputElement>(null);
   const nameInput = useRef<HTMLInputElement>(null);
@@ -80,6 +80,7 @@ const RegistrationPage: React.FC<ILoginPage> = ({ history }) => {
     }
     const success = await register(nameValue, emailValue, passwordValue, isLoaded);
     if (success) history.push('/');
+    return true;
   };
 
   return (
