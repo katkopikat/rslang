@@ -1,22 +1,39 @@
 import React, { useRef } from 'react';
 import {
   Button,
+  Container,
   CssBaseline,
   Grid,
-  Paper,
+  makeStyles,
   TextField,
-  // Typography,
+  Typography,
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    margin: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  form: {
+    width: '100%',
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
 interface ILoginPage {
   // TODO ??
-  // history: RouteComponentProps['history'];
-  history: any;
+  history: RouteComponentProps['history'];
+  // history: any;
 }
 
-const LoginPage: React.FC<ILoginPage> = (props) => {
+const LoginPage: React.FC<ILoginPage> = ({ history }) => {
+  const classes = useStyles();
   const emailInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
 
@@ -27,65 +44,59 @@ const LoginPage: React.FC<ILoginPage> = (props) => {
     const emailValue = emailInput.current ? emailInput.current.value : '';
     const passwordValue = passwordInput.current ? passwordInput.current.value : '';
     const success = await signIn(emailValue, passwordValue);
-    if (success) props.history.push('/');
+    if (success) history.push('/');
   };
   return (
-    <Grid
-      container
+    <Container
       component="main"
     >
       <CssBaseline />
-      <Grid
-        item
-        xs={false}
-        sm={4}
-        md={7}
-      />
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <div>
-          <form
-            noValidate
-            onSubmit={handleSignIn}
-          >
-            <TextField
-              inputRef={emailInput}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="email"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              inputRef={passwordInput}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Link to="/register">register</Link>
-            </Grid>
-          </form>
-        </div>
-      </Grid>
-    </Grid>
+      <Typography component="h1" variant="h5">
+        Войти
+      </Typography>
+      <form
+        noValidate
+        onSubmit={handleSignIn}
+        className={classes.form}
+      >
+        <TextField
+          inputRef={emailInput}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="email"
+          name="email"
+          autoComplete="email"
+          autoFocus
+        />
+        <TextField
+          inputRef={passwordInput}
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          name="password"
+          label="password"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+        />
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+        >
+          Sign In
+        </Button>
+        <Grid container>
+          <Link to="/register">register</Link>
+        </Grid>
+      </form>
+    </Container>
   );
 };
 
