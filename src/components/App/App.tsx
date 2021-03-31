@@ -5,7 +5,7 @@ import { AuthProvider } from '../AuthContext';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import LoginPage from '../Auth/LoginPage';
-// import Register from '../LoginPage/Register';
+import RegistrationPage from '../Auth/RegistrationPage';
 
 interface HistoryProps extends RouteComponentProps<any> {}
 
@@ -18,10 +18,10 @@ const App: React.FC = () => (
           path="/login"
           render={({ history }: HistoryProps) => <LoginPage history={history} />}
         />
-        {/* <Route
+        <Route
           path="/register"
-          render={({ history }: HistoryProps) => <Register history={history} />}
-        /> */}
+          render={({ history }: HistoryProps) => <RegistrationPage history={history} />}
+        />
         <Footer />
       </AuthProvider>
     </>

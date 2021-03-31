@@ -8,8 +8,9 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import { Link, RouteComponentProps } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
+import ILoginPage from './interface';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -26,11 +27,6 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-interface ILoginPage {
-  // TODO ??
-  history: RouteComponentProps['history'];
-  // history: any;
-}
 
 const LoginPage: React.FC<ILoginPage> = ({ history }) => {
   const classes = useStyles();

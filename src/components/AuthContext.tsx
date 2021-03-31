@@ -110,7 +110,7 @@ const AuthProvider: React.FC = (props) => {
         avatarUrl,
       } = await data.json();
       localStorage.setItem('token', token);
-      localStorage.setItem('avatarUrl', avatarUrl);
+      localStorage.getItem('avatarUrl');
       localStorage.setItem('refreshToken', refreshToken);
       localStorage.setItem('userId', userId);
       setUser({
@@ -126,13 +126,15 @@ const AuthProvider: React.FC = (props) => {
     return false;
   };
 
+  // TODO handle and display errors
+
   const register = async (
     name: string,
     email: string,
     password: string,
     avatarUrl: string,
   ) => {
-    const data = await request('POST', `${API_URL}/users/`, {
+    const data = await request('POST', `${API_URL}/users`, {
       name,
       email,
       password,
