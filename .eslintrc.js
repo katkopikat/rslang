@@ -4,7 +4,11 @@ module.exports = {
     es2021: true,
   },
   plugins: ['@typescript-eslint'],
-  extends: ['airbnb-typescript'],
+  extends: [
+    'airbnb',
+    'airbnb/hooks',
+    'airbnb-typescript'
+  ],
   parserOptions: {
     project: './tsconfig.json',
     ecmaVersion: 12,

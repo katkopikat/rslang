@@ -9,7 +9,7 @@ import { useAuth } from '../AuthContext';
 
 const Header: React.FC = () => {
   const {
-    userName,
+    userId,
     logout,
     avatarUrl,
   } = useAuth();
@@ -20,7 +20,7 @@ const Header: React.FC = () => {
   ) : (
     <AccountCircle />
   );
-  const logoutEl = userName && !isAuthPage ? <ExitToAppIcon onClick={logout} /> : null;
+  const logoutEl = userId && !isAuthPage ? <ExitToAppIcon onClick={logout} /> : null;
 
   return (
     <header>
