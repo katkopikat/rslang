@@ -5,7 +5,7 @@ import WriteGame from '../Games/WriteWords/WriteWord';
 import Savanna from '../Games/Savanna/Savanna';
 import shaffle from '../../commonFunc/shuffle';
 import { IWord } from '../../interfaces';
-
+// import MainPage from '../Pages/MainPage/MainPage';
 // import Header from '../Header/Header';
 // import Footer from '../Footer/Footer';
 
@@ -26,6 +26,7 @@ const App: React.FC = () => {
       <Route path="/games/writegame" render={() => <WriteGame words={words} />} />
       <Route path="/games/sprint" render={() => <span>Игра Спринт</span>} />
       <Route path="/games/audiocall" render={() => <span>Игра Аудиовызов</span>} />
+      {/* <MainPage /> */}
     </Router>
   //  {/* <Footer /> */}
   );
