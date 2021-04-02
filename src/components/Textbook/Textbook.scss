@@ -11,12 +11,8 @@ background-color: bg-color;
 }
 
 .main-heading {
-    font-family: 'Gilroy-Heavy';
-    font-size: 3rem;
-    border: none;
-    background-color: #fbfcff;
-    display: flex;
-	margin-top: 1rem;
+	display: flex;
+
 
 	svg {
 		color: $yellow-btn;
@@ -24,11 +20,36 @@ background-color: bg-color;
 }
 
 .main-heading--active {
+	font-size: 2rem;
+    font-family: 'Gilroy-Heavy';
+    border: none;
+    background-color: #fbfcff;
+    margin-left: 1rem;
+	margin-top: 1rem;
+	cursor: pointer;
+
     color: $dark-font;
 }
 
 .main-heading--unactive {
+	font-size: 2rem;
+    font-family: 'Gilroy-Heavy';
+    border: none;
+    background-color: #fbfcff;
+    margin-left: 1rem;
+	margin-top: 1rem;
     color: $inactive;
+	cursor: pointer;
+}
+
+.main-heading--active:focus, .main-heading--active:active,
+.main-heading--unactive:focus, .main-heading--unactive:active {
+	outline: none;
+}
+
+.main-heading--active:hover,
+.main-heading--unactive:hover {
+	color: $yellow-btn;
 }
 
 .main-subheading {

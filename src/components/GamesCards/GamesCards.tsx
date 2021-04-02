@@ -5,7 +5,6 @@ import './GameCards.scss';
 
 const GamesCards = () => (
   <>
-    {/* <h1>Игры</h1> */}
     <div className="card-games-wrapper">
       { cardGameData.map((game) => (
         <GameCard

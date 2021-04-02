@@ -92,8 +92,8 @@ const Textbook: React.FC<ITextbook> = ({ setWordsInGames }) => {
     <Container>
 
       <div className="main-heading">
-        <h1 className="main-heading--active"> Учебник </h1>
-        <h1 className="main-heading--unactive"> Словарь </h1>
+        <button type="button" className="main-heading--active"> Учебник </button>
+        <button type="button" className="main-heading--unactive"> Словарь </button>
 
         <Settings
           showTranslate={showTranslate}
@@ -105,7 +105,7 @@ const Textbook: React.FC<ITextbook> = ({ setWordsInGames }) => {
       </div>
       <h2 className="main-subheading"> Уровни сложности слов </h2>
       <Levels handleGroupChange={handleGroupChange} activeGroup={group} />
-      
+
       <Grid container justify="center" spacing={6} className={groupColorClass}>
 
         <Grid item>
