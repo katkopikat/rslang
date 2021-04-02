@@ -26,6 +26,11 @@ const Textbook: React.FC<ITextbook> = ({ setWordsInGames }) => {
   const [groupColorClass, setGroupColorClass] = useState('easy1-group');
 
   useEffect(() => {
+    setPage(Number(localStorage.getItem('page')) || 0);
+    setGroup(Number(localStorage.getItem('group')) || 0);
+  }, []);
+
+  useEffect(() => {
     if (isLoading) return;
     setWordsUrl(`${API_URL}/words?group=${group}&page=${page}`);
   }, [group, page, isLoading]);
@@ -41,6 +46,15 @@ const Textbook: React.FC<ITextbook> = ({ setWordsInGames }) => {
   }, [wordsUrl]);
 
   /* eslint-disable react-hooks/exhaustive-deps */
+  useEffect(() => {
+    localStorage.setItem('page', String(page));
+    localStorage.setItem('group', String(group));
+  }, [group, page]);
+
+  useEffect(() => {
+    setWordsInGames(words);
+  }, [words]);
+
   useEffect(() => {
     switch (group) {
       case 1:
@@ -63,10 +77,6 @@ const Textbook: React.FC<ITextbook> = ({ setWordsInGames }) => {
         break;
     }
   }, [group]);
-
-  useEffect(() => {
-    setWordsInGames(words);
-  }, [words]);
 
   const handleGroupChange = (value: number | null) => {
     if (value === null) return;
@@ -94,9 +104,8 @@ const Textbook: React.FC<ITextbook> = ({ setWordsInGames }) => {
 
       </div>
       <h2 className="main-subheading"> Уровни сложности слов </h2>
-
       <Levels handleGroupChange={handleGroupChange} activeGroup={group} />
-
+      
       <Grid container justify="center" spacing={6} className={groupColorClass}>
 
         <Grid item>
