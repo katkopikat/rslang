@@ -9,6 +9,8 @@ import { IWord } from '../../interfaces';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
+import Statistic from '../Statistic/Statistic';
+
 const App: React.FC = () => {
   const [words, setWords] = useState<IWord[]>([]);
 
@@ -21,7 +23,8 @@ const App: React.FC = () => {
       <Header />
       <Router>
         {/* <Route path='/login' component={LoginPage} /> */}
-        <Route path="/" exact render={() => <Textbook setWordsInGames={setWordsInGames} />} />
+        {/* <Route path="/" exact render={() => <Textbook setWordsInGames={setWordsInGames} />} /> */}
+        <Route path="/" exact render={() => <Statistic />} />
         <Route path="/games/main" render={() => <span> Main </span>} />
         <Route path="/games/savanna" render={() => <Savanna wordsList={words} />} />
         <Route path="/games/writegame" render={() => <WriteGame words={words} />} />
