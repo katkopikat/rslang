@@ -1,31 +1,38 @@
 import React from 'react';
 import './LevelCard.scss';
 
-// interface IGameCard {
-//   linkTo: string;
-//   name: string;
-//   description: string;
-//   badge: string;
-//   img: string;
-// }
+interface ILevelCard {
+  name: string;
+  words: string;
+  abbr: string;
+  level: number;
+  handleGroupChange: (group: number) => void;
+  activeGroup: number;
+}
 
-const LevelCard = () => (
-  <div className="level-card">
+const LevelCard = ({
+  name, words, abbr, level, handleGroupChange, activeGroup,
+}: ILevelCard) => (
+  <button
+    className={activeGroup === level ? 'level-card' : 'level-card level-card--unactive'}
+    type="button"
+    onClick={() => handleGroupChange(level)}
+  >
     <div className="level-card-left">
       <h2>
-        Easy
+        {name}
       </h2>
-      <p> Слова 1-599</p>
+      <p>{words}</p>
     </div>
 
     <div className="level-card-right">
       <h2>
-        B1
+        {abbr}
       </h2>
     </div>
 
     <div className="circle" />
-  </div>
+  </button>
 );
 
 export default LevelCard;

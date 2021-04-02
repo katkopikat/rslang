@@ -7,7 +7,7 @@ import shaffle from '../../commonFunc/shuffle';
 import { IWord } from '../../interfaces';
 
 import Header from '../Header/Header';
-// import Footer from '../Footer/Footer';
+import Footer from '../Footer/Footer';
 
 const App: React.FC = () => {
   const [words, setWords] = useState<IWord[]>([]);
@@ -28,7 +28,7 @@ const App: React.FC = () => {
         <Route path="/games/sprint" render={() => <span>Игра Спринт</span>} />
         <Route path="/games/audiocall" render={() => <span>Игра Аудиовызов</span>} />
       </Router>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 };

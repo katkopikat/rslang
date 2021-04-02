@@ -1,6 +1,10 @@
+$dark-font: #2c2647;
+$yellow-btn: #ffdc74;
+$footer: #1d1835;
 $bg-color: #f3f5f9;
 $primaryColor : #4379FF;
 $cocoBackground : #FBFCFF;
+$inactive: #d0d0d0;
 
 body {
 background-color: bg-color;
@@ -12,28 +16,27 @@ background-color: bg-color;
     border: none;
     background-color: #fbfcff;
     display: flex;
+	margin-top: 1rem;
+
+	svg {
+		color: $yellow-btn;
+	}
 }
 
 .main-heading--active {
-    color: #2c2647;
+    color: $dark-font;
 }
 
 .main-heading--unactive {
-    color: #d0d0d0;
+    color: $inactive;
 }
 
-.makeStyles-wordCard-5 {
-    width: 161px;
-    height: 80px;
-    color: #292448;
-    align-items: flex-start;
-    background-color: #ffffff;
-    padding-left: 0.6rem;
-    border-bottom: #d8d8d8 solid 1px;
-    border-right: #dddce0 solid 1px;
-    border-radius: 0.6rem;
+.main-subheading {
+	color: #2c2647;
+    font-family: 'Gilroy-SemiBold';
+    font-size: 1rem;
+    margin-left: 1rem;
 }
-
 
 
 .pre-publish{
@@ -97,3 +100,4 @@ background-color: bg-color;
 		top:-15vw;
 	}
 }
+

@@ -1,0 +1,65 @@
+.games-cards-container {
+	h3 {
+		margin: 0 0 1rem 1rem;
+		font-family: 'Gilroy-SemiBold';
+        font-size: 1rem;
+    	color: #2c2647;
+	}
+}
+
+
+.card-games-wrapper {
+    display: flex;
+}
+.card-games{
+    background-color: #f3f4f8;
+    border-radius: 0.5rem;
+    width: 270px;
+    height: 450px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column-reverse;
+    padding: 1rem;
+    margin: 1rem;
+    position: relative;
+    align-items: center;
+
+    &-image {
+        width: 250px;
+    }
+
+
+    &-text {
+        display: flex;
+        flex-direction: column;
+        padding-top: 1rem;
+
+        h2 {
+            font-size: 1.7rem;
+            font-family: 'Gilroy-Heavy';
+        }
+
+        p {
+            font-size: 0.9rem;
+            font-family: 'Gilroy-SemiBold';
+        }
+    }
+}
+
+.card-games:hover {
+    border-bottom: #2c2647 solid 2px;
+}
+
+a {
+    text-decoration: none;
+    color: #2c2647;
+}
+
+.card-games-badge {
+    background-color: #ffdc74;
+    display: inline-block;
+    width: fit-content;
+    font-family: 'Open Sans';
+    padding: 0.2rem;
+    border-radius: 5px;
+}

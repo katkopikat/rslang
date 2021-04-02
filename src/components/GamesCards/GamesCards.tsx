@@ -1,10 +1,11 @@
 import React from 'react';
 import GameCard from './GameCard';
 import cardGameData from './cardGameData';
+import './GameCards.scss';
 
 const GamesCards = () => (
   <>
-    <h1>Игры</h1>
+    {/* <h1>Игры</h1> */}
     <div className="card-games-wrapper">
       { cardGameData.map((game) => (
         <GameCard
@@ -13,6 +14,7 @@ const GamesCards = () => (
           description={game.description}
           badge={game.badge}
           img={game.img}
+          key={game.name}
         />
       ))}
     </div>

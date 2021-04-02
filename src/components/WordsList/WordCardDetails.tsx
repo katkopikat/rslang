@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -19,9 +20,11 @@ const useStyles = makeStyles(() => ({
 
 interface IProps {
   word: IWord;
+  showTranslate: boolean;
+  showBtns: boolean;
 }
 
-const WordCardDetails = ({ word }: IProps) => {
+const WordCardDetails = ({ word, showTranslate, showBtns }: IProps) => {
   const classes = useStyles();
 
   useEffect(() => {
@@ -40,35 +43,32 @@ const WordCardDetails = ({ word }: IProps) => {
         className={`${classes.cardImage} word-image`}
         image={`${API_URL}/${word?.image}`}
       />
+
       <CardContent>
         <div>
           <h2 className="word-word">{word?.word}</h2>
-          <h3 className="word-translate">{word?.wordTranslate}</h3>
+          <h3 className="word-translate">{showTranslate ? word?.wordTranslate : null}</h3>
           <span className="word-transcription">{word?.transcription}</span>
           <IconButton onClick={playWordAudio}><VolumeUpIcon /></IconButton>
         </div>
-
-        <CardActions>
-          <Button size="small" variant="outlined">+ в сложные слова</Button>
-          <Button size="small" variant="outlined">удалить слово</Button>
-        </CardActions>
+        {showBtns
+          ? (
+            <CardActions>
+              <Button size="small" variant="outlined" id="add-in-hard">+ в сложные слова</Button>
+              <Button size="small" variant="outlined" id="delete-word">удалить слово</Button>
+            </CardActions>
+          )
+          : null}
 
         <div className="word-description">
           <h3 className="word-subheading"> Значение </h3>
-          <p>
-            {word?.textMeaning}
-          </p>
-          <p>
-            {word?.textMeaningTranslate}
-          </p>
+          <ReactMarkdown source={word?.textMeaning} />
+          <ReactMarkdown source={showTranslate ? word?.textMeaningTranslate : ''} />
 
           <h3 className="word-subheading">  Пример </h3>
-          <p>
-            {word?.textExample}
-          </p>
-          <p>
-            {word?.textExampleTranslate}
-          </p>
+          <ReactMarkdown source={word?.textExample} />
+          <ReactMarkdown source={showTranslate ? word?.textExampleTranslate : ''} />
+
         </div>
 
       </CardContent>

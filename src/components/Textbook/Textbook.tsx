@@ -3,12 +3,11 @@ import React, { useState, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Pagination from '@material-ui/lab/Pagination';
-import ToggleButton from '@material-ui/lab/ToggleButton';
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-import WordsList from '../WordsList/WordsList';
 import { API_URL } from '../../constants';
 import GamesCards from '../GamesCards/GamesCards';
-import LevelCard from '../LevelsCards/LevelCard';
+import Levels from '../LevelsCards/Levels';
+import Settings from './Settings/Settings';
+import WordsList from '../WordsList/WordsList';
 import './Textbook.scss';
 import { IWord } from '../../interfaces';
 
@@ -22,6 +21,9 @@ const Textbook: React.FC<ITextbook> = ({ setWordsInGames }) => {
   const [page, setPage] = useState(0);
   const [wordsUrl, setWordsUrl] = useState(`${API_URL}/words?group=${group}&page=${page}`);
   const [isLoading, setisLoading] = useState(false);
+  const [showTranslate, setShowTranslate] = useState(true);
+  const [showBtns, setShowBtns] = useState(true);
+  const [groupColorClass, setGroupColorClass] = useState('easy1-group');
 
   useEffect(() => {
     if (isLoading) return;
@@ -40,10 +42,33 @@ const Textbook: React.FC<ITextbook> = ({ setWordsInGames }) => {
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
+    switch (group) {
+      case 1:
+        setGroupColorClass('easy2-group');
+        break;
+      case 2:
+        setGroupColorClass('medium1-group');
+        break;
+      case 3:
+        setGroupColorClass('medium2-group');
+        break;
+      case 4:
+        setGroupColorClass('hard1-group');
+        break;
+      case 5:
+        setGroupColorClass('hard2-group');
+        break;
+      default:
+        setGroupColorClass('easy1-group');
+        break;
+    }
+  }, [group]);
+
+  useEffect(() => {
     setWordsInGames(words);
   }, [words]);
 
-  const handleGroupChange = (event: React.MouseEvent<HTMLElement>, value: number | null) => {
+  const handleGroupChange = (value: number | null) => {
     if (value === null) return;
     setGroup(value);
   };
@@ -53,43 +78,42 @@ const Textbook: React.FC<ITextbook> = ({ setWordsInGames }) => {
   };
 
   return (
-    <Container className="pre-publish">
+    // className="pre-publish"
+    <Container>
 
       <div className="main-heading">
         <h1 className="main-heading--active"> Учебник </h1>
         <h1 className="main-heading--unactive"> Словарь </h1>
+
+        <Settings
+          showTranslate={showTranslate}
+          setShowTranslate={setShowTranslate}
+          showBtns={showBtns}
+          setShowBtns={setShowBtns}
+        />
+
       </div>
+      <h2 className="main-subheading"> Уровни сложности слов </h2>
 
-      <div className="levels-wrapper">
-        <LevelCard />
-        <LevelCard />
-        <LevelCard />
-        <LevelCard />
-        <LevelCard />
-        <LevelCard />
-      </div>
+      <Levels handleGroupChange={handleGroupChange} activeGroup={group} />
 
-      <Grid container justify="center" spacing={6}>
-        <h1>Слова</h1>
-        <Grid item>
-          <ToggleButtonGroup value={group} exclusive onChange={handleGroupChange}>
-            {['easy1', 'easy2', 'medium1', 'medium2', 'hard1', 'hard2']
-              .map((groupName, groupIndex) => (
-                <ToggleButton value={groupIndex} key={groupName}>{groupName}</ToggleButton>
-              ))}
-          </ToggleButtonGroup>
-        </Grid>
+      <Grid container justify="center" spacing={6} className={groupColorClass}>
 
         <Grid item>
-          <GamesCards />
+          <h1>Слова</h1>
+          <WordsList words={words} showTranslate={showTranslate} showBtns={showBtns} />
         </Grid>
 
-        <Grid item>
-          <WordsList words={words} />
-        </Grid>
         <Grid item>
           <Pagination count={30} page={page + 1} onChange={handlePageChange} color="primary" />
         </Grid>
+
+        <Grid item className="games-card-container">
+          <h1>Игры</h1>
+          <h3>Закрепи новые слова при помощи игр.</h3>
+          <GamesCards />
+        </Grid>
+
       </Grid>
     </Container>
   );

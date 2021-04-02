@@ -1,23 +1,35 @@
 $yellow-btn: #ffdc74;
-$dark-font: #2c2647;
 
+$yellow: #ffdc74;
+$green: #1dc4a2;
+$blue: #5d7cfe;
+$pink: #cc74ff;
+$orange: #ff7171;
+$violet: #5155d3;
+
+.MuiPaper-root {
+    box-shadow: none !important;
+}
+
+.MuiPaper-root + .card-word, #card-details {
+    color: #2c2647;
+    background-color: #f3f4f8;
+}
+    
 .card-word {
-    width: 205px;
-    height: 80px;
-    justify-content: flex-start;
-    display: 'flex';
-    flex-direction: 'column';
-    padding-left: 1rem;
-    padding-top: 1rem;
-    user-select: 'none';
-    overflow-wrap: 'break-word';
-    transition: all 0.3s;
+        margin: 0.5rem;
+        width: 180px;
+        height: 100px;
+        justify-content: flex-start;
+        padding-left: 1rem;
+        padding-top: 1rem;
+        transition: all 0.3s;
 
     &:hover {
         cursor: pointer;
         transition: all 0.3s;
-        background-color: $yellow-btn !important;
     }
+
 
     h2 {
         font-size: 1.3rem;
@@ -31,15 +43,45 @@ $dark-font: #2c2647;
     }
 }
 
-.MuiPaper-root {
-    color: #2c2647 !important;
-    background-color: #f3f4f8 !important;
-    box-shadow: none !important;
+.easy1-group {
+    .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word{
+        background-color: $yellow;
+    }
 }
-    
+
+.easy2-group {
+	.card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word{
+        background-color: $green;
+    }
+}
+
+.medium1-group {
+    .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word {
+        background-color: $blue;
+    }
+}
+
+.medium2-group {
+    .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word {
+        background-color: $pink;
+    }
+}
+
+.hard1-group {
+    .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word  {
+        background-color: $orange;
+    }
+}
+
+.hard2-group {
+    .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word  {
+        background-color: $violet ;
+        color: white !important;;
+    }
+}
 
 #card-details {
-    .MuiCardContent-root {
+    border-top-left-radius: 11rem; 
 
         .word {
     
@@ -67,14 +109,12 @@ $dark-font: #2c2647;
             }
 
             &-description {
-                p {
-                    font-size:  1rem;
-                }
+                font-size:  1rem;
+                font-family: 'Gilroy-Regular' !important;
 
-                p:nth-child(3n){
-                    font-size:  1rem;
-                    font-family: 'Gilroy-RegularItalic' !important;
-                }
+                p {
+                    margin-bottom: 0.6rem;
+                } 
             }
         }
 
@@ -83,88 +123,22 @@ $dark-font: #2c2647;
             margin-bottom: 2rem;
 
             button {
+                font-family: 'Gilroy-SemiBold';
                 border-radius: 50px;
-                background-color: $yellow-btn;
+                // background-color: $yellow-btn;
                 border: none;
             }
         }
 
-    }
 
-    .word-image {
-            height: 200px;
-            border-bottom-right-radius: 11rem;
-            border-top-left-radius: 11rem; 
-    }
+        .word-image {
+                height: 200px;
+                border-bottom-right-radius: 11rem;
+                border-top-left-radius: 11rem; 
+        }
 
-    .MuiPaper-root {
-        border-top-left-radius: 11rem !important;
-    }
+        .MuiPaper-root {
+            border-top-left-radius: 11rem !important;
+        }
             
-}
-
-h1 {
-    display: block;
-    font-size: 2rem;
-    font-family: 'Gilroy-Heavy';
-    color: $dark-font;
-    padding-left: 1rem;
-}
-.card-games-wrapper {
-    display: flex;
-}
-.card-games{
-    background-color: #f3f4f8;
-    border-radius: 0.5rem;
-    width: 270px;
-    height: 320px;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column-reverse;
-    padding: 1rem;
-    margin: 1rem;
-    position: relative;
-    align-items: center;
-
-    &-image {
-        width: 250px;
-    }
-
-   
-
-    &-text {
-        display: flex;
-        flex-direction: column;
-        // position: absolute;
-        // top: 0;
-        padding-top: 1rem;
-
-        h2 {
-            font-size: 1.7rem;
-            font-family: 'Gilroy-Heavy';
-        }
-
-        p {
-            font-size: 0.9rem;
-            font-family: 'Gilroy-SemiBold';
-        }
-    }
-}
-
-.card-games:hover {
-    border-bottom: #2c2647 solid 2px;
-}
-
-a {
-    text-decoration: none;
-    color: #2c2647;
-}
-
-.card-games-badge {
-    background-color: #ffdc74;
-    display: inline-block;
-    width: fit-content;
-    font-family: 'Open Sans';
-    padding: 0.2rem;
-    border-radius: 5px;
 }

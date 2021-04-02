@@ -6,7 +6,7 @@
 
 .level-card {
     height: 70px;
-    margin: 0.5rem;
+    margin: 2rem 0.5rem 3rem 0.5rem;
     width: 220px;
     background-color: #f3f4f8;
     display: flex;
@@ -21,12 +21,13 @@
     position: relative;
     align-items: center;
     overflow: hidden;
-
-    margin-bottom: 3rem;
-
-    margin-top: 2rem;
-
+    border: none;
     cursor: pointer;
+
+    &:focus, &:active {
+        border: none;
+        outline: none;
+    }
 
     &-left {
         z-index: 2;
@@ -52,22 +53,62 @@
     }
 
     .circle {
-        background-color: #ffdc74;
         border-radius: 53px;
         height: 110px;
         width: 110px;
         position: absolute;
         top: -1rem;
-        right: -2rem;
+        right: -2.5rem;
         overflow: hidden;
-    
-    }
-    
+    }  
 }
 
+.levels-wrapper {
+    .level-card {
+        transition: all 0.5s;
+        &:nth-child(1) {
+            .circle {
+                background-color: #ffdc74;
+            }
+        }
+
+        &:nth-child(2) {
+            .circle {
+                background-color: #1dc4a2;
+            }
+        }
+
+        &:nth-child(3) {
+            .circle {
+                background-color: #5d7cfe;
+            }
+        }
+
+        &:nth-child(4) {
+            .circle {
+                background-color: #cc74ff;
+            }
+        }
+
+        &:nth-child(5) {
+            .circle {
+                background-color: #ff7171;
+            }
+        }
+
+        &:nth-child(6) {
+            .circle {
+                background-color: #5155d3;
+            }
+        }
+    }
+}
 
 .level-card--unactive {
     background-color: #f3f4f8;
+    border: none;
+    outline: none;
+    transition: all 0.5s;
 
     .level-card-left {
         color: #d0d0d0;
@@ -78,6 +119,10 @@
     }
 
     .circle {
-        background-color: #ececec;
+        background-color: #ececec !important;
+    }
+
+    &:focus, &:active {
+        border: none;
     }
 }
