@@ -1,0 +1,144 @@
+$yellow-btn: #ffdc74;
+
+$yellow: #ffdc74;
+$green: #1dc4a2;
+$blue: #5d7cfe;
+$pink: #cc74ff;
+$orange: #ff7171;
+$violet: #5155d3;
+
+.MuiPaper-root {
+    box-shadow: none !important;
+}
+
+.MuiPaper-root + .card-word, #card-details {
+    color: #2c2647;
+    background-color: #f3f4f8;
+}
+    
+.card-word {
+        margin: 0.5rem;
+        width: 180px;
+        height: 100px;
+        justify-content: flex-start;
+        padding-left: 1rem;
+        padding-top: 1rem;
+        transition: all 0.3s;
+
+    &:hover {
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+
+    h2 {
+        font-size: 1.3rem;
+        font-family: 'Gilroy-SemiBold';
+        margin-bottom: 0;
+    }
+
+    p {
+        font-size: 1rem;
+        font-family: 'Gilroy-Medium';
+    }
+}
+
+.easy1-group {
+    .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word{
+        background-color: $yellow;
+    }
+}
+
+.easy2-group {
+	.card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word{
+        background-color: $green;
+    }
+}
+
+.medium1-group {
+    .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word {
+        background-color: $blue;
+    }
+}
+
+.medium2-group {
+    .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word {
+        background-color: $pink;
+    }
+}
+
+.hard1-group {
+    .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word  {
+        background-color: $orange;
+    }
+}
+
+.hard2-group {
+    .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word  {
+        background-color: $violet ;
+        color: white !important;;
+    }
+}
+
+#card-details {
+    border-top-left-radius: 11rem; 
+
+        .word {
+    
+            &-word {
+                font-size: 2.5rem;
+                font-family: 'Gilroy-SemiBold';
+            }
+    
+            &-transcription {
+                font-size: 1.2rem;
+                font-family: 'Gilroy-Medium';
+                font-weight:600;
+                letter-spacing: 0.1em;
+            }
+
+            &-translate {
+                font-size: 1.5rem;
+                font-family: 'Gilroy-SemiBold';
+            }
+
+            &-subheading {
+                font-size: 1.2rem;
+                font-family: 'Gilroy-Bold';
+                margin-bottom: 1rem;
+            }
+
+            &-description {
+                font-size:  1rem;
+                font-family: 'Gilroy-Regular' !important;
+
+                p {
+                    margin-bottom: 0.6rem;
+                } 
+            }
+        }
+
+        .MuiCardActions-root {
+            padding: 0;
+            margin-bottom: 2rem;
+
+            button {
+                font-family: 'Gilroy-SemiBold';
+                border-radius: 50px;
+                // background-color: $yellow-btn;
+                border: none;
+            }
+        }
+
+
+        .word-image {
+                height: 200px;
+                border-bottom-right-radius: 11rem;
+                border-top-left-radius: 11rem; 
+        }
+
+        .MuiPaper-root {
+            border-top-left-radius: 11rem !important;
+        }
+            
+}

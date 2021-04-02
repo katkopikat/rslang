@@ -3,9 +3,7 @@ import './Header.scss';
 
 const Header: React.FC = () => (
   <header>
-    <div className="header-wrapper">
-      header
-    </div>
+    <div className="header-wrapper" />
   </header>
 );
 

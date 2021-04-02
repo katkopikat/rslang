@@ -1,6 +1,8 @@
+$footer: #1d1835;
+
 .footer {
     height: 80px;
-    background-color: #0d0d0d;
+    background-color: $footer;
     color: white;
     display: flex;
     justify-content: space-between;

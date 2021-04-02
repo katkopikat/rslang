@@ -1,0 +1,21 @@
+.MuiPopover-paper {
+    height: 150px;
+    width: 500px;
+    padding: 1rem;
+    border-radius: 1rem;
+    
+    background-color: #ffdc74 !important;
+
+    .MuiFormControlLabel-label {
+        font-family: 'Gilroy-Regular'  !important;
+    }
+
+    h2 {
+        font-family: 'Gilroy-SemiBold';
+        font-size: 1.2rem;
+    }
+}
+
+.MuiCheckbox-colorSecondary.Mui-checked {
+color: #2c2647 !important;
+}

@@ -1,129 +1,94 @@
 @font-face {
 	font-family: 'Gilroy-Black';
-	src: 
-		url('./fonts/gilroy-black.woff') format('woff'), 
-		url('./fonts/gilroy-black.ttf') format('truetype');
+	src: url('./fonts/gilroy-black.ttf') format('truetype');
 }
 
 @font-face {
 	font-family: 'Gilroy-BlackItalic';
-	src: 
-		url('./fonts/gilroy-blackitalic.woff') format('woff'),
-		url('./fonts/gilroy-blackitalic.ttf') format('truetype'); 
+	src: url('./fonts/gilroy-blackitalic.ttf') format('truetype'); 
 	
 }
 
 @font-face {
 	font-family: 'Gilroy-Bold';
-	src: 
-		url('./fonts/gilroy-bold.woff') format('woff'), 
-		url('./fonts/gilroy-bold.ttf') format('truetype');
+	src: url('./fonts/gilroy-bold.ttf') format('truetype');
 }
 
 @font-face {
 	font-family: 'Gilroy-BoldItalic';
-	src: 
-		url('./fonts/gilroy-bolditalic.woff') format('woff'), 
-		url('./fonts/gilroy-bolditalic.ttf') format('truetype');
+	src: url('./fonts/gilroy-bolditalic.ttf') format('truetype');
 }
 
 @font-face {
 	font-family: 'Gilroy-ExtraBoldItalic';
-	src: 
-		url('./fonts/gilroy-extrabolditalic.woff') format('woff'),
-		url('./fonts/gilroy-extrabolditalic.ttf') format('truetype');
+	src: url('./fonts/gilroy-extrabolditalic.ttf') format('truetype');
 }
 
 @font-face {
 	font-family: 'Gilroy-Heavy';
-	src: 
-		url('./fonts/gilroy-heavy.woff') format('woff'),
-		url('./fonts/gilroy-heavy.ttf') format('truetype');
+	src: url('./fonts/gilroy-heavy.ttf') format('truetype');
 }
 
 @font-face {
 	font-family: 'Gilroy-HeavyItalic';
-	src: 
-		url('./fonts/gilroy-heavyitalic.woff') format('woff'),
-		url('./fonts/gilroy-heavyitalic.ttf') format('truetype');
+	src: url('./fonts/gilroy-heavyitalic.ttf') format('truetype');
 }
 
 @font-face {
 	font-family: 'Gilroy-LightItalic';
 	src: 
-		url('./fonts/gilroy-lightitalic.woff') format('woff'),
 		url('./fonts/gilroy-lightitalic.ttf') format('truetype');
 }
 
 @font-face {
 	font-family: 'Gilroy-Medium';
-	src: 
-		url('./fonts/gilroy-medium.woff') format('woff'), 
-		url('./fonts/gilroy-medium.ttf') format('truetype');
+	src: url('./fonts/gilroy-medium.ttf') format('truetype');
 }
 
 @font-face {
 	font-family: 'Gilroy-MediumItalic';
-	src:  
-		url('./fonts/gilroy-mediumitalic.woff') format('woff'), 
-		url('./fonts/gilroy-mediumitalic.ttf') format('truetype'); 
+	src: url('./fonts/gilroy-mediumitalic.ttf') format('truetype'); 
 		
 }
 
 @font-face {
 	font-family: 'Gilroy-Regular';
-	src: 
-		url('./fonts/gilroy-regular.woff') format('woff'), 
-		url('./fonts/gilroy-regular.ttf') format('truetype');
+	src: url('./fonts/gilroy-regular.ttf') format('truetype');
 }
 
 @font-face {
 	font-family: 'Gilroy-RegularItalic';
-	src: 
-		url('./fonts/gilroy-regularitalic.woff') format('woff'), 
-		url('./fonts/gilroy-regularitalic.ttf') format('truetype');
+	src: url('./fonts/gilroy-regularitalic.ttf') format('truetype');
 }
 
 @font-face {
 	font-family: 'Gilroy-SemiBold';
-	src: 
-		url('./fonts/gilroy-semibold.woff') format('woff'), 
-		url('./fonts/gilroy-semibold.ttf') format('truetype');
+	src: url('./fonts/gilroy-semibold.ttf') format('truetype');
 	
 }
 
 @font-face {
 	font-family: 'Gilroy-SemiBoldItalic';
-
-	src: 
-		url('./fonts/gilroy-semibolditalic.woff') format('woff'), 
-		url('./fonts/gilroy-semibolditalic.ttf') format('truetype');
+	src: url('./fonts/gilroy-semibolditalic.ttf') format('truetype');
 
 }
 
 @font-face {
 	font-family: 'Gilroy-Thin';
-	src: 
-		url('./fonts/gilroy-thin.woff') format('woff'), 
-		url('./fonts/gilroy-thin.ttf') format('truetype');
+	src: url('./fonts/gilroy-thin.ttf') format('truetype');
 }
 
 @font-face {
 	font-family: 'Gilroy-ThinItalic';
-	src: url('./fonts/gilroy-thinitalic.woff') format('woff'), 
-		 url('./fonts/gilroy-thinitalic.ttf') format('truetype');
+	src: url('./fonts/gilroy-thinitalic.ttf') format('truetype');
 }
 
 @font-face {
 	font-family: 'Gilroy-UltraLight';
-	src: 
-		url('./fonts/gilroy-ultralight.woff') format('woff'),
-		url('./fonts/gilroy-ultralight.ttf') format('truetype');
+	src: url('./fonts/gilroy-ultralight.ttf') format('truetype');
 }
 
 @font-face {
 	font-family: 'Gilroy-UltraLightItalic';
-	src:
-		url('./fonts/gilroy-ultralightitalic.woff') format('woff'), /* Super Modern Browsers */
-		url('./fonts/gilroy-ultralightitalic.ttf') format('truetype');
+	src: url('./fonts/gilroy-ultralightitalic.ttf') format('truetype');
 }

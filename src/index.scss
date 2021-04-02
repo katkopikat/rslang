@@ -1,5 +1,11 @@
+// @import './styles/variables';
+
+$dark-font: #2c2647;
+
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -11,6 +17,14 @@ body {
   overflow-x: hidden;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 10px;
+}
+
+h1 {
+  display: block;
+  font-size: 2rem;
+  font-family: 'Gilroy-Heavy';
+  color: $dark-font;
+  padding-left: 1rem;
 }
 
 .material-icons {
