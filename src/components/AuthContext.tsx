@@ -114,10 +114,15 @@ const AuthProvider: React.FC = (props) => {
       });
       return true;
     }
+    // TODO constant for errors
+    if (data.status === 404) {
+      throw new Error('not found');
+    }
+    if (data.status === 403) {
+      throw new Error('wrong credential');
+    }
     return false;
   };
-
-  // TODO handle and display errors
 
   const register = async (
     name: string,
@@ -139,6 +144,17 @@ const AuthProvider: React.FC = (props) => {
       localStorage.setItem('userId', id);
       signIn(email, password);
       return true;
+    }
+    if (data.status === 417) {
+      throw new Error('user with this e-mail exists');
+    }
+    if (data.status === 422) {
+      const errorsArray: Array<string> = (await data.json()).error.errors
+        .map((item: { message: string; }) => item.message);
+
+      if (errorsArray.length) {
+        throw new Error(errorsArray.toString());
+      }
     }
     return false;
   };
