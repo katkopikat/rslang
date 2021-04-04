@@ -11,6 +11,8 @@ import IconButton from '@material-ui/core/IconButton';
 import player from '../../utils/AudioPlayer';
 import { IWord } from '../../interfaces';
 import { API_URL } from '../../constants';
+import request from '../../helpers/request';
+import { useAuth } from '../AuthContext';
 
 const useStyles = makeStyles(() => ({
   cardImage: {
@@ -26,6 +28,7 @@ interface IProps {
 
 const WordCardDetails = ({ word, showTranslate, showBtns }: IProps) => {
   const classes = useStyles();
+  const { userId, token } = useAuth();
 
   useEffect(() => {
     if (word) {
@@ -34,6 +37,20 @@ const WordCardDetails = ({ word, showTranslate, showBtns }: IProps) => {
   }, [word]);
 
   const playWordAudio = () => player.play();
+
+  const deleteUserWord = () => {
+    if (!userId) return;
+    const userWordsApi = `${API_URL}/users/${userId}/words/${word.id}`;
+    const wordParam = { optional: { deleted: true } };
+    request('POST', userWordsApi, wordParam, token);
+  };
+
+  const setWordDifficult = () => {
+    if (!userId) return;
+    const userWordsApi = `${API_URL}/users/${userId}/words/${word.id}`;
+    const wordParam = { difficulty: 'difficult' };
+    request('POST', userWordsApi, wordParam, token);
+  };
 
   if (!word) return (<></>);
 
@@ -54,8 +71,22 @@ const WordCardDetails = ({ word, showTranslate, showBtns }: IProps) => {
         {showBtns
           ? (
             <CardActions>
-              <Button size="small" variant="outlined" id="add-in-hard">+ в сложные слова</Button>
-              <Button size="small" variant="outlined" id="delete-word">удалить слово</Button>
+              <Button
+                size="small"
+                variant="outlined"
+                id="add-in-hard"
+                onClick={setWordDifficult}
+              >
+                + в сложные слова
+              </Button>
+              <Button
+                size="small"
+                variant="outlined"
+                id="delete-word"
+                onClick={deleteUserWord}
+              >
+                удалить слово
+              </Button>
             </CardActions>
           )
           : null}
