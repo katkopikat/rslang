@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Textbook from '../Textbook/Textbook';
 import WriteGame from '../Games/WriteWords/WriteWord';
 import Savanna from '../Games/Savanna/Savanna';
+import AudioCall from '../Games/AudioCall/AudioCall';
 import shaffle from '../../commonFunc/shuffle';
 import { IWord } from '../../interfaces';
 
@@ -26,7 +27,7 @@ const App: React.FC = () => {
         <Route path="/games/savanna" render={() => <Savanna wordsList={words} />} />
         <Route path="/games/writegame" render={() => <WriteGame words={words} />} />
         <Route path="/games/sprint" render={() => <span>Игра Спринт</span>} />
-        <Route path="/games/audiocall" render={() => <span>Игра Аудиовызов</span>} />
+        <Route path="/games/audiocall" render={() => <AudioCall words={words} />} />
       </Router>
       <Footer />
     </>

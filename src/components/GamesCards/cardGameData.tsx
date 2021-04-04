@@ -30,10 +30,10 @@ const cardGameData: IGameCard[] = [
   },
   {
     name: 'Аудиовызов',
-    description: 'Напиши слово, пропущенное в предложении.',
+    description: 'Какое слово произнесено?',
     badge: 'Аудирование',
     img: 'https://res.cloudinary.com/travel-app/image/upload/v1617129730/rslang/11.png',
-    linkTo: '/games/writegame',
+    linkTo: '/games/audiocall',
   },
 ];
 
