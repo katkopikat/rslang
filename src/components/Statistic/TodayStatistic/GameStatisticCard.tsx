@@ -7,12 +7,11 @@ interface IGameStatisticCard {
   learnedWords: number;
   procentCorrectAnsw: number;
   longestCorrectSer: number;
-  img: string;
   name: string;
 }
 
 const GameStatisticCard = ({
-  learnedWords, procentCorrectAnsw, longestCorrectSer, img, name,
+  learnedWords, procentCorrectAnsw, longestCorrectSer, name,
 } : IGameStatisticCard) => (
   <div className="game-statistic-card">
     <h2>

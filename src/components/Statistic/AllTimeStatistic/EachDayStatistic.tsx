@@ -1,83 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Chart } from 'chart.js';
 
-const tempData = {
-  2021: {
-    1: {
-      1: 13,
-      2: 9,
-      5: 21,
-      17: 8,
-    },
-    2: {
-      1: 17,
-      2: 4,
-      5: 11,
-      17: 8,
-    },
-    7: {
-      1: 20,
-      2: 9,
-      5: 11,
-      17: 8,
-    },
-    11: {
-      1: 5,
-      2: 9,
-      5: 15,
-      17: 8,
-    },
-
-  },
-  2020: {
-    3: {
-      1: 13,
-      2: 9,
-      5: 21,
-      17: 8,
-    },
-    4: {
-      1: 17,
-      2: 4,
-      5: 11,
-      17: 8,
-    },
-    5: {
-      1: 20,
-      2: 9,
-      5: 11,
-      17: 8,
-    },
-    10: {
-      1: 5,
-      2: 9,
-      5: 15,
-      17: 8,
-    },
-
-  },
-
-};
 const EachDayStatistic = () => {
-  const [years, setYears] = useState([]);
-  const [choosenYear, setChoosenYear] = useState(new Date().getFullYear());
+  // const [years, setYears] = useState([]);
+  // const [choosenYear, setChoosenYear] = useState(new Date().getFullYear());
   //   const yearsList = [];
   //   const totalByMonth = {};
 
-  const countYears = () => {
-    const yearsList = [];
+  // const countYears = () => {
+  //   const yearsList = [];
 
-    tempData.forEach((data) => {
-      const year = new Date(data.date).getFullYear();
-      if (!yearsList.includes(year)) {
-        yearsList.push(year);
-      }
-    });
+  //   tempData.forEach((data) => {
+  //     const year = new Date(data.date).getFullYear();
+  //     if (!yearsList.includes(year)) {
+  //       yearsList.push(year);
+  //     }
+  //   });
 
-    yearsList.sort((a, b) => b - a);
+  //   yearsList.sort((a, b) => b - a);
 
-    setYears(yearsList);
-  };
+  //   setYears(yearsList);
+  // };
 
   const generateDaysLabels = () => {
     const days: number[] = [];
@@ -137,18 +80,12 @@ const EachDayStatistic = () => {
     });
   };
 
-  useEffect(() => {
-    // if (daysData) {
-
-    createChart();
-
-    // }
-  }, []);
+  useEffect(() => { createChart(); }, []);
 
   return (
     <>
       <canvas className="bar-container" />
-      { years.map((year) => (
+      {/* { years.map((year) => (
         <button
           type="button"
           onClick={() => setChoosenYear(year)}
@@ -157,7 +94,7 @@ const EachDayStatistic = () => {
           {year}
           {' '}
         </button>
-      ))}
+      ))} */}
     </>
   );
 };

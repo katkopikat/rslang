@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Chart } from 'chart.js';
 
-const GrowthStatistics = () => {
+const GrowthStatistic = () => {
   const createChart = () => {
     const chartContainer = document.querySelector('.growth-container');
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -55,14 +55,6 @@ const GrowthStatistics = () => {
         gridLines: {
           color: 'rgba(255, 255, 255, 0.1)',
         },
-
-        // title: {
-        //   display: false,
-        // },
-        //     legend: {
-        //       display: false,
-        //     },
-        //     steppedLine: true,
       },
     });
   };
@@ -76,4 +68,4 @@ const GrowthStatistics = () => {
   );
 };
 
-export default GrowthStatistics;
+export default GrowthStatistic;

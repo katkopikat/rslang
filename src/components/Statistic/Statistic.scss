@@ -3,11 +3,9 @@
     padding: 1.5rem 3rem;
     margin: 0 auto;
     border-radius: 8px;
-    // background-color: rgb(241, 241, 241);
     display: flex;
 
     canvas {
-        // margin: 2rem;
         border-radius: 10px;
         padding: 2rem 1rem;
     }
@@ -17,10 +15,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.growth-container, .bar-container {
-    // background-color: #4e57bc;
 }
 
 .games-statistic-wrapper {
