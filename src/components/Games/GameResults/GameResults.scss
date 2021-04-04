@@ -1,0 +1,27 @@
+.results-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 90%;
+  margin: auto;
+
+  &__main {
+    align-items: center;
+  }
+
+  &__words {
+    align-items: flex-start;
+  }
+}
+
+.results__buttons {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.MuiTabs-root {
+  height: 50px;
+}
+

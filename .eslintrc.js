@@ -4,7 +4,11 @@ module.exports = {
     es2021: true,
   },
   plugins: ['@typescript-eslint'],
-  extends: ['airbnb-typescript'],
+  extends: [
+    'airbnb',
+    'airbnb/hooks',
+    'airbnb-typescript',
+  ],
   parserOptions: {
     project: './tsconfig.json',
     ecmaVersion: 12,
@@ -12,5 +16,7 @@ module.exports = {
   },
   rules: {
     'linebreak-style': 0,
+    'no-console': 0,
+    'react/no-array-index-key': 0,
   },
 };

@@ -1,0 +1,94 @@
+@import "../ModalWindow/ModalWindow.scss";
+
+.word-list {
+  &__wrapper {
+    font-size: 1rem;
+    color: rgb(84, 84, 84);
+    padding: 10px 0;
+  }
+
+  &__wrong {
+    margin-bottom: 40px;
+  }
+
+  &__title {
+    margin-bottom: 30px;
+  }
+}
+
+.word-item {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+
+  &__sound {
+    margin-right: 10px;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.05);
+      transition: all 0.3 ease-in-out;
+    }
+
+    &:active,
+    &:focus {
+      border: none;
+      outline: none ;
+    }
+  }
+
+  &__word {
+    color: rgb(34, 34, 34);
+    font-weight: bold;
+
+    &::first-letter {
+      text-transform: capitalize;
+    }
+  }
+}
+
+.count-label {
+  padding: 0 10px;
+  margin: 0 5px;
+  border-radius: 15px;
+  color: #fff;
+
+  &__wrong {
+    background-color: red;
+  }
+
+  &__correct {
+    background-color: forestgreen;
+  }
+}
+
+.react-swipeable-view-container {
+  margin: auto;
+  max-height: $modal-window-height - 100px;
+
+  & > *:not(:last-child) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  & > * {
+    scroll-behavior: smooth;
+    --scrollbarBG: #ffffff;
+
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: var(--scrollbarBG);
+      border-radius: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #673bc6 0%, #7112d6ba 100%);
+      border-radius: 6px;
+      border: 3px solid var(--scrollbarBG);
+    }
+  }
+}

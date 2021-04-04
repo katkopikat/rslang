@@ -5,15 +5,12 @@ import shuffleArray from '../../../helpers/shuffleArray';
 
 import './Sprint.scss';
 
-interface ISpringSettings {
-  group: number;
-  page: number;
+interface ISprint {
+  wordsList: IWord[];
 }
 
-const apiURL = 'https://rslang-team69.herokuapp.com/words?group=';
-
-const Sprint: React.FC<ISpringSettings> = ({ group, page } : ISpringSettings) => {
-  const [words, setWords] = useState<IWord[]>([]);
+const Sprint: React.FC<ISprint> = ({ wordsList } : ISprint) => {
+  const [words, setWords] = useState<IWord[]>(wordsList);
   const [currentWord, setCurrentWord] = useState<IWord>();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [countCorrect, setCountCorrect] = useState<number>(0);
@@ -26,16 +23,9 @@ const Sprint: React.FC<ISpringSettings> = ({ group, page } : ISpringSettings) =>
   const [timeLeft, setTimeLeft] = useState<number>(30);
 
   useEffect(() => {
-    // TODO write api or utils method for getting data for games
-    fetch(`${apiURL}${group}&page=${page}`)
-      .then((response) => response.json())
-      .then((data) => shuffleArray(data))
-      .then((data) => {
-        setWords(data);
-      })
-      .catch();
+    setWords(wordsList);
     setCurrentIndex(0);
-  }, []);
+  }, [wordsList]);
 
   useEffect(() => {
     if (words.length) {
@@ -52,7 +42,7 @@ const Sprint: React.FC<ISpringSettings> = ({ group, page } : ISpringSettings) =>
       const wrongWord = shuffleArray(words.filter((item) => item.id !== currentWord?.id))[0];
       setCurrentTranslate(shuffleArray([currentWord, wrongWord])[0]);
     }
-  }, [currentWord]);
+  }, [currentWord, words]);
 
   useEffect(() => {
     if (currentTranslate?.id === currentWord?.id) {
@@ -60,7 +50,7 @@ const Sprint: React.FC<ISpringSettings> = ({ group, page } : ISpringSettings) =>
     } else {
       setIsCurrentWorldCorrect(false);
     }
-  }, [currentTranslate]);
+  }, [currentTranslate, currentWord?.id]);
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
@@ -70,7 +60,7 @@ const Sprint: React.FC<ISpringSettings> = ({ group, page } : ISpringSettings) =>
       }, 1000);
     } else { setIsGameEnd(true); }
     return () => clearTimeout(timer);
-  }, [timeLeft]);
+  }, [isGameEnd, timeLeft]);
 
   const CheckAnswer = (answer: boolean) => {
     if (answer === isCurrentWorldCorrect) {
