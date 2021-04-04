@@ -1,5 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, RouteComponentProps } from 'react-router-dom';
+import Textbook from '../Textbook/Textbook';
+import WriteGame from '../Games/WriteWords/WriteWord';
+import Savanna from '../Games/Savanna/Savanna';
+import AudioCall from '../Games/AudioCall/AudioCall';
+import shaffle from '../../commonFunc/shuffle';
+import { IWord } from '../../interfaces';
 
 import { AuthProvider } from '../AuthContext';
 import Header from '../Header/Header';
@@ -9,23 +15,38 @@ import RegistrationPage from '../Auth/RegistrationPage';
 
 interface HistoryProps extends RouteComponentProps<any> {}
 
-const App: React.FC = () => (
-  <Router>
+const App: React.FC = () => {
+  const [words, setWords] = useState<IWord[]>([]);
+
+  const setWordsInGames = (arr: IWord[]) => {
+    setWords(shaffle(arr));
+  };
+
+  return (
     <>
-      <AuthProvider>
-        <Header />
-        <Route
-          path="/login"
-          render={({ history }: HistoryProps) => <LoginPage history={history} />}
-        />
-        <Route
-          path="/register"
-          render={({ history }: HistoryProps) => <RegistrationPage history={history} />}
-        />
-        <Footer />
-      </AuthProvider>
+      <Router>
+        <AuthProvider>
+          <Header />
+          {/* <Route path='/login' component={LoginPage} /> */}
+          <Route
+            path="/login"
+            render={({ history }: HistoryProps) => <LoginPage history={history} />}
+          />
+          <Route
+            path="/register"
+            render={({ history }: HistoryProps) => <RegistrationPage history={history} />}
+          />
+          <Route path="/" exact render={() => <Textbook setWordsInGames={setWordsInGames} />} />
+          <Route path="/games/main" render={() => <span> Main </span>} />
+          <Route path="/games/savanna" render={() => <Savanna wordsList={words} />} />
+          <Route path="/games/writegame" render={() => <WriteGame words={words} />} />
+          <Route path="/games/sprint" render={() => <span>Игра Спринт</span>} />
+          <Route path="/games/audiocall" render={() => <AudioCall words={words} />} />
+        </AuthProvider>
+      </Router>
+      <Footer />
     </>
-  </Router>
-);
+  );
+};
 
 export default App;

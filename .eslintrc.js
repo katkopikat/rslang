@@ -16,5 +16,7 @@ module.exports = {
   },
   rules: {
     'linebreak-style': 0,
+    'no-console': 0,
+    'react/no-array-index-key': 0,
   },
 };
