@@ -1,13 +1,13 @@
 .statistic-container {
-    width: 50vw;
+    width: 70vw;
     padding: 1.5rem 3rem;
-    margin: o auto;
+    margin: 0 auto;
     border-radius: 8px;
-    background-color: rgb(241, 241, 241);
+    // background-color: rgb(241, 241, 241);
     display: flex;
 
     canvas {
-        margin: 2rem;
+        // margin: 2rem;
         border-radius: 10px;
         padding: 2rem 1rem;
     }
@@ -20,5 +20,83 @@
 }
 
 .growth-container, .bar-container {
-    background-color: #4e57bc;
+    // background-color: #4e57bc;
+}
+
+.games-statistic-wrapper {
+    display: flex;
+}
+
+.game-statistic-card {
+    font-family: 'Gilroy-Regular';
+    font-size: 1.1rem;
+    color: #2c2647;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    margin: 1rem;
+    background-color: #f3f4f8;
+    border-radius: 0.5rem;
+    overflow: hidden;
+
+    h2 {
+        font-family: 'Gilroy-Heavy';
+        margin-bottom: 0.5rem;
+        z-index: 2;
+	}
+
+    h3 {
+        font-family: 'Gilroy-Regular';
+        font-size: 0.9rem;
+        padding: 0.3rem 0;
+        z-index: 2;
+        display: flex;
+        align-items: flex-start;
+	}
+
+    svg {
+        margin-right: 0.5rem;
+    }
+
+    .circle {
+        border-radius: 114px;
+        height: 200px;
+        width: 200px;
+        position: absolute;
+        top: 3rem;
+        right: -4.5rem;
+        background-color: #ffca68;
+    }  
+}
+
+.statistic-today {
+    color: #2c2647;
+    justify-content: center;
+    display: flex;
+    margin-bottom: 2rem;
+
+
+    h3 {
+        font-size: 1.2rem;
+        padding: 0.3rem 0;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        font-family: 'Gilroy-Regular';
+        margin: 0 6rem;
+	}
+
+    h2 {
+        margin-left: 1rem;
+        font-family: 'Gilroy-SemiBold';
+        margin-top: -0.5rem;
+        font-size: 1.5rem;
+        opacity: 0.8;
+    }
+
+    b {
+        font-size: 6rem;
+        font-family: 'Gilroy-Heavy';
+    }
 }

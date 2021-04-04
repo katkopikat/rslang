@@ -90,6 +90,7 @@ const EachDayStatistic = () => {
 
   const createChart = () => {
     const barContainer = document.querySelector('.bar-container');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const barChart = new Chart(barContainer, {
       type: 'bar',
       data: {
@@ -149,6 +150,7 @@ const EachDayStatistic = () => {
       <canvas className="bar-container" />
       { years.map((year) => (
         <button
+          type="button"
           onClick={() => setChoosenYear(year)}
         >
           {' '}

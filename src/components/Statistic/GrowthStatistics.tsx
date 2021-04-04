@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Chart } from 'chart.js';
 
 const GrowthStatistics = () => {
   const createChart = () => {
     const chartContainer = document.querySelector('.growth-container');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const lineChart = new Chart(chartContainer, {
       type: 'line',
       data: {
@@ -22,7 +23,7 @@ const GrowthStatistics = () => {
             borderWidth: 3,
             fill: false,
             // borderDash: [5, 5],
-            pointBackgroundColor: 'rgba(255, 255, 255, 1)',
+            pointBackgroundColor: 'rgba(78, 87, 188, 1)',
             pointRadius: 5,
             pointHoverRadius: 10,
             pointHitRadius: 30,
