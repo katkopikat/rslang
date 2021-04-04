@@ -8,6 +8,7 @@ import {
   TextField,
   Typography,
   Fab,
+  Popover,
 } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import AddIcon from '@material-ui/icons/Add';
@@ -34,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.grey[900],
     color: theme.palette.grey[50],
   },
+  typography: {
+    padding: theme.spacing(2),
+  },
 }));
 
 const RegistrationPage: React.FC<ILoginPage> = ({ history }: ILoginPage) => {
@@ -42,7 +46,15 @@ const RegistrationPage: React.FC<ILoginPage> = ({ history }: ILoginPage) => {
   const nameInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
   const confirmPasswordInput = useRef<HTMLInputElement>(null);
+  const signUpButton = (document.getElementById('signUpButton') as HTMLButtonElement);
   const [isLoaded, setIsLoaded] = useState('');
+  const [errors, setErrors] = useState('');
+  const [openPopover, setOpenPopover] = useState(false);
+
+  const id = openPopover ? 'simple-popover' : undefined;
+  const handleClose = () => {
+    setOpenPopover(false);
+  };
 
   const { register } = useAuth();
 
@@ -69,18 +81,30 @@ const RegistrationPage: React.FC<ILoginPage> = ({ history }: ILoginPage) => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    let registerError;
     const emailValue = emailInput.current ? emailInput.current.value : '';
     const nameValue = nameInput.current ? nameInput.current.value : '';
     const passwordValue = passwordInput.current ? passwordInput.current.value : '';
     const confirmPasswordValue = confirmPasswordInput.current ? confirmPasswordInput.current.value : '';
-    // TODO normal error
     if (passwordValue !== confirmPasswordValue) {
-      console.log('error');
+      setErrors('Confirm password error');
+      setOpenPopover(true);
       return false;
     }
-    const success = await register(nameValue, emailValue, passwordValue, isLoaded);
-    if (success) history.push('/');
-    return true;
+    const success = await register(nameValue, emailValue, passwordValue, isLoaded)
+      .catch((error) => {
+        registerError = error.message;
+      });
+    if (success === true && registerError === undefined) {
+      history.push('/');
+      return true;
+    }
+    if (registerError) {
+      setErrors(registerError);
+      setOpenPopover(true);
+      return false;
+    }
+    return false;
   };
 
   return (
@@ -91,6 +115,22 @@ const RegistrationPage: React.FC<ILoginPage> = ({ history }: ILoginPage) => {
       <Typography component="h1" variant="h5">
         Зарегистрироваться
       </Typography>
+      <Popover
+        id={id}
+        open={openPopover}
+        anchorEl={signUpButton}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+      >
+        <Typography className={classes.typography}>{errors}</Typography>
+      </Popover>
       <form
         noValidate
         onSubmit={handleSubmit}
@@ -168,6 +208,7 @@ const RegistrationPage: React.FC<ILoginPage> = ({ history }: ILoginPage) => {
         </a>
         <Button
           type="submit"
+          id="signUpButton"
           fullWidth
           variant="contained"
           color="primary"
@@ -176,7 +217,7 @@ const RegistrationPage: React.FC<ILoginPage> = ({ history }: ILoginPage) => {
           Sign Up
         </Button>
         <Grid container>
-          <Link to="/register">register</Link>
+          <Link to="/login">Sign in</Link>
         </Grid>
       </form>
     </Container>
