@@ -12,8 +12,7 @@ interface ISpringSettings {
 
 const apiURL = 'https://rslang-team69.herokuapp.com/words?group=';
 
-// eslint-disable-next-line react/prop-types
-const Sprint: React.FC<ISpringSettings> = ({ group, page }) => {
+const Sprint: React.FC<ISpringSettings> = ({ group, page } : ISpringSettings) => {
   const [words, setWords] = useState<IWord[]>([]);
   const [currentWord, setCurrentWord] = useState<IWord>();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
