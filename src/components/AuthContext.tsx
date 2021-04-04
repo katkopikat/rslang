@@ -11,9 +11,9 @@ export interface IAuthContext {
   userEmail: string;
   token: string;
   refreshToken: string;
-  avatarUrl: string;
+  avatarURL: string;
   signIn: (email: string, password: string) => Promise<boolean>;
-  register: (email: string, name: string, password: string, avatarUrl: string) => Promise<boolean>;
+  register: (email: string, name: string, password: string, avatarURL: string) => Promise<boolean>;
   logout?: () => void;
 }
 
@@ -29,7 +29,7 @@ const contextDefaults = {
   userEmail: '',
   token: '',
   refreshToken: '',
-  avatarUrl: '',
+  avatarURL: '',
   signIn: () => new Promise<boolean>(() => true),
   register: () => new Promise<boolean>(() => true),
   logout: () => null,
@@ -47,12 +47,12 @@ const AuthProvider: React.FC = (props) => {
     userEmail: '',
     token: '',
     refreshToken: '',
-    avatarUrl: '',
+    avatarURL: '',
   });
 
   const logout = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('avatarUrl');
+    localStorage.removeItem('avatarURL');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('userId');
     setUser({
@@ -61,34 +61,45 @@ const AuthProvider: React.FC = (props) => {
       userEmail: '',
       token: '',
       refreshToken: '',
-      avatarUrl: '',
+      avatarURL: '',
     });
   };
 
-  const autoLogin = () => {
-    const id = localStorage.getItem('userId');
-    const token = localStorage.getItem('token');
-    if (token) {
-      request('GET', `${API_URL}/users/${id}`, false, token)
-        .then((data) => {
-          if (!data.ok) {
-            logout();
-          } else {
-            setUser({
-              userId: loadFromLS('userId'),
-              userName: loadFromLS('userName'),
-              userEmail: loadFromLS('userEmail'),
-              token: loadFromLS('token'),
-              refreshToken: loadFromLS('refreshToken'),
-              avatarUrl: loadFromLS('avatarUrl'),
-            });
-          }
-        })
-        .catch();
-    }
-  };
-
-  useEffect(autoLogin, []);
+  useEffect(() => {
+    const autoLogin = async () => {
+      const id = localStorage.getItem('userId');
+      const token = localStorage.getItem('token');
+      if (token) {
+        request('GET', `${API_URL}/users/${id}`, false, token)
+          .then(async (data) => {
+            if (!data.ok) {
+              logout();
+            } else {
+              const {
+                id: userId,
+                name,
+                avatarURL,
+                email,
+              } = await data.json();
+              localStorage.setItem('userId', userId);
+              localStorage.setItem('userName', name);
+              localStorage.setItem('avatarURL', avatarURL);
+              localStorage.setItem('userEmail', email);
+              setUser({
+                userId,
+                userName: name,
+                userEmail: email,
+                token: loadFromLS('token'),
+                refreshToken: loadFromLS('refreshToken'),
+                avatarURL,
+              });
+            }
+          })
+          .catch();
+      }
+    };
+    autoLogin();
+  }, []);
 
   const signIn = async (email: string, password: string) => {
     const data = await request('POST', `${API_URL}/signin`, { email, password });
@@ -98,10 +109,10 @@ const AuthProvider: React.FC = (props) => {
         refreshToken,
         userId,
         name,
-        avatarUrl,
+        avatarURL,
       } = await data.json();
       localStorage.setItem('token', token);
-      localStorage.getItem('avatarUrl');
+      localStorage.setItem('avatarURL', avatarURL);
       localStorage.setItem('refreshToken', refreshToken);
       localStorage.setItem('userId', userId);
       setUser({
@@ -109,7 +120,7 @@ const AuthProvider: React.FC = (props) => {
         refreshToken,
         userId,
         userName: name || '',
-        avatarUrl,
+        avatarURL: avatarURL || '',
         userEmail: email,
       });
       return true;
@@ -128,19 +139,19 @@ const AuthProvider: React.FC = (props) => {
     name: string,
     email: string,
     password: string,
-    avatarUrl: string,
+    avatarURL: string,
   ) => {
     const data = await request('POST', `${API_URL}/users`, {
       name,
       email,
       password,
-      avatarUrl,
+      avatarURL,
     });
     if (data.ok) {
       const {
         id,
       } = await data.json();
-      localStorage.setItem('avatarUrl', avatarUrl);
+      localStorage.setItem('avatarURL', avatarURL);
       localStorage.setItem('userId', id);
       signIn(email, password);
       return true;

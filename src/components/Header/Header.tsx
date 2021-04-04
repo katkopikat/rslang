@@ -11,12 +11,12 @@ const Header: React.FC = () => {
   const {
     userId,
     logout,
-    avatarUrl,
+    avatarURL,
   } = useAuth();
   const currentURL = useLocation();
   const isAuthPage = currentURL.pathname === '/login' || currentURL.pathname === '/register';
-  const authLinkEl = avatarUrl ? (
-    <Avatar alt="user avatar" src={avatarUrl} />
+  const authLinkEl = avatarURL ? (
+    <Avatar alt="user avatar" src={avatarURL} />
   ) : (
     <AccountCircle />
   );
