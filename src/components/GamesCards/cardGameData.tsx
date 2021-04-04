@@ -23,7 +23,7 @@ const cardGameData: IGameCard[] = [
   },
   {
     name: 'Спринт',
-    description: 'Напиши слово, пропущенное в предложении.',
+    description: 'Слово-перевод',
     badge: 'Перевод на скорость',
     img: 'https://res.cloudinary.com/travel-app/image/upload/v1617137987/rslang/run1.png',
     linkTo: '/games/sprint',
