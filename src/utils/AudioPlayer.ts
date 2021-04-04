@@ -16,9 +16,15 @@ class AudioPlayer {
     this.playlist = paths;
   };
 
-  play = () => {
-    this.playingIndex = 0;
-    this.playByIndex(this.playingIndex);
+  // play one file (path) or playlist (no path)
+  play = (path?: string) => {
+    if (path) {
+      this.playlist = [] as string[];
+      this.playPath(path);
+    } else {
+      this.playingIndex = 0;
+      this.playByIndex(this.playingIndex);
+    }
   };
 
   private playNext = () => {
@@ -28,11 +34,14 @@ class AudioPlayer {
 
   private playByIndex = (index: number) => {
     const path = this.playlist[index];
-    if (path) {
-      this.audio.src = `${API_URL}/${path}`;
-      this.audio.currentTime = 0;
-      this.audio.play();
-    }
+    if (path) this.playPath(path);
+  };
+
+  private playPath = (path: string) => {
+    this.audio.src = `${API_URL}/${path}`;
+    this.audio.currentTime = 0;
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    this.audio.play();
   };
 }
 
