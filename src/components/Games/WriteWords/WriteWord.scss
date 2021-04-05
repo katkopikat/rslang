@@ -84,13 +84,16 @@
             position: absolute;
             padding: 0.5rem 1rem;
             z-index: 2;
+            border: none;
         
 
             .correct {
                 color: #35c77f;
             }
+
             .wrong {
                 color: #f50057;
+                opacity: 1;
             }
          }
     }

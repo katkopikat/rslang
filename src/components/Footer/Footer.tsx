@@ -19,7 +19,7 @@ const Footer: React.FC = () => (
       <div className="wrapper footer__wrapper">
         <div className="footer__top-block">
           <div>
-            <p className="logo footer__logo">RS LANG</p>
+            <p className="footer__logo">RS LANG</p>
             <div className="logo-container">
               <a href="https://github.com/katkopikat/rslang/tree/develop">
                 <img src="../../../assets/img/logo/github.svg" alt="github" />

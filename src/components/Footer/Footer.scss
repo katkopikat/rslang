@@ -16,12 +16,6 @@
   display: flex;
   align-items: flex-end;
 
-  &__logo {
-    margin: 0;
-    margin-bottom: 15px;
-    font-size: 1.3rem;
-  }
-
   &__wrapper {
     display: flex;
     flex-direction: column;
@@ -46,7 +40,19 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 10px;
+
+    a {
+      color: #fff;
+      text-decoration: underline;
+    }
   }
+}
+
+.footer__logo {
+  margin: 0;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+  font-family: "Gilroy-Bold";
 }
 
 .logo-container {

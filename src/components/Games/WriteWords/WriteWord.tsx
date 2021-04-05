@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
-
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Letters from './Letters';
 import StatusBadge from './StatusBadge';
 import Hints from './Hints';
-import GameResults from '../Components/GameResults/GameResults';
+import Sentence from './Sentence';
+import GameResults from "../Components/GameResults/GameResults";
 import './WriteWord.scss';
 import { IWord } from '../../../interfaces';
 import initialState from '../wordInitialState';
@@ -27,8 +27,6 @@ interface IWriteWord {
 }
 
 const WriteWord: React.FC<IWriteWord> = ({ words }) => {
-  // const [words, setWords] = useState<IWord[]>([]);
-  const [sentence, setSentence] = useState<string>();
   const [currentWord, setCurrentWord] = useState<IWord>(initialState);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [userWord, setUserWord] = useState<string>('');
@@ -43,14 +41,6 @@ const WriteWord: React.FC<IWriteWord> = ({ words }) => {
   const [wrongAnswers, setWrongAnswers] = useState<IWord[]>([]);
   const [correctAnswers, setCorrectAnswers] = useState<IWord[]>([]);
   const [correctSeries, setCorrectSeries] = useState<number>(0);
-
-  const replaceWordInSentence = (word: IWord) : string => {
-    const { textMeaning } = word;
-    const str = textMeaning;
-    const start = textMeaning.indexOf('*');
-    const newStr = str.substr(start, word.word.length + 2);
-    return str.replace(newStr, ('_'.repeat(newStr.length)));
-  };
 
   // answers
   const colorLetterInWrongWord = (answer: string, word: string) => {
@@ -145,7 +135,7 @@ const WriteWord: React.FC<IWriteWord> = ({ words }) => {
         setUserWord('');
         setWrong(false);
         setCurrentWord(word);
-        setSentence(replaceWordInSentence(word));
+
         setDisableCheckBtn(false);
       }
     }
@@ -158,12 +148,7 @@ const WriteWord: React.FC<IWriteWord> = ({ words }) => {
         <div className="write-game__wrapper">
           <StatusBadge correct={countCorrect} error={countWrong} />
           <Hints currentWord={currentWord} setUserWord={setUserWord} />
-
-          <p>
-            {' '}
-            { sentence }
-            {' '}
-          </p>
+          <Sentence currentWord={currentWord} />
 
           <form className="write-game__input" noValidate autoComplete="off">
             {wrongWord ? <Letters letterList={letterList} /> : null }

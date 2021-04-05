@@ -1,41 +1,34 @@
 import React, { useEffect } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import IconButton from '@material-ui/core/IconButton';
 import player from '../../utils/AudioPlayer';
 import { IWord } from '../../interfaces';
 import { API_URL } from '../../constants';
+import request from '../../helpers/request';
+import { useAuth } from '../AuthContext';
 
 const useStyles = makeStyles(() => ({
   cardImage: {
-    height: 150,
-  },
-  cardHeader: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-  },
-  cardText: {
-    paddingBottom: 20,
-  },
-  cardExamples: {
-    paddingTop: 20,
+    height: 200,
   },
 }));
 
 interface IProps {
   word: IWord;
+  showTranslate: boolean;
+  showBtns: boolean;
 }
 
-const WordCardDetails = ({ word }: IProps) => {
+const WordCardDetails = ({ word, showTranslate, showBtns }: IProps) => {
   const classes = useStyles();
+  const { userId, token } = useAuth();
 
   useEffect(() => {
     if (word) {
@@ -45,44 +38,70 @@ const WordCardDetails = ({ word }: IProps) => {
 
   const playWordAudio = () => player.play();
 
+  const deleteUserWord = () => {
+    if (!userId) return;
+    const userWordsApi = `${API_URL}/users/${userId}/words/${word.id}`;
+    const wordParam = { optional: { deleted: true } };
+    request('POST', userWordsApi, wordParam, token);
+  };
+
+  const setWordDifficult = () => {
+    if (!userId) return;
+    const userWordsApi = `${API_URL}/users/${userId}/words/${word.id}`;
+    const wordParam = { difficulty: 'difficult' };
+    request('POST', userWordsApi, wordParam, token);
+  };
+
   if (!word) return (<></>);
 
   return (
-    <Card>
+    <Card id="card-details">
       <CardMedia
-        className={classes.cardImage}
+        className={`${classes.cardImage} word-image`}
         image={`${API_URL}/${word?.image}`}
       />
+
       <CardContent>
-        <div className={classes.cardHeader}>
-          <Typography variant="h4">{word?.word}</Typography>
-          &nbsp;&nbsp;
-          <Typography variant="h6">{word?.transcription}</Typography>
+        <div>
+          <h2 className="word-word">{word?.word}</h2>
+          <h3 className="word-translate">{showTranslate ? word?.wordTranslate : null}</h3>
+          <span className="word-transcription">{word?.transcription}</span>
           <IconButton onClick={playWordAudio}><VolumeUpIcon /></IconButton>
         </div>
-        <Typography gutterBottom>
-          {word?.wordTranslate}
-        </Typography>
-        <CardActions>
-          <Button size="small" variant="outlined">+ в сложные слова</Button>
-          <Button size="small" variant="outlined">удалить слово</Button>
-        </CardActions>
-        <div className={classes.cardExamples}>
-          <Divider variant="middle" />
-          <Typography gutterBottom variant="body2">
-            {word?.textMeaning}
-          </Typography>
-          <Typography className={classes.cardText} variant="body2">
-            {word?.textMeaningTranslate}
-          </Typography>
-          <Divider variant="middle" />
-          <Typography gutterBottom variant="body2">
-            {word?.textExample}
-          </Typography>
-          <Typography variant="body2">
-            {word?.textExampleTranslate}
-          </Typography>
+        {showBtns
+          ? (
+            <CardActions>
+              <Button
+                size="small"
+                variant="outlined"
+                id="add-in-hard"
+                onClick={setWordDifficult}
+              >
+                + в сложные слова
+              </Button>
+              <Button
+                size="small"
+                variant="outlined"
+                id="delete-word"
+                onClick={deleteUserWord}
+              >
+                удалить слово
+              </Button>
+            </CardActions>
+          )
+          : null}
+
+        <div className="word-description">
+          <h3 className="word-subheading"> Значение </h3>
+          <ReactMarkdown source={word?.textMeaning} />
+          <ReactMarkdown source={showTranslate ? word?.textMeaningTranslate : ''} />
+
+          <h3 className="word-subheading">  Пример </h3>
+          <ReactMarkdown source={word?.textExample} />
+          <ReactMarkdown source={showTranslate ? word?.textExampleTranslate : ''} />
+
         </div>
+
       </CardContent>
     </Card>
   );

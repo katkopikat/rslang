@@ -1,5 +1,11 @@
+// @import './styles/variables';
+
+$dark-font: #2c2647;
+
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -27,6 +33,14 @@ body {
     background: rgb(64, 0, 142); 
     border-radius: 6px;
   }
+}
+
+h1 {
+  display: block;
+  font-size: 2rem;
+  font-family: 'Gilroy-Heavy';
+  color: $dark-font;
+  padding-left: 1rem;
 }
 
 .material-icons {
@@ -94,4 +108,5 @@ a {
   height: 50%;
   width: 100%;
 }
+
 
