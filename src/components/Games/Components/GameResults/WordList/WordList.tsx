@@ -1,9 +1,8 @@
 import React from 'react';
 import useSound from 'use-sound';
 import './WordList.scss';
-import { IWord } from '../../../../interfaces';
-
-const AUDIO_LINK: string = 'https://rslang-team69.herokuapp.com/';
+import { IWord } from '../../../../../interfaces';
+import { API_URL } from '../../../../../constants';
 
 interface IWordList {
   wrong: IWord[];
@@ -15,7 +14,7 @@ interface IWordItem {
 }
 
 const WordItem = ({ word }: IWordItem) => {
-  const [play] = useSound(`${AUDIO_LINK}${word.audio}`);
+  const [play] = useSound(`${API_URL}/${word.audio}`);
 
   const handleClick = () => {
     play();
@@ -39,6 +38,7 @@ const WordItem = ({ word }: IWordItem) => {
       <span className="word-item__translate">
         {' '}
         -
+        {' '}
         {word.wordTranslate}
       </span>
     </div>

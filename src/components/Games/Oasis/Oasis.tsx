@@ -6,11 +6,11 @@ import Letters from './Letters';
 import StatusBadge from './StatusBadge';
 import Hints from './Hints';
 import Sentence from './Sentence';
-import GameResults from '../GameResults/GameResults';
-import './Oasis.scss';
+import GameResults from '../Components/GameResults/GameResults';
 import { IWord } from '../../../interfaces';
 import initialState from '../wordInitialState';
 import BgGradient from '../BgGradient';
+import './Oasis.scss';
 
 interface ILetterStatus {
   letter: string;

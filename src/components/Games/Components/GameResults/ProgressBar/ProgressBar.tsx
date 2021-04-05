@@ -64,7 +64,7 @@ const ProgressBar: React.FC<IProgressBar> = ({ percentage }: IProgressBar) => (
         return (
           <CircularProgressbarWithChildren
             value={value}
-            strokeWidth={25}
+            strokeWidth={15}
             styles={buildStyles({
               pathColor: `rgba(138, 120, 250, ${value / 100})`,
               pathTransition: 'none',

@@ -6,12 +6,20 @@ $primaryColor : #4379FF;
 $cocoBackground : #FBFCFF;
 $inactive: #d0d0d0;
 
+$header-height: 80px;
+
+.header-container {
+	height: $header-height;
+	background-color: $primaryColor;
+}
+
 body {
 background-color: bg-color;
 }
 
 .main-heading {
 	display: flex;
+	padding-top: $header-height;
 
 
 	svg {

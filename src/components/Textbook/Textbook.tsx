@@ -1,15 +1,17 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
-import Pagination from '@material-ui/lab/Pagination';
-import { API_URL } from '../../constants';
-import GamesCards from '../GamesCards/GamesCards';
-import Levels from '../LevelsCards/Levels';
-import Settings from './Settings/Settings';
-import WordsList from '../WordsList/WordsList';
-import './Textbook.scss';
-import { IWord } from '../../interfaces';
+import React, { useState, useEffect } from "react";
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import Pagination from "@material-ui/lab/Pagination";
+import { API_URL } from "../../constants";
+import GamesCards from "../GamesCards/GamesCards";
+import Levels from "../LevelsCards/Levels";
+import Settings from "./Settings/Settings";
+import WordsList from "../WordsList/WordsList";
+import "./Textbook.scss";
+import { IWord } from "../../interfaces";
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 
 interface ITextbook {
   setWordsInGames: (words: IWord[]) => void;
@@ -19,15 +21,17 @@ const Textbook: React.FC<ITextbook> = ({ setWordsInGames }) => {
   const [words, setWords] = useState([]);
   const [group, setGroup] = useState(0);
   const [page, setPage] = useState(0);
-  const [wordsUrl, setWordsUrl] = useState(`${API_URL}/words?group=${group}&page=${page}`);
+  const [wordsUrl, setWordsUrl] = useState(
+    `${API_URL}/words?group=${group}&page=${page}`
+  );
   const [isLoading, setisLoading] = useState(false);
   const [showTranslate, setShowTranslate] = useState(true);
   const [showBtns, setShowBtns] = useState(true);
-  const [groupColorClass, setGroupColorClass] = useState('easy1-group');
+  const [groupColorClass, setGroupColorClass] = useState("easy1-group");
 
   useEffect(() => {
-    setPage(Number(localStorage.getItem('page')) || 0);
-    setGroup(Number(localStorage.getItem('group')) || 0);
+    setPage(Number(localStorage.getItem("page")) || 0);
+    setGroup(Number(localStorage.getItem("group")) || 0);
   }, []);
 
   useEffect(() => {
@@ -47,8 +51,8 @@ const Textbook: React.FC<ITextbook> = ({ setWordsInGames }) => {
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    localStorage.setItem('page', String(page));
-    localStorage.setItem('group', String(group));
+    localStorage.setItem("page", String(page));
+    localStorage.setItem("group", String(group));
   }, [group, page]);
 
   useEffect(() => {
@@ -58,22 +62,22 @@ const Textbook: React.FC<ITextbook> = ({ setWordsInGames }) => {
   useEffect(() => {
     switch (group) {
       case 1:
-        setGroupColorClass('easy2-group');
+        setGroupColorClass("easy2-group");
         break;
       case 2:
-        setGroupColorClass('medium1-group');
+        setGroupColorClass("medium1-group");
         break;
       case 3:
-        setGroupColorClass('medium2-group');
+        setGroupColorClass("medium2-group");
         break;
       case 4:
-        setGroupColorClass('hard1-group');
+        setGroupColorClass("hard1-group");
         break;
       case 5:
-        setGroupColorClass('hard2-group');
+        setGroupColorClass("hard2-group");
         break;
       default:
-        setGroupColorClass('easy1-group');
+        setGroupColorClass("easy1-group");
         break;
     }
   }, [group]);
@@ -83,48 +87,71 @@ const Textbook: React.FC<ITextbook> = ({ setWordsInGames }) => {
     setGroup(value);
   };
 
-  const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
     setPage(value - 1);
   };
 
   return (
     // className="pre-publish"
-    <Container>
+    <div className="header-container">
+      <Header />
+      <Container>
+        <div className="main-heading">
+          <button type="button" className="main-heading--active">
+            {" "}
+            Учебник{" "}
+          </button>
+          <button type="button" className="main-heading--unactive">
+            {" "}
+            Словарь{" "}
+          </button>
 
-      <div className="main-heading">
-        <button type="button" className="main-heading--active"> Учебник </button>
-        <button type="button" className="main-heading--unactive"> Словарь </button>
+          <Settings
+            showTranslate={showTranslate}
+            setShowTranslate={setShowTranslate}
+            showBtns={showBtns}
+            setShowBtns={setShowBtns}
+          />
+        </div>
+        <h2 className="main-subheading"> Уровни сложности слов </h2>
+        <Levels handleGroupChange={handleGroupChange} activeGroup={group} />
 
-        <Settings
-          showTranslate={showTranslate}
-          setShowTranslate={setShowTranslate}
-          showBtns={showBtns}
-          setShowBtns={setShowBtns}
-        />
+        <Grid
+          container
+          justify="center"
+          spacing={6}
+          className={groupColorClass}
+        >
+          <Grid item>
+            <h1>Слова</h1>
+            <WordsList
+              words={words}
+              showTranslate={showTranslate}
+              showBtns={showBtns}
+            />
+          </Grid>
 
-      </div>
-      <h2 className="main-subheading"> Уровни сложности слов </h2>
-      <Levels handleGroupChange={handleGroupChange} activeGroup={group} />
+          <Grid item>
+            <Pagination
+              count={30}
+              page={page + 1}
+              onChange={handlePageChange}
+              color="primary"
+            />
+          </Grid>
 
-      <Grid container justify="center" spacing={6} className={groupColorClass}>
-
-        <Grid item>
-          <h1>Слова</h1>
-          <WordsList words={words} showTranslate={showTranslate} showBtns={showBtns} />
+          <Grid item className="games-card-container">
+            <h1>Игры</h1>
+            <h3>Закрепи новые слова при помощи игр.</h3>
+            <GamesCards />
+          </Grid>
         </Grid>
-
-        <Grid item>
-          <Pagination count={30} page={page + 1} onChange={handlePageChange} color="primary" />
-        </Grid>
-
-        <Grid item className="games-card-container">
-          <h1>Игры</h1>
-          <h3>Закрепи новые слова при помощи игр.</h3>
-          <GamesCards />
-        </Grid>
-
-      </Grid>
-    </Container>
+      </Container>
+      <Footer />
+    </div>
   );
 };
 

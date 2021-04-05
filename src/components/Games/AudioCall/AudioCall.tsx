@@ -10,7 +10,7 @@ import { IWord } from '../../../interfaces';
 import player from '../../../utils/AudioPlayer';
 import shuffle from '../../../helpers/shuffleArray';
 import { API_URL } from '../../../constants';
-import GameResults from '../GameResults/GameResults';
+import GameResults from '../Components/GameResults/GameResults';
 import StartPage from './StartPage';
 import useStyles from './styles';
 

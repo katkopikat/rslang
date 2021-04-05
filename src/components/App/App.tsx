@@ -7,10 +7,10 @@ import AudioCall from '../Games/AudioCall/AudioCall';
 import Sprint from '../Games/Sprint/Sprint';
 import shaffle from '../../commonFunc/shuffle';
 import { IWord } from '../../interfaces';
-
 import { AuthProvider } from '../AuthContext';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+// import Header from '../Header/Header';
+// import Footer from '../Footer/Footer';
+import MainPage from '../MainPage/MainPage';
 import LoginPage from '../Auth/LoginPage';
 import RegistrationPage from '../Auth/RegistrationPage';
 
@@ -22,12 +22,11 @@ const App: React.FC = () => {
   const setWordsInGames = (arr: IWord[]) => {
     setWords(shaffle(arr));
   };
-
   return (
     <>
       <Router>
         <AuthProvider>
-          <Header />
+          {/* <Header /> */}
           {/* <Route path='/login' component={LoginPage} /> */}
           <Route
             path="/login"
@@ -37,7 +36,8 @@ const App: React.FC = () => {
             path="/register"
             render={({ history }: HistoryProps) => <RegistrationPage history={history} />}
           />
-          <Route path="/" exact render={() => <Textbook setWordsInGames={setWordsInGames} />} />
+          <Route path="/" exact render={() => <MainPage />} />
+          <Route path="/textbook" render={() => <Textbook setWordsInGames={setWordsInGames} />} />
           <Route path="/games/main" render={() => <span> Main </span>} />
           <Route path="/games/savanna" render={() => <Savanna wordsList={words} />} />
           <Route path="/games/oasis" render={() => <Oasis words={words} />} />
@@ -45,9 +45,8 @@ const App: React.FC = () => {
           <Route path="/games/audiocall" render={() => <AudioCall words={words} />} />
         </AuthProvider>
       </Router>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };
-
 export default App;

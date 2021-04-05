@@ -10,7 +10,7 @@ import ProgressBar from './ProgressBar/ProgressBar';
 import ResultTitle from './ResultTitle/ResultTitle';
 import Counting from './ResultsCounting/Counting';
 import WordList from './WordList/WordList';
-import { IWord } from '../../../interfaces';
+import { IWord } from '../../../../interfaces';
 import './GameResults.scss';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
