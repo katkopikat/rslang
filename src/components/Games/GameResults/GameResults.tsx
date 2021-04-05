@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -81,12 +82,15 @@ const GameResults: React.FC<IGameResults> = ({ wrong, correct }: IGameResults) =
           </div>
         </SwipeableViews>
         <div className={`${classes.root} results__buttons`}>
+          {/* TODO Кнопка сыграть еще раз  */}
           <Button variant="contained" color="primary">
             Сыграть еще раз
           </Button>
-          <Button variant="contained" color="primary">
-            Перейти в учебник
-          </Button>
+          <Link to="/textbook">
+            <Button variant="contained" color="primary">
+              Перейти в учебник
+            </Button>
+          </Link>
         </div>
       </ModalWindow>
     </div>

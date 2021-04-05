@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, RouteComponentProps } from 'react-router-dom';
 import Textbook from '../Textbook/Textbook';
-import WriteGame from '../Games/WriteWords/WriteWord';
+import Oasis from '../Games/Oasis/Oasis';
 import Savanna from '../Games/Savanna/Savanna';
 import AudioCall from '../Games/AudioCall/AudioCall';
 import Sprint from '../Games/Sprint/Sprint';
@@ -40,7 +40,7 @@ const App: React.FC = () => {
           <Route path="/" exact render={() => <Textbook setWordsInGames={setWordsInGames} />} />
           <Route path="/games/main" render={() => <span> Main </span>} />
           <Route path="/games/savanna" render={() => <Savanna wordsList={words} />} />
-          <Route path="/games/writegame" render={() => <WriteGame words={words} />} />
+          <Route path="/games/oasis" render={() => <Oasis words={words} />} />
           <Route path="/games/sprint" render={() => <Sprint wordsList={words} />} />
           <Route path="/games/audiocall" render={() => <AudioCall words={words} />} />
         </AuthProvider>

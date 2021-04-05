@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { IWord } from '../../../interfaces';
-import './WriteWord.scss';
 import { API_URL } from '../../../constants';
 
 interface IHints {
@@ -10,7 +9,6 @@ interface IHints {
 }
 
 const Hints: React.FC<IHints> = ({ currentWord, setUserWord }) => {
-  // hints
   const showWordTranslate = () => {
     setUserWord(currentWord.wordTranslate);
   };

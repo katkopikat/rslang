@@ -7,9 +7,10 @@ import StatusBadge from './StatusBadge';
 import Hints from './Hints';
 import Sentence from './Sentence';
 import GameResults from '../GameResults/GameResults';
-import './WriteWord.scss';
+import './Oasis.scss';
 import { IWord } from '../../../interfaces';
 import initialState from '../wordInitialState';
+import BgGradient from '../BgGradient';
 
 interface ILetterStatus {
   letter: string;
@@ -22,11 +23,11 @@ interface ILetterStatus {
 //   correctSeries: number;
 // }
 
-interface IWriteWord {
+interface IOasis {
   words: IWord[];
 }
 
-const WriteWord: React.FC<IWriteWord> = ({ words }) => {
+const Oasis: React.FC<IOasis> = ({ words }) => {
   const [currentWord, setCurrentWord] = useState<IWord>(initialState);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [userWord, setUserWord] = useState<string>('');
@@ -191,12 +192,9 @@ const WriteWord: React.FC<IWriteWord> = ({ words }) => {
         )}
         {isEndGame && <GameResults wrong={wrongAnswers} correct={correctAnswers} />}
       </div>
-
-      <div className="bg" />
-      <div className="bg bg2" />
-      <div className="bg bg3" />
+      <BgGradient gameName="oasis" />
     </>
   );
 };
 
-export default WriteWord;
+export default Oasis;

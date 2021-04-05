@@ -2,6 +2,7 @@
 
 .word-list {
   &__wrapper {
+    font-family: 'Gilroy-SemiBold';
     font-size: 1rem;
     color: rgb(84, 84, 84);
     padding: 10px 0;
@@ -24,9 +25,11 @@
   &__sound {
     margin-right: 10px;
     cursor: pointer;
+    opacity: 0.3;
 
     &:hover {
       transform: scale(1.05);
+      opacity: 0.7;
       transition: all 0.3 ease-in-out;
     }
 
@@ -38,12 +41,13 @@
   }
 
   &__word {
+    font-family: 'Gilroy-Bold';
     color: rgb(34, 34, 34);
     font-weight: bold;
 
-    &::first-letter {
-      text-transform: capitalize;
-    }
+    // &::first-letter {
+    //   text-transform: capitalize;
+    // }
   }
 }
 
@@ -54,11 +58,11 @@
   color: #fff;
 
   &__wrong {
-    background-color: red;
+    background-color: #FF7171;
   }
 
   &__correct {
-    background-color: forestgreen;
+    background-color: #4ccbb7;
   }
 }
 

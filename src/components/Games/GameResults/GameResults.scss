@@ -15,10 +15,21 @@
 }
 
 .results__buttons {
+  font-family: 'Gilroy-SemiBold';
   height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  button {
+    font-family: 'Gilroy-Medium';
+    background-color: #FFC53D;
+    color: #2c2647;
+  }
+
+  button:hover{
+    background-color: rgb(138, 120, 250);
+  }
 }
 
 .MuiTabs-root {

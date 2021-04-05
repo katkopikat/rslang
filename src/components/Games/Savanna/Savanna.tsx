@@ -5,6 +5,8 @@ import './Savanna.scss';
 import Lives from './LivesIndicator/Lives';
 import GameResults from '../GameResults/GameResults';
 import initialState from '../wordInitialState';
+import BgGradient from '../BgGradient';
+import '../BgGradient.scss';
 
 const NUMBER_OF_THE_OPTIONS: number = 4;
 const LIVES: number = 5;
@@ -195,6 +197,7 @@ const Savanna = ({ wordsList }: ISavanna) => {
         </div>
       )}
       {isEnd && <GameResults wrong={wrongAnswers} correct={correctAnswers} />}
+      <BgGradient gameName="savanna" />
     </div>
   );
 };
