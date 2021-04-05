@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { IWord } from '../../../../interfaces';
+import { IWord } from '../../../../../interfaces';
 import './Counting.scss';
 
 interface ICounting {

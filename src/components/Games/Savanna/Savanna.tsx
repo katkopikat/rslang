@@ -3,9 +3,11 @@ import shuffle from '../../../commonFunc/shuffle';
 import { IWord } from '../../../interfaces';
 import './Savanna.scss';
 import Lives from './LivesIndicator/Lives';
-import GameResults from '../GameResults/GameResults';
+import GameResults from '../Components/GameResults/GameResults';
 import initialState from '../wordInitialState';
 import Crystal from './Crystal/Crystal';
+import StartScreen from '../Components/GameStartScreen/StartScreen';
+import Loader from '../Components/Loader/Loader';
 
 const NUMBER_OF_THE_OPTIONS: number = 4;
 const LIVES: number = 5;
@@ -62,6 +64,7 @@ const Savanna = ({ wordsList }: ISavanna) => {
   const [newCurrentWord, setNewCurrentWord] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
   const [isEnd, setIsEnd] = useState<boolean>(false);
+  const [isStart, setIsStart] = useState<boolean>(false);
   const [canIChoose, setCanIChoose] = useState<boolean>(true);
   const [backgroundPosition, setBackgroundPosition] = useState(50);
 
@@ -83,16 +86,37 @@ const Savanna = ({ wordsList }: ISavanna) => {
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
   const [isAnswer, setIsAnswer] = useState<boolean>(false);
 
-  useEffect(() => {
-    setWords(wordsList);
-  }, [wordsList]);
+  // for loader
+  const [count, setCount] = useState<number>(3);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const tick = () => {
+    if (isLoading && count > 0) {
+      setCount(count - 1);
+    }
+  };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setClassName(classNames.fall);
-    }, 100);
+    const timer = setTimeout(tick, 1000);
     return () => clearTimeout(timer);
-  }, []);
+  });
+
+  useEffect(() => {
+    let timer: any;
+    if (count <= 0) {
+      setIsStart(true);
+      timer = setTimeout(() => {
+        setClassName(classNames.fall);
+      }, 0);
+    }
+    return () => clearTimeout(timer);
+  }, [count]);
+
+  useEffect(() => {
+    if (isStart) {
+      setWords(wordsList);
+    }
+  }, [wordsList, isStart]);
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
@@ -133,7 +157,7 @@ const Savanna = ({ wordsList }: ISavanna) => {
       setClassName(classNames.fall);
       setIsAnswer(false);
       setCanIChoose(true);
-    }, 100);
+    }, 500);
   };
 
   const setWrongAnswer = () => {
@@ -196,7 +220,17 @@ const Savanna = ({ wordsList }: ISavanna) => {
       }}
       className="savanna"
     >
-      {!isEnd && (
+      {!isStart && !isLoading && (
+        <StartScreen
+          game="savanna"
+          isLevel
+          onClick={() => {
+            setIsLoading(true);
+          }}
+        />
+      )}
+      {isLoading && !isStart && <Loader seconds={count} />}
+      {!isEnd && isStart && (
         <div className="savanna__wrapper">
           {newCurrentWord && (
             <div

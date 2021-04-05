@@ -1,0 +1,28 @@
+.loader__loading {
+  position: relative;
+  height: 114px;
+  width: 114px;
+  margin: 0 auto 30px;
+}
+
+.loader__timer {
+  height: 100px;
+  top: 50%;
+  margin-top: -50px;
+  position: absolute;
+  right: 0;
+  left: 0;
+}
+
+.loader__count {
+  position: absolute;
+  top: 37px;
+  right: 0;
+  left: 0;
+  font-size: 40px;
+  line-height: 1;
+  font-weight: 300;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+  color: #fff;
+}

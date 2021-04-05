@@ -1,5 +1,6 @@
 import React from 'react';
 import './Crystal.scss';
+import Circle from '../../Components/Circle/Circle';
 
 interface ICrystal {
   isCorrect: boolean;
@@ -15,11 +16,7 @@ const Crystal = ({ isCorrect }: ICrystal) => (
         <i className="crystal-bg crystal__img-4" />
       </div>
     </div>
-    <div className={`crystal__circle ${isCorrect ? 'crystal__circle-visible' : ''}`}>
-      <div className="crystal__circle-1" />
-      <div className="crystal__circle-2" />
-      <div className="crystal__circle-3" />
-    </div>
+    <Circle visible={isCorrect} />
     <div className="crystal__point">
       <i className="crystal__point-base crystal__point-1" />
       <i className="crystal__point-base crystal__point-2" />

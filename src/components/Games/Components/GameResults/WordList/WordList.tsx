@@ -1,8 +1,8 @@
 import React from 'react';
 import useSound from 'use-sound';
 import './WordList.scss';
-import { IWord } from '../../../../interfaces';
-import { API_URL } from '../../../../constants';
+import { IWord } from '../../../../../interfaces';
+import { API_URL } from '../../../../../constants';
 
 interface IWordList {
   wrong: IWord[];

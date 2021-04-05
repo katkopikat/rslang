@@ -14,3 +14,24 @@ export interface IWord {
   textMeaningTranslate: string;
   textExampleTranslate: string;
 }
+
+export interface IGameDescription {
+  id: number,
+  type: string,
+  description: string,
+}
+
+export interface IAdvantages {
+  id: number,
+  image: string,
+  title: string,
+  description: string,
+}
+
+export interface IDeveloper {
+  id: number,
+  image: string,
+  name: string,
+  github: string,
+  description: string,
+}

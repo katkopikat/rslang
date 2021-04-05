@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import Letters from './Letters';
 import StatusBadge from './StatusBadge';
 import Hints from './Hints';
-import GameResults from '../GameResults/GameResults';
+import GameResults from '../Components/GameResults/GameResults';
 import './WriteWord.scss';
 import { IWord } from '../../../interfaces';
 import initialState from '../wordInitialState';
