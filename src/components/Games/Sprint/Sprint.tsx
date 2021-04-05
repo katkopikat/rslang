@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card, Typography } from '@material-ui/core';
 import { IWord } from '../../../interfaces';
 import shuffleArray from '../../../helpers/shuffleArray';
-
+import GameResults from '../GameResults/GameResults';
 import './Sprint.scss';
 
 interface ISprint {
@@ -15,8 +15,8 @@ const Sprint: React.FC<ISprint> = ({ wordsList } : ISprint) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [countCorrect, setCountCorrect] = useState<number>(0);
   const [countError, setCountError] = useState<number>(0);
-  const [correctAnswer, setCorrectAnswers] = useState<IWord[]>([]);
-  const [wrongAnswer, setWrongAnswer] = useState<IWord[]>([]);
+  const [correctAnswers, setCorrectAnswers] = useState<IWord[]>([]);
+  const [wrongAnswers, setWrongAnswers] = useState<IWord[]>([]);
   const [currentTranslate, setCurrentTranslate] = useState<IWord>();
   const [isGameEnd, setIsGameEnd] = useState<boolean>(false);
   const [isCurrentWorldCorrect, setIsCurrentWorldCorrect] = useState<boolean>(false);
@@ -66,11 +66,11 @@ const Sprint: React.FC<ISprint> = ({ wordsList } : ISprint) => {
     if (answer === isCurrentWorldCorrect) {
       setCountCorrect(countCorrect + 1);
       setCurrentIndex(currentIndex + 1);
-      if (currentWord) setCorrectAnswers([...correctAnswer, currentWord]);
+      if (currentWord) setCorrectAnswers([...correctAnswers, currentWord]);
     } else {
       setCountError(countError + 1);
       setCurrentIndex(currentIndex + 1);
-      if (currentWord) setWrongAnswer([...wrongAnswer, currentWord]);
+      if (currentWord) setWrongAnswers([...wrongAnswers, currentWord]);
     }
   };
 
@@ -92,30 +92,35 @@ const Sprint: React.FC<ISprint> = ({ wordsList } : ISprint) => {
 
   return (
     <div className="sprint">
-      <div className="timer">{timeLeft}</div>
-      <Card className="sprint_card">
-        <Typography variant="h5" component="h2">{ currentWord?.word }</Typography>
-        <Typography>{ currentTranslate?.wordTranslate }</Typography>
-        <div className="buttons">
-          <Button
-            type="button"
-            id="0"
-            style={{ color: 'green' }}
-            variant="outlined"
-            onClick={() => (!isGameEnd ? CheckAnswer(true) : null)}
-          >
-            true
-          </Button>
-          <Button
-            type="button"
-            style={{ color: 'red' }}
-            id="1"
-            onClick={() => (!isGameEnd ? CheckAnswer(false) : null)}
-          >
-            false
-          </Button>
-        </div>
-      </Card>
+      {!isGameEnd && (
+        <>
+          <div className="timer">{timeLeft}</div>
+          <Card className="sprint_card">
+            <Typography variant="h5" component="h2">{ currentWord?.word }</Typography>
+            <Typography>{ currentTranslate?.wordTranslate }</Typography>
+            <div className="buttons">
+              <Button
+                type="button"
+                id="0"
+                style={{ color: 'green' }}
+                variant="outlined"
+                onClick={() => (!isGameEnd ? CheckAnswer(true) : null)}
+              >
+                true
+              </Button>
+              <Button
+                type="button"
+                style={{ color: 'red' }}
+                id="1"
+                onClick={() => (!isGameEnd ? CheckAnswer(false) : null)}
+              >
+                false
+              </Button>
+            </div>
+          </Card>
+        </>
+      )}
+      {isGameEnd && <GameResults wrong={wrongAnswers} correct={correctAnswers} />}
     </div>
   );
 };
