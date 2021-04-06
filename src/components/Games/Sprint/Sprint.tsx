@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import { IWord } from '../../../interfaces';
+import { createUserWord, setUserWord } from '../../../api';
 import shuffleArray from '../../../helpers/shuffleArray';
 import GameResults from '../GameResults/GameResults';
 import './Sprint.scss';
@@ -73,7 +74,7 @@ const Sprint: React.FC<ISprint> = ({ wordsList } : ISprint) => {
     return () => clearTimeout(timer);
   }, [isGameEnd, timeLeft]);
 
-  const CheckAnswer = (answer: boolean) => {
+  const CheckAnswer = async (answer: boolean) => {
     if (answer === isCurrentWorldCorrect) {
       setCountCorrect(countCorrect + 1);
       setCurrentIndex(currentIndex + 1);
@@ -94,6 +95,17 @@ const Sprint: React.FC<ISprint> = ({ wordsList } : ISprint) => {
       setCurStreak(0);
       setMultiply(1);
       if (currentWord) setWrongAnswers([...wrongAnswers, currentWord]);
+    }
+    if (currentWord !== undefined) {
+      // const result = await
+      // createUserWord(currentWord, 'studied', 'sprint', answer === isCurrentWorldCorrect);
+      const result = await setUserWord(
+        currentWord,
+        // 'studied',
+        'sprint',
+        answer === isCurrentWorldCorrect,
+      );
+      console.log(result);
     }
   };
 
