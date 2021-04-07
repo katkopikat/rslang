@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import SwipeableViews from 'react-swipeable-views';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -27,7 +28,10 @@ interface IGameResults {
   correct: IWord[];
 }
 
-const GameResults: React.FC<IGameResults> = ({ wrong, correct }: IGameResults) => {
+const GameResults: React.FC<IGameResults> = ({
+  wrong,
+  correct,
+}: IGameResults) => {
   const [index, setIndex] = useState<number>(0);
 
   const handleChangeIndex = (i: number) => {
@@ -84,9 +88,11 @@ const GameResults: React.FC<IGameResults> = ({ wrong, correct }: IGameResults) =
           <Button variant="contained" color="primary">
             Сыграть еще раз
           </Button>
-          <Button variant="contained" color="primary">
-            Перейти в учебник
-          </Button>
+          <Link to="/textbook">
+            <Button variant="contained" color="primary">
+              Перейти в учебник
+            </Button>
+          </Link>
         </div>
       </ModalWindow>
     </div>
