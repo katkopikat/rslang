@@ -39,6 +39,7 @@ const Textbook: React.FC = () => {
     setWordsUrl(`${API_URL}/words?group=${group}&page=${page}`);
   }, [group, page, isLoading]);
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     (async () => {
       setIsLoading(true);

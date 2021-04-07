@@ -6,10 +6,11 @@ import Letters from './Letters';
 import StatusBadge from './StatusBadge';
 import Hints from './Hints';
 import Sentence from './Sentence';
-import GameResults from "../Components/GameResults/GameResults";
+import GameResults from '../Components/GameResults/GameResults';
 import './WriteWord.scss';
 import { IWord } from '../../../interfaces';
 import initialState from '../wordInitialState';
+import StartScreen from '../Components/GameStartScreen/StartScreen';
 
 interface ILetterStatus {
   letter: string;
@@ -30,6 +31,7 @@ const WriteWord: React.FC<IWriteWord> = ({ words }) => {
   const [currentWord, setCurrentWord] = useState<IWord>(initialState);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [userWord, setUserWord] = useState<string>('');
+  const [isStartGame, setIsStartGame] = useState<boolean>(false);
   const [isEndGame, setEndGame] = useState<boolean>(false);
   // for wrong answer
   const [wrongWord, setWrong] = useState<boolean>(false);
@@ -144,52 +146,67 @@ const WriteWord: React.FC<IWriteWord> = ({ words }) => {
   return (
     <>
       <div className="write-game">
-        {!isEndGame && (
-        <div className="write-game__wrapper">
-          <StatusBadge correct={countCorrect} error={countWrong} />
-          <Hints currentWord={currentWord} setUserWord={setUserWord} />
-          <Sentence currentWord={currentWord} />
+        {!isStartGame && (
+          <StartScreen
+            game="oasis"
+            onClick={() => setIsStartGame(true)}
+          />
+        )}
 
-          <form className="write-game__input" noValidate autoComplete="off">
-            {wrongWord ? <Letters letterList={letterList} /> : null }
-            <TextField
-              id="standard-basic"
-              variant="filled"
-              value={userWord}
-              onChange={(e) => { setUserWord(e.target.value); }}
-              onFocus={() => handleFocus()}
-            />
+        {!isEndGame && isStartGame && (
+          <div className="write-game__wrapper">
+            <StatusBadge correct={countCorrect} error={countWrong} />
+            <Hints currentWord={currentWord} setUserWord={setUserWord} />
+            <Sentence currentWord={currentWord} />
 
-            { disableCheckBtn
-              ? (
+            <form className="write-game__input" noValidate autoComplete="off">
+              {wrongWord ? <Letters letterList={letterList} /> : null}
+              <TextField
+                id="standard-basic"
+                variant="filled"
+                value={userWord}
+                onChange={(e) => {
+                  setUserWord(e.target.value);
+                }}
+                onFocus={() => handleFocus()}
+              />
+
+              {disableCheckBtn ? (
                 <Button
                   variant="contained"
-                  onClick={() => { setCurrentIndex(currentIndex + 1); }}
+                  onClick={() => {
+                    setCurrentIndex(currentIndex + 1);
+                  }}
                 >
                   Далее
                 </Button>
-              )
-              : (
+              ) : (
                 <div className="btns-wrapper">
                   <Button
                     variant="contained"
-                    onClick={() => { checkAnswer(userWord, currentWord.word); }}
+                    onClick={() => {
+                      checkAnswer(userWord, currentWord.word);
+                    }}
                   >
                     Проверить
                   </Button>
 
                   <Button
                     variant="contained"
-                    onClick={() => { showAnswer(); }}
+                    onClick={() => {
+                      showAnswer();
+                    }}
                   >
                     Не знаю
                   </Button>
                 </div>
-              ) }
-          </form>
-        </div>
+              )}
+            </form>
+          </div>
         )}
-        {isEndGame && <GameResults wrong={wrongAnswers} correct={correctAnswers} />}
+        {isEndGame && (
+          <GameResults wrong={wrongAnswers} correct={correctAnswers} />
+        )}
       </div>
 
       <div className="bg" />

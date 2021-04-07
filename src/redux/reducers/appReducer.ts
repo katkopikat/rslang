@@ -1,4 +1,4 @@
-import { SET_WORDS, SET_IS_LEVEL } from "../types";
+import { SET_WORDS, SET_IS_LEVEL } from '../types';
 
 interface IAction {
   type: string;
@@ -11,7 +11,7 @@ const initialState = {
   isLevel: true,
 };
 
-export const appReducer = (state = initialState, action: IAction) => {
+const appReducer = (state = initialState, action: IAction) => {
   switch (action.type) {
     case SET_WORDS:
       return {
@@ -19,10 +19,14 @@ export const appReducer = (state = initialState, action: IAction) => {
         words: action.payload,
       };
     case SET_IS_LEVEL:
-      return { ...state,
-        isLevel: action.value };
+      return {
+        ...state,
+        isLevel: action.value,
+      };
 
     default:
       return state;
   }
 };
+
+export default appReducer;

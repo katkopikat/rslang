@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Card, Typography } from '@material-ui/core';
 import { IWord } from '../../../interfaces';
 import shuffleArray from '../../../helpers/shuffleArray';
+import StartScreen from '../Components/GameStartScreen/StartScreen';
 
 import './Sprint.scss';
 
@@ -9,7 +10,7 @@ interface ISprint {
   wordsList: IWord[];
 }
 
-const Sprint: React.FC<ISprint> = ({ wordsList } : ISprint) => {
+const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
   const [words, setWords] = useState<IWord[]>(wordsList);
   const [currentWord, setCurrentWord] = useState<IWord>();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -18,8 +19,11 @@ const Sprint: React.FC<ISprint> = ({ wordsList } : ISprint) => {
   const [correctAnswer, setCorrectAnswers] = useState<IWord[]>([]);
   const [wrongAnswer, setWrongAnswer] = useState<IWord[]>([]);
   const [currentTranslate, setCurrentTranslate] = useState<IWord>();
+  const [isGameStart, setIsGmeStart] = useState<boolean>(false);
   const [isGameEnd, setIsGameEnd] = useState<boolean>(false);
-  const [isCurrentWorldCorrect, setIsCurrentWorldCorrect] = useState<boolean>(false);
+  const [isCurrentWorldCorrect, setIsCurrentWorldCorrect] = useState<boolean>(
+    false,
+  );
   const [timeLeft, setTimeLeft] = useState<number>(30);
 
   useEffect(() => {
@@ -39,7 +43,9 @@ const Sprint: React.FC<ISprint> = ({ wordsList } : ISprint) => {
 
   useEffect(() => {
     if (currentWord) {
-      const wrongWord = shuffleArray(words.filter((item) => item.id !== currentWord?.id))[0];
+      const wrongWord = shuffleArray(
+        words.filter((item) => item.id !== currentWord?.id),
+      )[0];
       setCurrentTranslate(shuffleArray([currentWord, wrongWord])[0]);
     }
   }, [currentWord, words]);
@@ -58,7 +64,9 @@ const Sprint: React.FC<ISprint> = ({ wordsList } : ISprint) => {
       timer = setTimeout(() => {
         if (timeLeft > 0) setTimeLeft(timeLeft - 1);
       }, 1000);
-    } else { setIsGameEnd(true); }
+    } else {
+      setIsGameEnd(true);
+    }
     return () => clearTimeout(timer);
   }, [isGameEnd, timeLeft]);
 
@@ -74,7 +82,7 @@ const Sprint: React.FC<ISprint> = ({ wordsList } : ISprint) => {
     }
   };
 
-  const handleKey: any = (e:React.KeyboardEvent) => {
+  const handleKey: any = (e: React.KeyboardEvent) => {
     if (!isGameEnd) {
       if (e.key === 'ArrowLeft') {
         CheckAnswer(true);
@@ -92,30 +100,39 @@ const Sprint: React.FC<ISprint> = ({ wordsList } : ISprint) => {
 
   return (
     <div className="sprint">
-      <div className="timer">{timeLeft}</div>
-      <Card className="sprint_card">
-        <Typography variant="h5" component="h2">{ currentWord?.word }</Typography>
-        <Typography>{ currentTranslate?.wordTranslate }</Typography>
-        <div className="buttons">
-          <Button
-            type="button"
-            id="0"
-            style={{ color: 'green' }}
-            variant="outlined"
-            onClick={() => (!isGameEnd ? CheckAnswer(true) : null)}
-          >
-            true
-          </Button>
-          <Button
-            type="button"
-            style={{ color: 'red' }}
-            id="1"
-            onClick={() => (!isGameEnd ? CheckAnswer(false) : null)}
-          >
-            false
-          </Button>
-        </div>
-      </Card>
+      {!isGameStart && (
+        <StartScreen game="sprint" onClick={() => setIsGmeStart(true)} />
+      )}
+      {isGameStart && (
+        <>
+          <div className="timer">{timeLeft}</div>
+          <Card className="sprint_card">
+            <Typography variant="h5" component="h2">
+              {currentWord?.word}
+            </Typography>
+            <Typography>{currentTranslate?.wordTranslate}</Typography>
+            <div className="buttons">
+              <Button
+                type="button"
+                id="0"
+                style={{ color: 'green' }}
+                variant="outlined"
+                onClick={() => (!isGameEnd ? CheckAnswer(true) : null)}
+              >
+                true
+              </Button>
+              <Button
+                type="button"
+                style={{ color: 'red' }}
+                id="1"
+                onClick={() => (!isGameEnd ? CheckAnswer(false) : null)}
+              >
+                false
+              </Button>
+            </div>
+          </Card>
+        </>
+      )}
     </div>
   );
 };

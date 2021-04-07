@@ -1,7 +1,6 @@
 import { SET_WORDS, SET_IS_LEVEL } from '../types';
-import { IWord } from '../../interfaces';
 
-export const setWords = (words: IWord[]) => ({
+export const setWords = (words: any) => ({
   type: SET_WORDS,
   payload: words,
 });
@@ -15,4 +14,4 @@ export const fetchWords = (url: string) => async (dispatch: any) => {
 export const setIsLevel = (isLevel: boolean) => ({
   type: SET_IS_LEVEL,
   value: isLevel,
-})
+});

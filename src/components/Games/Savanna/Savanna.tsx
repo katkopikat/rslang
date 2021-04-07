@@ -107,7 +107,7 @@ const Savanna = ({ wordsList }: ISavanna) => {
       setIsStart(true);
       timer = setTimeout(() => {
         setClassName(classNames.fall);
-      }, 0);
+      }, 500);
     }
     return () => clearTimeout(timer);
   }, [count]);
@@ -223,7 +223,6 @@ const Savanna = ({ wordsList }: ISavanna) => {
       {!isStart && !isLoading && (
         <StartScreen
           game="savanna"
-          isLevel
           onClick={() => {
             setIsLoading(true);
           }}

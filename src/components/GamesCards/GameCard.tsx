@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setIsLevel } from '../../redux/actions/appActions';
 
 interface IGameCard {
   linkTo: string;
@@ -11,23 +13,21 @@ interface IGameCard {
 
 const GameCards = ({
   linkTo, name, description, badge, img,
-} : IGameCard) => (
-  <Link to={linkTo}>
-    <div className="card-games">
-      <img
-        className="card-games-image"
-        src={img}
-        alt={name}
-      />
-      <div className="card-games-text">
-        <div className="card-games-badge">{badge}</div>
-        <h2>
-          {name}
-        </h2>
-        <p>{description}</p>
+}: IGameCard) => {
+  const dispatch = useDispatch();
+
+  return (
+    <Link to={linkTo}>
+      <div className="card-games" onClick={() => dispatch(setIsLevel(false))}>
+        <img className="card-games-image" src={img} alt={name} />
+        <div className="card-games-text">
+          <div className="card-games-badge">{badge}</div>
+          <h2>{name}</h2>
+          <p>{description}</p>
+        </div>
       </div>
-    </div>
-  </Link>
-);
+    </Link>
+  );
+};
 
 export default GameCards;

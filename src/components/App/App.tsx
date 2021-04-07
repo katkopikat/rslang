@@ -1,21 +1,21 @@
-import React from "react";
+import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
   RouteComponentProps,
-} from "react-router-dom";
-import Textbook from "../Textbook/Textbook";
-import WriteGame from "../Games/WriteWords/WriteWord";
-import Savanna from "../Games/Savanna/Savanna";
-import AudioCall from "../Games/AudioCall/AudioCall";
-import Sprint from "../Games/Sprint/Sprint";
-import shuffle from "../../commonFunc/shuffle";
-import { AuthProvider } from "../AuthContext";
-import MainPage from "../MainPage/MainPage";
-import LoginPage from "../Auth/LoginPage";
-import RegistrationPage from "../Auth/RegistrationPage";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/rootReducer";
+} from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import Textbook from '../Textbook/Textbook';
+import WriteGame from '../Games/WriteWords/WriteWord';
+import Savanna from '../Games/Savanna/Savanna';
+import AudioCall from '../Games/AudioCall/AudioCall';
+import Sprint from '../Games/Sprint/Sprint';
+import shuffle from '../../commonFunc/shuffle';
+import { AuthProvider } from '../AuthContext';
+import MainPage from '../MainPage/MainPage';
+import LoginPage from '../Auth/LoginPage';
+import RegistrationPage from '../Auth/RegistrationPage';
+import { RootState } from '../../redux/rootReducer';
 
 interface HistoryProps extends RouteComponentProps<any> {}
 

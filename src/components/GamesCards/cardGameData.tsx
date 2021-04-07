@@ -19,7 +19,7 @@ const cardGameData: IGameCard[] = [
     description: 'Напиши слово, пропущенное в предложении.',
     badge: 'Перевод',
     img: 'https://res.cloudinary.com/travel-app/image/upload/v1617123395/rslang/wr.png',
-    linkTo: '/games/writegame',
+    linkTo: '/games/oasis',
   },
   {
     name: 'Спринт',
