@@ -18,7 +18,12 @@ const GameCards = ({
 
   return (
     <Link to={linkTo}>
-      <div className="card-games" onClick={() => dispatch(setIsLevel(false))}>
+      <div
+        role="presentation"
+        className="card-games"
+        onClick={() => dispatch(setIsLevel(false))}
+        onKeyDown={() => null}
+      >
         <img className="card-games-image" src={img} alt={name} />
         <div className="card-games-text">
           <div className="card-games-badge">{badge}</div>

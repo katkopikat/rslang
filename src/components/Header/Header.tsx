@@ -9,19 +9,36 @@ const Header: React.FC = () => {
   return (
     <header className="header">
       <div className="wrapper header__wrapper">
-        <Link to="/"><span className="logo header__logo">RS LANG</span></Link>
+        <Link to="/">
+          <span className="logo header__logo">RS LANG</span>
+        </Link>
         <nav className="header__nav">
           <ul className="navigation">
-            <Link to="/textbook"><li className="navigation__item">Учебник</li></Link>
+            <Link to="/textbook">
+              <li className="navigation__item">Учебник</li>
+            </Link>
             <li className="navigation__item navigation__item_list">
               Игры
               {' '}
               <span className="material-icons arrow">expand_more</span>
-              <ul className="navigation_submenu" onClick={() => dispatch(setIsLevel(true))} onKeyDown={() => null}>
-                <Link to="/games/savanna"><li className="navigation_submenu__item item_one">Саванна</li></Link>
-                <Link to="/games/oasis"><li className="navigation_submenu__item">Оазис</li></Link>
-                <Link to="/games/sprint"><li className="navigation_submenu__item">Спринт</li></Link>
-                <Link to="/games/audiocall"><li className="navigation_submenu__item">Аудиовызов</li></Link>
+              <ul
+                role="presentation"
+                className="navigation_submenu"
+                onClick={() => dispatch(setIsLevel(true))}
+                onKeyDown={() => null}
+              >
+                <Link to="/games/savanna">
+                  <li className="navigation_submenu__item item_one">Саванна</li>
+                </Link>
+                <Link to="/games/oasis">
+                  <li className="navigation_submenu__item">Оазис</li>
+                </Link>
+                <Link to="/games/sprint">
+                  <li className="navigation_submenu__item">Спринт</li>
+                </Link>
+                <Link to="/games/audiocall">
+                  <li className="navigation_submenu__item">Аудиовызов</li>
+                </Link>
               </ul>
             </li>
             <li className="navigation__item">Статистика</li>

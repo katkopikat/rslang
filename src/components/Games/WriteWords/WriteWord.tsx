@@ -8,6 +8,7 @@ import Hints from './Hints';
 import Sentence from './Sentence';
 import GameResults from '../Components/GameResults/GameResults';
 import './WriteWord.scss';
+import '../Styles/background.scss';
 import { IWord } from '../../../interfaces';
 import initialState from '../wordInitialState';
 import StartScreen from '../Components/GameStartScreen/StartScreen';
@@ -209,9 +210,9 @@ const WriteWord: React.FC<IWriteWord> = ({ words }) => {
         )}
       </div>
 
-      <div className="bg" />
-      <div className="bg bg2" />
-      <div className="bg bg3" />
+      <div className="bg_oasis" />
+      <div className="bg_oasis bg2" />
+      <div className="bg_oasis bg3" />
     </>
   );
 };

@@ -11,7 +11,7 @@ import player from '../../../utils/AudioPlayer';
 import shuffle from '../../../helpers/shuffleArray';
 import { API_URL } from '../../../constants';
 import GameResults from '../Components/GameResults/GameResults';
-import StartPage from './StartPage';
+import StartPage from '../Components/GameStartScreen/StartScreen';
 import useStyles from './styles';
 
 enum GameState {
@@ -55,7 +55,9 @@ const AudioCall = ({ words }: IProps): JSX.Element => {
     } else answers.current.wrong.push(guessingWord);
   };
 
-  const handleStartClick = () => setGameState(GameState.Question);
+  const handleStartClick = () => {
+    setGameState(GameState.Question);
+  };
 
   const handleNextClick = () => {
     if (currentWordIndex + 1 < wordsToGuess.length) {
@@ -71,9 +73,7 @@ const AudioCall = ({ words }: IProps): JSX.Element => {
     answers.current.wrong.push(wordsToGuess[currentWordIndex]);
   };
 
-  const handleSoundClick = () => (
-    player.play(wordsToGuess[currentWordIndex].audio)
-  );
+  const handleSoundClick = () => player.play(wordsToGuess[currentWordIndex].audio);
 
   // next level
   useEffect(() => {
@@ -82,7 +82,9 @@ const AudioCall = ({ words }: IProps): JSX.Element => {
     const wrongWords = shuffle<IWord>(words)
       .filter((word) => word.id !== guessingWord.id)
       .slice(0, numWordOptions - 1);
-    setLevelWords(shuffle<IWord>([guessingWord, ...wrongWords]));
+    setLevelWords(
+      shuffle<IWord>([guessingWord, ...wrongWords]),
+    );
     player.play(guessingWord.audio);
   }, [currentWordIndex, gameState, words, wordsToGuess]);
 
@@ -121,32 +123,43 @@ const AudioCall = ({ words }: IProps): JSX.Element => {
     );
   };
 
-  const wordsChoice = () => (
-    levelWords.map((word, index) => (
-      <Grid item key={word.id}>
-        {AnswerOption(word, index)}
-      </Grid>
-    ))
-  );
+  const wordsChoice = () => levelWords.map((word, index) => (
+    <Grid item key={word.id}>
+      {AnswerOption(word, index)}
+    </Grid>
+  ));
 
   if (gameState === GameState.StartScreen) {
-    return <StartPage handleStartClick={handleStartClick} />;
+    return (
+      <Container className={classes.root} maxWidth={false}>
+        <StartPage game="audiocall" onClick={handleStartClick} />
+        <div className="bg_audiocall" />
+        <div className="bg_audiocall bg2" />
+        <div className="bg_audiocall bg3" />
+      </Container>
+    );
   }
   if (gameState === GameState.GameOver) {
     return (
       <Container className={classes.root} maxWidth={false}>
-        <GameResults wrong={answers.current.wrong} correct={answers.current.right} />
+        <GameResults
+          wrong={answers.current.wrong}
+          correct={answers.current.right}
+        />
+        <div className="bg_audiocall" />
+        <div className="bg_audiocall bg2" />
+        <div className="bg_audiocall bg3" />
       </Container>
     );
   }
 
   return (
-    <Container className={classes.root} maxWidth={false}>
-      <Grid container direction="column" className={classes.gameGrid}>
-        <Grid item container justify="center">
-          <Grid item>
-            {gameState === GameState.Answer
-              ? (
+    <>
+      <Container className={classes.root} maxWidth={false}>
+        <Grid container direction="column" className={classes.gameGrid}>
+          <Grid item container justify="center">
+            <Grid item>
+              {gameState === GameState.Answer ? (
                 <>
                   <img
                     className={classes.wordImage}
@@ -160,30 +173,40 @@ const AudioCall = ({ words }: IProps): JSX.Element => {
                     </IconButton>
                   </Typography>
                 </>
-              )
-              : (
+              ) : (
                 <IconButton onClick={handleSoundClick}>
                   <VolumeUpIcon className={classes.soundIconBig} />
                 </IconButton>
               )}
+            </Grid>
           </Grid>
-        </Grid>
-        <Grid item container justify="space-evenly" className={classes.wordChoise}>
-          {wordsChoice()}
-        </Grid>
-        <Grid item container justify="center">
-          <Grid item>
-            {gameState === GameState.Answer
-              ? (
+          <Grid
+            item
+            container
+            justify="space-evenly"
+            className={classes.wordChoise}
+          >
+            {wordsChoice()}
+          </Grid>
+          <Grid item container justify="center">
+            <Grid item>
+              {gameState === GameState.Answer ? (
                 <Button variant="contained" onClick={handleNextClick}>
                   <ArrowRightAltIcon className={classes.arrow} />
                 </Button>
-              )
-              : <Button variant="contained" onClick={handleDontKnowClick}>Не знаю</Button>}
+              ) : (
+                <Button variant="contained" onClick={handleDontKnowClick}>
+                  Не знаю
+                </Button>
+              )}
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </Container>
+      </Container>
+      <div className="bg bg_audiocall" />
+      <div className="bg bg_audiocall bg2" />
+      <div className="bg bg_audiocall bg3" />
+    </>
   );
 };
 

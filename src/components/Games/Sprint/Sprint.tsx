@@ -99,41 +99,46 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
   });
 
   return (
-    <div className="sprint">
-      {!isGameStart && (
-        <StartScreen game="sprint" onClick={() => setIsGmeStart(true)} />
-      )}
-      {isGameStart && (
-        <>
-          <div className="timer">{timeLeft}</div>
-          <Card className="sprint_card">
-            <Typography variant="h5" component="h2">
-              {currentWord?.word}
-            </Typography>
-            <Typography>{currentTranslate?.wordTranslate}</Typography>
-            <div className="buttons">
-              <Button
-                type="button"
-                id="0"
-                style={{ color: 'green' }}
-                variant="outlined"
-                onClick={() => (!isGameEnd ? CheckAnswer(true) : null)}
-              >
-                true
-              </Button>
-              <Button
-                type="button"
-                style={{ color: 'red' }}
-                id="1"
-                onClick={() => (!isGameEnd ? CheckAnswer(false) : null)}
-              >
-                false
-              </Button>
-            </div>
-          </Card>
-        </>
-      )}
-    </div>
+    <>
+      <div className="sprint">
+        {!isGameStart && (
+          <StartScreen game="sprint" onClick={() => setIsGmeStart(true)} />
+        )}
+        {isGameStart && (
+          <>
+            <div className="timer">{timeLeft}</div>
+            <Card className="sprint_card">
+              <Typography variant="h5" component="h2">
+                {currentWord?.word}
+              </Typography>
+              <Typography>{currentTranslate?.wordTranslate}</Typography>
+              <div className="buttons">
+                <Button
+                  type="button"
+                  id="0"
+                  style={{ color: 'green' }}
+                  variant="outlined"
+                  onClick={() => (!isGameEnd ? CheckAnswer(true) : null)}
+                >
+                  true
+                </Button>
+                <Button
+                  type="button"
+                  style={{ color: 'red' }}
+                  id="1"
+                  onClick={() => (!isGameEnd ? CheckAnswer(false) : null)}
+                >
+                  false
+                </Button>
+              </div>
+            </Card>
+          </>
+        )}
+      </div>
+      <div className="bg_sprint" />
+      <div className="bg_sprint bg2" />
+      <div className="bg_sprint bg3" />
+    </>
   );
 };
 

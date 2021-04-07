@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import shuffle from '../../../commonFunc/shuffle';
 import { IWord } from '../../../interfaces';
 import './Savanna.scss';
+import '../Styles/background.scss';
 import Lives from './LivesIndicator/Lives';
 import GameResults from '../Components/GameResults/GameResults';
 import initialState from '../wordInitialState';
@@ -214,60 +215,62 @@ const Savanna = ({ wordsList }: ISavanna) => {
   });
 
   return (
-    <div
-      style={{
-        backgroundPosition: `50% ${backgroundPosition}%`,
-      }}
-      className="savanna"
-    >
-      {!isStart && !isLoading && (
-        <StartScreen
-          game="savanna"
-          onClick={() => {
-            setIsLoading(true);
-          }}
-        />
-      )}
-      {isLoading && !isStart && <Loader seconds={count} />}
-      {!isEnd && isStart && (
-        <div className="savanna__wrapper">
-          {newCurrentWord && (
-            <div
-              className={`savanna__question ${className}`}
-              onTransitionEnd={() => {
-                if (className === classNames.fall && !isAnswer) {
-                  setWrongAnswer();
-                }
-              }}
-            >
-              <div className="savanna__question-word">
-                {currentWord && currentWord?.word.toLowerCase()}
+    <>
+      <div
+        className="savanna"
+      >
+        {!isStart && !isLoading && (
+          <StartScreen
+            game="savanna"
+            onClick={() => {
+              setIsLoading(true);
+            }}
+          />
+        )}
+        {isLoading && !isStart && <Loader seconds={count} />}
+        {!isEnd && isStart && (
+          <div className="savanna__wrapper">
+            {newCurrentWord && (
+              <div
+                className={`savanna__question ${className}`}
+                onTransitionEnd={() => {
+                  if (className === classNames.fall && !isAnswer) {
+                    setWrongAnswer();
+                  }
+                }}
+              >
+                <div className="savanna__question-word">
+                  {currentWord && currentWord?.word.toLowerCase()}
+                </div>
+              </div>
+            )}
+            <Lives number={LIVES} disabled={lostLivesArray} />
+            <div className="savanna__field">
+              <div className="savanna__options">
+                {translateOptions.length > 0
+                  && translateOptions.map((item: any, idx: number) => (
+                    <TranslateOption
+                      key={item.id}
+                      index={idx}
+                      word={item.wordTranslate}
+                      onClick={handleClick}
+                      id={item.id}
+                      isAnswer={showAnswer && item.id === currentWord?.id}
+                      isWrongAnswer={showAnswer && item.id === currentAnswerId}
+                      isPressed={isPressed && item.id === currentAnswerId}
+                    />
+                  ))}
               </div>
             </div>
-          )}
-          <Lives number={LIVES} disabled={lostLivesArray} />
-          <div className="savanna__field">
-            <div className="savanna__options">
-              {translateOptions.length > 0
-                && translateOptions.map((item: any, idx: number) => (
-                  <TranslateOption
-                    key={item.id}
-                    index={idx}
-                    word={item.wordTranslate}
-                    onClick={handleClick}
-                    id={item.id}
-                    isAnswer={showAnswer && item.id === currentWord?.id}
-                    isWrongAnswer={showAnswer && item.id === currentAnswerId}
-                    isPressed={isPressed && item.id === currentAnswerId}
-                  />
-                ))}
-            </div>
+            <Crystal isCorrect={isCorrect} />
           </div>
-          <Crystal isCorrect={isCorrect} />
-        </div>
-      )}
-      {isEnd && <GameResults wrong={wrongAnswers} correct={correctAnswers} />}
-    </div>
+        )}
+        {isEnd && <GameResults wrong={wrongAnswers} correct={correctAnswers} />}
+      </div>
+      <div className="bg_savanna" />
+      <div className="bg_savanna bg2" />
+      <div className="bg_savanna bg3" />
+    </>
   );
 };
 
