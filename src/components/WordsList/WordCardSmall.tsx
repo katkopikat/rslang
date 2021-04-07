@@ -14,14 +14,22 @@ interface IProps {
 
 const WordCardSmall = ({
   word, activeId, id, onClick, showTranslate,
-}: IProps) => (
-  <Paper className={activeId === id ? 'card-word active-word' : 'card-word'} onClick={onClick}>
-    <Typography variant="h5" component="h2" gutterBottom>
-      {word.word}
-    </Typography>
-    <Typography>
-      {showTranslate ? word.wordTranslate : null}
-    </Typography>
-  </Paper>
-);
+}: IProps) => {
+  // <Paper className={activeId === id ? 'card-word active-word' : 'card-word'} onClick={onClick}>
+  const classIfActive = activeId === id ? 'active-word' : '';
+  const classIfDifficult = word.userWord?.difficulty === 'difficult' ? 'difficult-word' : '';
+  return (
+    <Paper
+      className={`card-word ${classIfActive} ${classIfDifficult}`}
+      onClick={onClick}
+    >
+      <Typography variant="h5" component="h2" gutterBottom>
+        {word.word}
+      </Typography>
+      <Typography>
+        {showTranslate ? word.wordTranslate : null}
+      </Typography>
+    </Paper>
+  );
+};
 export default WordCardSmall;

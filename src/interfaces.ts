@@ -13,4 +13,8 @@ export interface IWord {
   wordTranslate: string;
   textMeaningTranslate: string;
   textExampleTranslate: string;
+  userWord?: {
+    difficulty: string;
+    optional: {};
+  };
 }

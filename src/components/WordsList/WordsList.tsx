@@ -3,14 +3,23 @@ import Grid from '@material-ui/core/Grid';
 import WordCardSmall from './WordCardSmall';
 import WordCardDetails from './WordCardDetails';
 import { IWord } from '../../interfaces';
+import { ViewMode } from '../../constants';
 
 interface IProps {
   words: IWord[];
   showBtns: boolean;
   showTranslate: boolean;
+  forceUpdate: () => void;
+  viewMode: ViewMode;
 }
 
-const WordsList = ({ words = [], showBtns, showTranslate }: IProps) => {
+const WordsList = ({
+  words = [],
+  showBtns,
+  showTranslate,
+  forceUpdate,
+  viewMode,
+}: IProps) => {
   const [activeWord, setActiveWord] = useState(words[0]);
 
   useEffect(() => setActiveWord(words[0]), [words]);
@@ -31,7 +40,13 @@ const WordsList = ({ words = [], showBtns, showTranslate }: IProps) => {
       </Grid>
       <Grid container item xs={4}>
         <Grid item xs>
-          <WordCardDetails word={activeWord} showBtns={showBtns} showTranslate={showTranslate} />
+          <WordCardDetails
+            word={activeWord}
+            showBtns={showBtns}
+            showTranslate={showTranslate}
+            forceUpdate={forceUpdate}
+            viewMode={viewMode}
+          />
         </Grid>
       </Grid>
     </Grid>
