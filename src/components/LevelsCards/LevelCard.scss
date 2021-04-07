@@ -33,9 +33,10 @@
         text-align: left;
         z-index: 2;
 
-        h2{ 
+        h2 { 
             font-family: 'Gilroy-Bold';
             font-size: 1.3rem;
+            color: #2c2647;
         }
 
         p {
@@ -47,10 +48,12 @@
     &-right {
         z-index: 2;
 
-        h2{ 
+        h2 { 
             font-family: 'Gilroy-Heavy';
             font-size: 1.5rem;
+            color: #2c2647;
         }
+
     }
 
     .circle {

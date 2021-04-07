@@ -9,9 +9,10 @@ $violet: #8A78FA;
 
 .MuiPaper-root {
     box-shadow: none !important;
+    background-color: #f3f4f8;
 }
 
-.MuiPaper-root + .card-word, #card-details {
+.MuiPaper-root.card-word, #card-details {
     color: #2c2647;
     background-color: #f3f4f8;
 }
@@ -24,6 +25,7 @@ $violet: #8A78FA;
         padding-left: 1rem;
         padding-top: 1rem;
         transition: all 0.3s;
+        background-color: #f3f4f8;
 
     &:hover {
         cursor: pointer;
@@ -35,6 +37,7 @@ $violet: #8A78FA;
         font-size: 1.3rem;
         font-family: 'Gilroy-SemiBold';
         margin-bottom: 0;
+        color: #2c2647;
     }
 
     p {

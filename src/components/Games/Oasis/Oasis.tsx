@@ -2,10 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import Letters from './Letters';
-import StatusBadge from './StatusBadge';
-import Hints from './Hints';
-import Sentence from './Sentence';
+import Letters from './Components/Letters';
+import StatusBadge from './Components/StatusBadge';
+import Hints from './Components/Hints';
+import Sentence from './Components/Sentence';
 import GameResults from '../Components/GameResults/GameResults';
 import { IWord } from '../../../interfaces';
 import initialState from '../wordInitialState';

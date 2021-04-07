@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { IWord } from '../../../interfaces';
-import { API_URL } from '../../../constants';
+import { IWord } from '../../../../interfaces';
+import { API_URL } from '../../../../constants';
 
 interface IHints {
   currentWord: IWord;

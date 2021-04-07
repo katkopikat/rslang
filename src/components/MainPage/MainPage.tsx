@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 import './MainPage.scss';
 import './BgAnimation.scss';
 
-import Header from '../Header/Header';
+import Menu from '../Menu/Menu';
 import Footer from '../Footer/Footer';
 import AdvantageCard from './Components/AdvantageCard';
 import advantages from '../../data/advantages.json';
@@ -13,7 +13,7 @@ import developers from '../../data/developers.json';
 
 const MainPage = () => (
   <div>
-    <Header />
+    <Menu />
     <section className="greeting anim">
       <div className="inner">
         <div className="wrapper greeting__wrapper">
