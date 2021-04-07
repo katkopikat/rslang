@@ -1,3 +1,5 @@
+@import '../../styles/variables';
+
 .levels-wrapper {
     display: flex;
     flex-direction: row;
@@ -33,9 +35,10 @@
         text-align: left;
         z-index: 2;
 
-        h2{ 
+        h2 { 
             font-family: 'Gilroy-Bold';
             font-size: 1.3rem;
+            color: #2c2647;
         }
 
         p {
@@ -47,10 +50,12 @@
     &-right {
         z-index: 2;
 
-        h2{ 
+        h2 { 
             font-family: 'Gilroy-Heavy';
             font-size: 1.5rem;
+            color: #2c2647;
         }
+
     }
 
     .circle {
@@ -69,37 +74,37 @@
         transition: all 0.5s;
         &:nth-child(1) {
             .circle {
-                background-color: #ffdc74;
+                background-color: $color-level-one;
             }
         }
 
         &:nth-child(2) {
             .circle {
-                background-color: #1dc4a2;
+                background-color: $color-level-two;
             }
         }
 
         &:nth-child(3) {
             .circle {
-                background-color: #5d7cfe;
+                 background-color: $color-level-three;
             }
         }
 
         &:nth-child(4) {
             .circle {
-                background-color: #cc74ff;
+                background-color: $color-level-four;
             }
         }
 
         &:nth-child(5) {
             .circle {
-                background-color: #ff7171;
+                background-color: $color-level-five;
             }
         }
 
         &:nth-child(6) {
             .circle {
-                background-color: #5155d3;
+                background-color: $color-level-six;
             }
         }
     }

@@ -1,10 +1,17 @@
 $dark-font: #2c2647;
-$yellow-btn: #ffdc74;
+$yellow-btn: #FFC53D;
 $footer: #1d1835;
 $bg-color: #f3f5f9;
 $primaryColor : #4379FF;
 $cocoBackground : #FBFCFF;
 $inactive: #d0d0d0;
+
+$header-height: 80px;
+
+.header-container {
+	height: $header-height;
+	background-color: $primaryColor;
+}
 
 body {
 background-color: bg-color;
@@ -12,6 +19,7 @@ background-color: bg-color;
 
 .main-heading {
 	display: flex;
+	// padding-top: $header-height;
 
 
 	svg {

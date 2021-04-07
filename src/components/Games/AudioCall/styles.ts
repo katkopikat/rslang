@@ -2,12 +2,12 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles(() => ({
   root: {
-    'background-image': 'linear-gradient(to right top, #2848e3, #2942e0, #2a3bdd, #2c34da, #2e2dd7, #342ad6, #3828d4, #3d25d3, #4527d3, #4c29d3, #522bd4, #582dd4)',
     height: '100vh',
     display: 'flex',
     'flex-direction': 'column',
     'align-items': 'center',
     'justify-content': 'center',
+    position: 'relative',
   },
   gameGrid: {
     maxWidth: 900,

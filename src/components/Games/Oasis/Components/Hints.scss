@@ -1,0 +1,31 @@
+.oasis__help {
+    margin-top: 3rem;
+    font-family: 'Gilroy-SemiBold';
+    font-size: 1rem;
+}
+
+.hints__wrapper {
+    display: flex;
+    margin: 1rem;
+
+    .hint__btn {
+        font-size: 0.9rem;
+        font-family: 'Gilroy-Regular';
+        color: white;
+        background-color: transparent;
+        border: none;
+        margin: 0.3rem;
+        cursor: pointer;
+        padding: 0.5rem 0.9rem;
+        border:#ffffff40 solid 2px;
+        border-radius: 35px;
+    }
+
+    .hint__btn:focus {
+        // border-radius: 35px;
+        outline: none;
+        color: orange;
+        border-color: orange;
+
+    }
+}

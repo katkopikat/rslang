@@ -1,0 +1,38 @@
+.results-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 90%;
+  margin: auto;
+
+  &__main {
+    align-items: center;
+  }
+
+  &__words {
+    align-items: flex-start;
+  }
+}
+
+.results__buttons {
+  font-family: 'Gilroy-SemiBold';
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  button {
+    font-family: 'Gilroy-Medium';
+    background-color: #FFC53D;
+    color: #2c2647;
+  }
+
+  button:hover{
+    background-color: rgb(138, 120, 250);
+  }
+}
+
+.MuiTabs-root {
+  height: 50px;
+}
+

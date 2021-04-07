@@ -1,14 +1,23 @@
 .sprint {
   width: 100%;
-  height: 90vh;
-  background-image: url('https://cdn.apkmody.io/uploads/2020/08/Spirit-Sprint-MOD-APK-gameplay.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  position: relative;
+
+  &-stat {
+    display: flex;
+    justify-content: space-around;
+    min-width: 480px;
+    flex-direction: row;
+    font-size: 2rem;
+  }
+  .MuiBadge-colorPrimary {
+    color: #fff;
+    background-color: #35c77f;
+}
   .sprint_card{
     display: flex;
     justify-content: center;

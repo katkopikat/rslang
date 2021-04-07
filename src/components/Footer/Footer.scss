@@ -1,82 +1,97 @@
-$footer: #1d1835;
+@import "../../styles/variables";
 
 .footer {
-    height: 80px;
-    background-color: $footer;
-    color: white;
+  overflow: hidden;
+  padding-top: 100px;
+  background: linear-gradient(
+    -45deg,
+    $color-primary,
+    rgb(107, 97, 220),
+    rgb(80, 71, 174),
+    $color-primary
+  );
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+
+  &__wrapper {
     display: flex;
-    justify-content: space-between;
-    padding: 0rem 3rem 1rem;
-    align-items: flex-end;
+    flex-direction: column;
+  }
 
-    .text-wrapper {
-        display: flex;
-        flex-direction: column;
+  &__top-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 3fr;
+    grid-column-gap: 20px;
+    justify-items: stretch;
+    align-items: stretch;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.17);
+    margin-bottom: 10px;
 
-
-        .git_links {
-            font-size: 0.8rem;
-
-            .git_link {
-                padding: 0 0.5rem;
-                text-decoration: none;
-                font-size: 0.8rem;
-                color: #A1A1AA;
-
-                &:hover {
-                    color: #ffb400;
-                }
-            }
-        }
-
-        .year {
-            color: #61616C;
-            font-size: 0.8rem;
-        }
+    @media (max-width: 700px) {
+      grid-template-columns: 1fr 1fr 1fr;
     }
+  }
 
-    .logo__img {
-        height: 50px;
-        width: 68px;
-        opacity: 0.5;
-        filter: invert(1);
+  &__bottom-block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
 
-        &:hover {
-            opacity: 0.8;
-       }
+    a {
+      color: #fff;
+      text-decoration: underline;
     }
+  }
 }
 
-.footer-not-found {
-    position: absolute;
-    bottom: 0;
-    width: -webkit-fill-available;
+.footer__logo {
+  margin: 0;
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+  font-family: "Gilroy-Bold";
 }
 
+.logo-container {
+  display: flex;
 
-@media (max-width: 500px) {
-    .footer {
-        .text-wrapper {
-            .git_links {
-                font-size: 0.6rem;
+  img {
+    margin-right: 12px;
+    width: 20px;
+    opacity: 0.5;
+    transition: all 0.3s ease-in-out;
+    z-index: 100;
 
-                .git_link {
-                    padding: 0 0.3rem;
-                    font-size: 0.6rem;
-            }
-
-
-        }
-
-
-        .year {
-            font-size: 0.6rem;
-        }
+    &:hover {
+      opacity: 1;
+      cursor: pointer;
     }
-
-    .logo__img {
-        height: 30px;
-        width: 55px;
-    }
+  }
 }
+
+.column {
+  display: flex;
+  flex-direction: column;
+
+  &__title {
+    font-family: "Gilroy-Bold";
+    font-size: 0.8rem;
+    margin-top: 5px;
+    margin-bottom: 20px;
+  }
+
+  &__item {
+    margin: 0;
+    margin-bottom: 20px;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.646);
+
+    &:hover {
+      color: white;
+      cursor: pointer;
+    }
+  }
 }

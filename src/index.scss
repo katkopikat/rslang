@@ -10,13 +10,29 @@ $dark-font: #2c2647;
 
 body {
   margin: 0;
-  font-family: 'Gilroy-Regular', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: white;
   overflow-x: hidden;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-family: "Gilroy-Regular", "Roboto", "Helvetica", "Arial", sans-serif;
   font-size: 10px;
+  user-select: none;
+  overflow-x: hidden;
+
+  scroll-behavior: smooth;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #e4e4e4;
+    border-radius: 0px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgb(64, 0, 142); 
+    border-radius: 6px;
+  }
 }
 
 h1 {
@@ -28,10 +44,10 @@ h1 {
 }
 
 .material-icons {
-  font-family: 'Material Icons';
+  font-family: "Material Icons";
   font-weight: normal;
   font-style: normal;
-  font-size: 24px; 
+  font-size: 24px;
   display: inline-block;
   line-height: 1;
   text-transform: none;
@@ -42,5 +58,56 @@ h1 {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: 'liga';
+  font-feature-settings: "liga";
 }
+
+.wrapper {
+  max-width: 1200px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+  padding: 0;
+  color: #2c2647;
+}
+
+img {
+  display: block;
+}
+
+a {
+  color: white;
+}
+
+.button:active,
+.button:focus {
+  outline: none;
+}
+
+.svg_main {
+  position: absolute;
+  left: 0;
+  bottom: 0%;
+  width: 100%;
+  height: 40%;
+
+  @media (max-width: 800px) {
+    height: 20%;
+  }
+}
+
+.svg_footer {
+  position: absolute;
+  top: -2%;
+  left: 0;
+  height: 50%;
+  width: 100%;
+}
+
+

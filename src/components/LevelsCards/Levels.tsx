@@ -63,7 +63,6 @@ const Levels = ({ handleGroupChange, activeGroup }: ILevelCards) => (
         abbr={level.abbr}
         level={level.group}
         activeGroup={activeGroup}
-        // onClick={() => handleGroupChange(level.group)}
         handleGroupChange={handleGroupChange}
         key={level.abbr}
       />
