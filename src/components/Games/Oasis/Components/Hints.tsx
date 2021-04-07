@@ -2,6 +2,7 @@
 import React from 'react';
 import { IWord } from '../../../../interfaces';
 import { API_URL } from '../../../../constants';
+import './Hints.scss';
 
 interface IHints {
   currentWord: IWord;
@@ -29,10 +30,10 @@ const Hints: React.FC<IHints> = ({ currentWord, setUserWord }) => {
 
   return (
     <>
-      <span className="write-game__hints"> Нужна помощь? </span>
+      <span className="oasis__help"> Нужна помощь? </span>
       <div className="hints__wrapper">
         <button
-          className="write-game__hint"
+          className="hint__btn"
           type="button"
           onClick={() => playSound(currentWord)}
         >
@@ -40,7 +41,7 @@ const Hints: React.FC<IHints> = ({ currentWord, setUserWord }) => {
         </button>
 
         <button
-          className="write-game__hint"
+          className="hint__btn"
           type="button"
           onClick={() => showWordTranslate()}
         >
@@ -48,7 +49,7 @@ const Hints: React.FC<IHints> = ({ currentWord, setUserWord }) => {
         </button>
 
         <button
-          className="write-game__hint"
+          className="hint__btn"
           type="button"
           onClick={() => showFirstLetter()}
         >
@@ -56,7 +57,7 @@ const Hints: React.FC<IHints> = ({ currentWord, setUserWord }) => {
         </button>
 
         <button
-          className="write-game__hint"
+          className="hint__btn"
           type="button"
           onClick={() => showLettersCount()}
         >

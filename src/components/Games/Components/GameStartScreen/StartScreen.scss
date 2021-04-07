@@ -1,0 +1,134 @@
+@import "../../../../styles/variables";
+
+.start-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 600px;
+  width: 90%;
+  text-align: center;
+  height: 100vh;
+  padding: 50px 0;
+
+  &_block-one {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &_block-two {
+    width: 60%;
+
+    @media (max-width: 500px) {
+      width: 90%;
+    }
+  }
+
+  &__title {
+    font-size: 4rem;
+    margin-bottom: 40px;
+    opacity: 0.8;
+    font-family: "Gilroy-Heavy";
+
+    &_two {
+      font-size: 0.8rem;
+      font-family: "Gilroy-Bold";
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+  }
+
+  &__description {
+    font-size: 1.5rem;
+
+    @media (max-width: 500px) {
+      font-size: 1.2rem;
+    }
+  }
+
+  &__button {
+    border: none;
+    background-color: $yellow-btn;
+    color: #fff;
+    font-size: 1rem;
+    font-family: "Gilroy-Bold";
+    padding: 10px 30px;
+    border-radius: 20px;
+    margin: 40px 0;
+    box-shadow: inset 0px -1px 1px rgba(255, 255, 255, 0.28),
+      inset 0px 1px 2px rgba(0, 0, 0, 0.25);
+
+    &:hover {
+      background-color: rgb(255, 193, 60);
+      cursor: pointer;
+    }
+
+    &:disabled,
+    &[disabled] {
+      background-color: #cccccc;
+      color: #666666;
+      cursor: default;
+    }
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
+  }
+}
+
+.level-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 30px;
+  font-family: "Gilroy-Heavy";
+  font-size: 1rem;
+  opacity: 0.6;
+
+  &:nth-child(1) {
+    background-color: $color-level-one;
+  }
+  &:nth-child(2) {
+    background-color: $color-level-two;
+  }
+  &:nth-child(3) {
+    background-color: $color-level-three;
+  }
+  &:nth-child(4) {
+    background-color: $color-level-four;
+  }
+  &:nth-child(5) {
+    background-color: $color-level-five;
+  }
+  &:nth-child(6) {
+    background-color: $color-level-six;
+  }
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+    opacity: 1;
+  }
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}
+
+.active {
+  opacity: 1;
+}
+
+.level-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}

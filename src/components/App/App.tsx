@@ -1,5 +1,11 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, RouteComponentProps } from 'react-router-dom';
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  RouteComponentProps,
+} from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 import MainPage from '../MainPage/MainPage';
 import Textbook from '../Textbook/Textbook';
 import Statistic from '../Statistic/Statistic';
@@ -11,45 +17,56 @@ import Savanna from '../Games/Savanna/Savanna';
 import AudioCall from '../Games/AudioCall/AudioCall';
 import Sprint from '../Games/Sprint/Sprint';
 
-import shaffle from '../../commonFunc/shuffle';
-import { IWord } from '../../interfaces';
+import shuffle from '../../commonFunc/shuffle';
 import { AuthProvider } from '../AuthContext';
-// import Header from '../Header/Header';
-// import Footer from '../Footer/Footer';
+import { RootState } from '../../redux/rootReducer';
 
 interface HistoryProps extends RouteComponentProps<any> {}
 
 const App: React.FC = () => {
-  const [words, setWords] = useState<IWord[]>([]);
-
-  const setWordsInGames = (arr: IWord[]) => {
-    setWords(shaffle(arr));
-  };
+  const words = useSelector((state: RootState) => shuffle(state.app.words));
 
   return (
     <>
       <Router>
         <AuthProvider>
-          {/* <Header /> */}
           <Route
             path="/login"
-            render={({ history }: HistoryProps) => <LoginPage history={history} />}
+            render={({ history }: HistoryProps) => (
+              <LoginPage history={history} />
+            )}
           />
           <Route
             path="/register"
-            render={({ history }: HistoryProps) => <RegistrationPage history={history} />}
+            render={({ history }: HistoryProps) => (
+              <RegistrationPage history={history} />
+            )}
           />
-          <Route path="/" exact component={MainPage} />
-          <Route path="/textbook" render={() => <Textbook setWordsInGames={setWordsInGames} />} />
-          <Route path="/games/savanna" render={() => <Savanna wordsList={words} />} />
-          <Route path="/games/oasis" render={() => <Oasis words={words} />} />
-          <Route path="/games/sprint" render={() => <Sprint wordsList={words} />} />
-          <Route path="/games/audiocall" render={() => <AudioCall words={words} />} />
-          <Route path="/statistic" component={Statistic} />
-        </AuthProvider>
-        {/* <Footer /> */}
-      </Router>
 
+          <Route path="/" exact render={() => <MainPage />} />
+          <Route path="/textbook" render={() => <Textbook />} />
+          <Route path="/statistic" render={() => <Statistic />} />
+          <Route path="/games/main" render={() => <span> Main </span>} />
+
+          <Route
+            path="/games/savanna"
+            render={() => <Savanna wordsList={words} />}
+          />
+
+          <Route
+            path="/games/oasis"
+            render={() => <Oasis words={words} />}
+          />
+          <Route
+            path="/games/sprint"
+            render={() => <Sprint wordsList={words} />}
+          />
+          <Route
+            path="/games/audiocall"
+            render={() => <AudioCall words={words} />}
+          />
+        </AuthProvider>
+      </Router>
     </>
   );
 };

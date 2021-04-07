@@ -16,12 +16,9 @@ const Letters: React.FC<ILetterList> = ({ letterList }) => (
 
       <span
         className={letter.status}
-        // eslint-disable-next-line react/no-array-index-key
         key={`${letter.letter}${i}`}
       >
-        {' '}
         {letter.letter}
-        {' '}
       </span>
     )) }
   </div>

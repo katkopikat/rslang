@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './Footer.scss';
 import '../MainPage/BgAnimation.scss';
 
@@ -32,8 +33,13 @@ const Footer: React.FC = () => (
           </div>
           <div className="column">
             <p className="column__title">Меню</p>
-            <p className="column__item">Главная</p>
-            <p className="column__item">Учебник</p>
+            <Link to="/">
+              <p className="column__item">Главная</p>
+            </Link>
+            <Link to="/textbook">
+              <p className="column__item">Учебник</p>
+            </Link>
+
             <p className="column__item">Статистика</p>
             <p className="column__item">О разработчиках</p>
           </div>

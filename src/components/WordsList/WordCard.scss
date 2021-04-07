@@ -1,11 +1,5 @@
-$yellow-btn: #FFC53D;
+@import '../../styles/variables';
 
-$yellow: #FFC53D;
-$sky: #9CD7F9;
-$green: #4CCBB7;
-$carrot: #FF7171;
-$blue: #5D7CFD;
-$violet: #8A78FA;
 
 .MuiPaper-root {
     box-shadow: none !important;
@@ -48,39 +42,39 @@ $violet: #8A78FA;
 
 .easy1-group {
     .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word{
-        background-color: $yellow;
+        background-color: $color-level-one;
     }
 }
 
 .easy2-group {
 	.card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word{
-        background-color: $sky;
+        background-color: $color-level-two;
     }
 }
 
 .medium1-group {
     .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word {
-        background-color: $green;
+        background-color: $color-level-three;
     }
 }
 
 .medium2-group {
     .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word {
-        background-color: $carrot;
+        background-color: $color-level-four;
     }
 }
 
 .hard1-group {
     .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word  {
-        background-color: $blue;
         color: white !important;
+        background-color: $color-level-five;
     }
 }
 
 .hard2-group {
     .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word  {
-        background-color: $violet ;
-        color: white !important;
+        background-color: $color-level-six;
+        color: white !important;;
     }
 }
 

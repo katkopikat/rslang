@@ -1,3 +1,5 @@
+@import '../../styles/variables';
+
 .levels-wrapper {
     display: flex;
     flex-direction: row;
@@ -72,37 +74,37 @@
         transition: all 0.5s;
         &:nth-child(1) {
             .circle {
-                background-color: #FFC53D;
+                background-color: $color-level-one;
             }
         }
 
         &:nth-child(2) {
             .circle {
-                background-color: #9CD7F9;
+                background-color: $color-level-two;
             }
         }
 
         &:nth-child(3) {
             .circle {
-                background-color: #4CCBB7;
+                 background-color: $color-level-three;
             }
         }
 
         &:nth-child(4) {
             .circle {
-                background-color: #FF7171;
+                background-color: $color-level-four;
             }
         }
 
         &:nth-child(5) {
             .circle {
-                background-color: #5D7CFD;
+                background-color: $color-level-five;
             }
         }
 
         &:nth-child(6) {
             .circle {
-                background-color: #8A78FA;
+                background-color: $color-level-six;
             }
         }
     }
