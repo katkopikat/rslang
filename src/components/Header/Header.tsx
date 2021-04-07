@@ -26,7 +26,6 @@ const Header: React.FC = () => (
   </>
 );
 
-
 // import AccountCircle from '@material-ui/icons/AccountCircle';
 // import Avatar from '@material-ui/core/Avatar';
 // import ExitToAppIcon from '@material-ui/icons/ExitToApp';

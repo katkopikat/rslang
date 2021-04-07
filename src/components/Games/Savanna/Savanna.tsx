@@ -6,7 +6,7 @@ import '../Styles/background.scss';
 import Lives from './LivesIndicator/Lives';
 import GameResults from '../Components/GameResults/GameResults';
 import initialState from '../wordInitialState';
-import BgGradient from '../BgGradient';
+// import BgGradient from '../BgGradient';
 
 import Crystal from './Crystal/Crystal';
 import StartScreen from '../Components/GameStartScreen/StartScreen';

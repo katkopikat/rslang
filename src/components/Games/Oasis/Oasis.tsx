@@ -214,7 +214,7 @@ const Oasis: React.FC<IOasis> = ({ words }) => {
           <GameResults wrong={wrongAnswers} correct={correctAnswers} />
         )}
       </div>
-{/* 
+      {/*
       <BgGradient gameName="oasis" />  */}
 
       <div className="bg_oasis" />
