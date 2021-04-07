@@ -1,37 +1,37 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from "react";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Pagination from "@material-ui/lab/Pagination";
-import { API_URL } from "../../constants";
-import GamesCards from "../GamesCards/GamesCards";
-import Levels from "../LevelsCards/Levels";
-import Settings from "./Settings/Settings";
-import WordsList from "../WordsList/WordsList";
-import "./Textbook.scss";
-import { IWord } from "../../interfaces";
+import React, { useState, useEffect } from 'react';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
+import Pagination from '@material-ui/lab/Pagination';
+import { useDispatch, useSelector } from 'react-redux';
+import { API_URL } from '../../constants';
+import GamesCards from '../GamesCards/GamesCards';
+import Levels from '../LevelsCards/Levels';
+import Settings from './Settings/Settings';
+import WordsList from '../WordsList/WordsList';
+import './Textbook.scss';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import { fetchWords } from '../../redux/actions/appActions';
+import { RootState } from '../../redux/rootReducer';
 
-interface ITextbook {
-  setWordsInGames: (words: IWord[]) => void;
-}
+const Textbook: React.FC = () => {
+  const dispatch = useDispatch();
+  const words = useSelector((state: RootState) => state.app.words);
 
-const Textbook: React.FC<ITextbook> = ({ setWordsInGames }) => {
-  const [words, setWords] = useState([]);
   const [group, setGroup] = useState(0);
   const [page, setPage] = useState(0);
   const [wordsUrl, setWordsUrl] = useState(
-    `${API_URL}/words?group=${group}&page=${page}`
+    `${API_URL}/words?group=${group}&page=${page}`,
   );
-  const [isLoading, setisLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [showTranslate, setShowTranslate] = useState(true);
   const [showBtns, setShowBtns] = useState(true);
-  const [groupColorClass, setGroupColorClass] = useState("easy1-group");
+  const [groupColorClass, setGroupColorClass] = useState('easy1-group');
 
   useEffect(() => {
-    setPage(Number(localStorage.getItem("page")) || 0);
-    setGroup(Number(localStorage.getItem("group")) || 0);
+    setPage(Number(localStorage.getItem('page')) || 0);
+    setGroup(Number(localStorage.getItem('group')) || 0);
   }, []);
 
   useEffect(() => {
@@ -41,43 +41,37 @@ const Textbook: React.FC<ITextbook> = ({ setWordsInGames }) => {
 
   useEffect(() => {
     (async () => {
-      setisLoading(true);
-      const wordsResponce = await fetch(wordsUrl);
-      const wordsResult = await wordsResponce.json();
-      setisLoading(false);
-      setWords(wordsResult);
+      setIsLoading(true);
+      dispatch(fetchWords(wordsUrl));
+      setIsLoading(false);
     })();
   }, [wordsUrl]);
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    localStorage.setItem("page", String(page));
-    localStorage.setItem("group", String(group));
+    localStorage.setItem('page', String(page));
+    localStorage.setItem('group', String(group));
   }, [group, page]);
-
-  useEffect(() => {
-    setWordsInGames(words);
-  }, [words]);
 
   useEffect(() => {
     switch (group) {
       case 1:
-        setGroupColorClass("easy2-group");
+        setGroupColorClass('easy2-group');
         break;
       case 2:
-        setGroupColorClass("medium1-group");
+        setGroupColorClass('medium1-group');
         break;
       case 3:
-        setGroupColorClass("medium2-group");
+        setGroupColorClass('medium2-group');
         break;
       case 4:
-        setGroupColorClass("hard1-group");
+        setGroupColorClass('hard1-group');
         break;
       case 5:
-        setGroupColorClass("hard2-group");
+        setGroupColorClass('hard2-group');
         break;
       default:
-        setGroupColorClass("easy1-group");
+        setGroupColorClass('easy1-group');
         break;
     }
   }, [group]);
@@ -89,7 +83,7 @@ const Textbook: React.FC<ITextbook> = ({ setWordsInGames }) => {
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
-    value: number
+    value: number,
   ) => {
     setPage(value - 1);
   };
@@ -101,12 +95,14 @@ const Textbook: React.FC<ITextbook> = ({ setWordsInGames }) => {
       <Container>
         <div className="main-heading">
           <button type="button" className="main-heading--active">
-            {" "}
-            Учебник{" "}
+            {' '}
+            Учебник
+            {' '}
           </button>
           <button type="button" className="main-heading--unactive">
-            {" "}
-            Словарь{" "}
+            {' '}
+            Словарь
+            {' '}
           </button>
 
           <Settings
