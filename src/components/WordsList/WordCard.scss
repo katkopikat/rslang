@@ -37,6 +37,10 @@
     p {
         font-size: 1rem;
         font-family: 'Gilroy-Medium';
+        hyphens: auto;
+        -moz-hyphenate-limit-chars: 6 3 2;
+        -webkit-hyphenate-limit-chars: 6 3 2;
+        -ms-hyphenate-limit-chars: 6 3 2;
     }
 }
 

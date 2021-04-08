@@ -4,6 +4,7 @@ interface IGameCard {
   description: string;
   badge: string;
   img: string;
+  id: string;
 }
 
 const cardGameData: IGameCard[] = [
@@ -14,6 +15,7 @@ const cardGameData: IGameCard[] = [
     // img: 'https://res.cloudinary.com/travel-app/image/upload/v1617137987/rslang/catch1.png',
     img: 'https://res.cloudinary.com/travel-app/image/upload/v1617587319/rslang/33.png',
     linkTo: '/games/savanna',
+    id: 'savanna',
   },
   {
     name: 'Оазис',
@@ -22,6 +24,7 @@ const cardGameData: IGameCard[] = [
     // img: 'https://res.cloudinary.com/travel-app/image/upload/v1617123395/rslang/wr.png',
     img: 'https://res.cloudinary.com/travel-app/image/upload/v1617587319/rslang/22.png',
     linkTo: '/games/oasis',
+    id: 'oasis',
   },
   {
     name: 'Спринт',
@@ -30,6 +33,7 @@ const cardGameData: IGameCard[] = [
     // img: 'https://res.cloudinary.com/travel-app/image/upload/v1617137987/rslang/run1.png',
     img: 'https://res.cloudinary.com/travel-app/image/upload/v1617587319/rslang/111.png',
     linkTo: '/games/sprint',
+    id: 'sprint',
   },
   {
     name: 'Аудиовызов',
@@ -38,6 +42,7 @@ const cardGameData: IGameCard[] = [
     // img: 'https://res.cloudinary.com/travel-app/image/upload/v1617129730/rslang/11.png',
     img: 'https://res.cloudinary.com/travel-app/image/upload/v1617587319/rslang/44.png',
     linkTo: '/games/audiocall',
+    id: 'audiocall',
   },
 ];
 

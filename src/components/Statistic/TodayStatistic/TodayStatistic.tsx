@@ -7,14 +7,14 @@ const TodayStatistic = () => {
   const [procentCorrect, setProcentCorrect] = useState<number>(74);
 
   return (
-    <>
+    <div className="wrapper">
       <h2>cегодня:</h2>
-      <div className="statistic-today">
+      <div className="statistic__today">
         <h3> <b> {learnedWords} </b> слов изучено</h3>
         <h3> <b> {procentCorrect}% </b> правильных ответов</h3>
       </div>
       <GamesStatistic />
-    </>
+    </div>
   );
 };
 

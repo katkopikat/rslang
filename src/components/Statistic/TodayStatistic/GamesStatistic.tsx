@@ -12,6 +12,7 @@ const GamesStatistic = () => (
           longestCorrectSer={13}
           name={game.name}
           key={game.name}
+          id={game.id}
         />
       ))}
     </div>

@@ -8,10 +8,11 @@ interface IGameStatisticCard {
   procentCorrectAnsw: number;
   longestCorrectSer: number;
   name: string;
+  id: string;
 }
 
 const GameStatisticCard = ({
-  learnedWords, procentCorrectAnsw, longestCorrectSer, name,
+  learnedWords, procentCorrectAnsw, longestCorrectSer, name, id,
 } : IGameStatisticCard) => (
   <div className="game-statistic-card">
     <h2>
@@ -29,7 +30,18 @@ const GameStatisticCard = ({
       <DoneAllIcon />
       {`Самая длинная серия правильных ответов: ${longestCorrectSer}.`}
     </h3>
-    <div className="circle" />
+    {/* <div className="circle" /> */}
+    <svg
+      className={`card__wave--${id}`}
+      viewBox="0 0 500 150"
+      preserveAspectRatio="none"
+      // style={{ height: '20%', width: '100%', transform: 'rotate(180deg)' }}
+    >
+      <path
+        d="M0.00,49.99 C300.45,252.92 271.49,-49.99 500.00,49.99 L500.00,0.00 L0.00,0.00 Z"
+        style={{ stroke: 'none', fill: '#bbb' }}
+      />
+    </svg>
   </div>
 );
 
