@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
   Button,
   Card,
-  Typography,
   Badge,
 } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
@@ -145,8 +144,8 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
             <div className="timer">{`time: ${timeLeft}`}</div>
           </div>
           <Card className="sprint_card">
-            <Typography variant="h5" component="h2">{ currentWord?.word }</Typography>
-            <Typography>{ currentTranslate?.wordTranslate }</Typography>
+            <h2>{ currentWord?.word }</h2>
+            <h3>{ currentTranslate?.wordTranslate }</h3>
             <div className="buttons">
               <Button
                 type="button"
