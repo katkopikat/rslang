@@ -5,6 +5,13 @@
     &__wrapper {
         background-color: $color-light-m;
         position: relative;
+
+        h1 {
+            text-align: center;
+            z-index: 1;
+            position: relative;
+            margin-bottom: 3rem;
+        }
     }
 
     &__wave--top {
@@ -13,6 +20,10 @@
             left: 0;
             height: 25%;
             width: 100%;
+
+        path {
+            fill: #fff;
+        }
             
     }
         
@@ -20,7 +31,15 @@
             position: absolute;
             bottom: -2%;
             left: 0;
-          }
+            height: 20%;
+            width: 100%;
+            transform: rotate(180deg);
+
+            path {
+                fill: #fff;
+            }
+              
+         }
 
     &__today {
         color: #2c2647;
@@ -53,6 +72,10 @@
         }
     
     }
+
+    path {
+        stroke: none;
+    }
 }
 
 
@@ -70,10 +93,78 @@
     }
 }
 
-.charts-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.charts {
+
+    &__wrapper {
+        position: relative;
+        background-color: #524cb7;
+
+        h1 {
+            color: white;
+            margin-bottom: 1rem;
+            font-family: 'Gilroy-Bold';
+        }
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 6rem 2rem;
+        margin: 0 auto;
+    
+        // canvas {
+        //     padding: 2rem 1rem;
+        // }
+    }
+
+    &__wave--top {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 10%;
+        width: 100%;
+
+        path {
+            fill: #fff;
+        }
+    }
+    
+    &__wave--bottom {
+        position: absolute;
+        bottom: -2%;
+        left: 0;
+        height: 20%;
+        width: 100%; 
+        transform: rotate(180deg);
+
+        path {
+            fill: #fff;
+        }
+    }
+
+    &__switch {
+        font-size: 0.8rem;
+        margin-bottom: 3rem;
+        
+        .switch__label {
+            opacity: 0.8;
+        }
+
+        .switch__label:hover {
+            opacity: 1;
+            cursor: pointer;
+        }
+
+        .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
+            background-color: #8b86e2;
+        }
+
+        .MuiSwitch-colorSecondary.Mui-checked {
+            color: #4ccbb7;
+        }
+    }
+
 }
 
 .games-statistic-wrapper {
@@ -115,13 +206,57 @@
         margin-right: 0.5rem;
     }
 
-    .card__wave--oasis {
-        height: 66%;
-        width: 150%;
-        position: absolute;
-        top: 0%;
-        left: -7px;
-    }
+    // .card__wave--oasis {
+    //     height: 55%;
+    //     width: 138%;
+    //     position: absolute;
+    //     top: 0;
+    //     left: -5px;
+
+    //     path {
+    //         stroke: none;
+    //         fill: $color-level-one;
+    //     }
+    // }
+
+    // .card__wave--savanna {
+    //     height: 66%;
+    //     width: 244%;
+    //     position: absolute;
+    //     top: 0%;
+    //     left: -207px;
+
+    //     path {
+    //         stroke: none;
+    //         fill: $color-level-three;
+    //     }
+    // }
+
+    // .card__wave--sprint {
+    //     height: 51%;
+    //     width: 195%;
+    //     position: absolute;
+    //     top: -1%;
+    //     left: -7px;
+
+    //     path {
+    //         stroke: none;
+    //         fill: $color-level-four;
+    //     }
+    // }
+
+    // .card__wave--audiocall {
+    //     height: 75%;
+    //     width: 205%;
+    //     position: absolute;
+    //     top: -4%;
+    //     left: 0px;
+
+    //     path {
+    //         stroke: none;
+    //         fill: $color-level-six;
+    //     }
+    // }
 
 
     .circle {

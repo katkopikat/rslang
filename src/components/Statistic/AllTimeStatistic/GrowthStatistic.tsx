@@ -12,7 +12,7 @@ const GrowthStatistic = () => {
         datasets: [
           {
             minBarLength: 2,
-            label: 'Изучено слов к этому дню: ',
+            label: ' Изучено слов к этому дню ',
             data: [5, 5, 12, 12, 12, 22, 31, 50, 50, 50, 62, 70, 78],
             backgroundColor: [
               'rgba(67, 121, 255, 0.9)',
@@ -23,16 +23,20 @@ const GrowthStatistic = () => {
             borderWidth: 3,
             fill: false,
             // borderDash: [5, 5],
-            pointBackgroundColor: 'rgba(78, 87, 188, 1)',
+            pointBackgroundColor: 'rgba(255, 255, 255, 1)',
             pointRadius: 5,
             pointHoverRadius: 10,
             pointHitRadius: 30,
             pointBorderWidth: 0,
+            fontColor: '#FFF',
           },
 
         ],
       },
       options: {
+        legend: {
+          display: false,
+        },
         scales: {
           yAxes: [
             {
@@ -42,6 +46,12 @@ const GrowthStatistic = () => {
                 fontColor: 'rgba(255, 255, 255, 1)',
                 fontFamily: 'Gilroy-Regular',
               },
+
+              scaleLabel: {
+                display: true,
+                labelString: 'Кол-во слов',
+                fontColor: '#fff',
+              },
             },
           ],
           xAxes: [
@@ -49,11 +59,17 @@ const GrowthStatistic = () => {
               ticks: {
                 display: false,
               },
+
+              scaleLabel: {
+                display: true,
+                labelString: 'Период',
+                fontColor: '#fff',
+              },
             },
           ],
         },
         gridLines: {
-          color: 'rgba(255, 255, 255, 0.1)',
+          color: 'rgba(255, 255, 255, 0.5)',
         },
       },
     });

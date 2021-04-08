@@ -46,7 +46,7 @@ const App: React.FC = () => {
           <Route path="/" exact render={() => <MainPage />} />
           <Route path="/textbook" render={() => <Textbook />} />
           <Route path="/statistic" render={() => <Statistic />} />
-          <Route path="/games/main" render={() => <span> Main </span>} />
+          {/* <Route path="/games/main" render={() => <span> Main </span>} /> */}
 
           <Route
             path="/games/savanna"
