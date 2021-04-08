@@ -34,7 +34,7 @@ const Menu: React.FC = () => {
             <Link to="/statistic"><li className="navigation__item">Статистика</li></Link>
             <li className="navigation__item">О разработчиках</li>
           </ul>
-          <Link to="/login">
+          <Link to="/authorization">
             <button type="button" className="button button_bordered">
               Вход
             </button>

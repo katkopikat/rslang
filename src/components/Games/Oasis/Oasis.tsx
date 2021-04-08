@@ -49,6 +49,9 @@ const Oasis: React.FC<IOasis> = ({ words }) => {
   const [correctAnswers, setCorrectAnswers] = useState<IWord[]>([]);
   const [correctSeries, setCorrectSeries] = useState<number>(0);
 
+  const [streak, setStreak] = useState<number>(0);
+  const [maxStreak, setMaxStreak] = useState<number>(0);
+
   // answers
   const colorLetterInWrongWord = (answer: string, word: string) => {
     const letter: Array<ILetterStatus> = [];
@@ -80,11 +83,16 @@ const Oasis: React.FC<IOasis> = ({ words }) => {
       setUserWord('');
       setWrong(false);
       setCorrectAnswers([...correctAnswers, currentWord]);
+      setStreak(streak + 1);
+      if (maxStreak < streak + 1) {
+        setMaxStreak(streak + 1);
+      }
     } else {
       colorLetterInWrongWord(userAnswer, questWord);
       setUserWord('');
       setWrong(true);
       setWrongAnswers([...wrongAnswers, currentWord]);
+      setStreak(0);
     }
   };
 
@@ -134,7 +142,7 @@ const Oasis: React.FC<IOasis> = ({ words }) => {
   useEffect(() => {
     if (words.length) {
       if (currentIndex === words.length) {
-        console.log('Finish');
+        console.log(maxStreak);
         setEndGame(true);
         // checkLS();
       } else {

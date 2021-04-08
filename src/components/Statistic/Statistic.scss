@@ -10,6 +10,7 @@
             text-align: center;
             z-index: 1;
             position: relative;
+            margin-top: 2rem;
             margin-bottom: 3rem;
         }
     }
@@ -102,6 +103,7 @@
         h1 {
             color: white;
             margin-bottom: 1rem;
+            margin-top: 2rem;
             font-family: 'Gilroy-Bold';
         }
     }
@@ -112,6 +114,8 @@
         align-items: center;
         padding: 6rem 2rem;
         margin: 0 auto;
+
+        padding-bottom: 3rem;
     
         // canvas {
         //     padding: 2rem 1rem;

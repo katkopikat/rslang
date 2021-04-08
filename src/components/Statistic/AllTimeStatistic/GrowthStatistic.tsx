@@ -3,7 +3,7 @@ import { Chart } from 'chart.js';
 
 const GrowthStatistic = () => {
   const createChart = () => {
-    const chartContainer = document.querySelector('.growth-container');
+    const chartContainer = document.querySelector('.growth-container') as HTMLCanvasElement;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const lineChart = new Chart(chartContainer, {
       type: 'line',
@@ -51,6 +51,8 @@ const GrowthStatistic = () => {
                 display: true,
                 labelString: 'Кол-во слов',
                 fontColor: '#fff',
+                fontFamily: 'Gilroy-Regular',
+                fontSize: 14,
               },
             },
           ],
@@ -62,8 +64,10 @@ const GrowthStatistic = () => {
 
               scaleLabel: {
                 display: true,
-                labelString: 'Период',
+                labelString: 'Период изучения',
                 fontColor: '#fff',
+                fontFamily: 'Gilroy-Regular',
+                fontSize: 14,
               },
             },
           ],
