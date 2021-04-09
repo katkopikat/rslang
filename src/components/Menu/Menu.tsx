@@ -11,7 +11,7 @@ const Menu: React.FC = () => {
     <nav className="header">
       <div className="wrapper header__wrapper">
         <Link to="/">
-          <span className="logo header__logo">Ulearning</span>
+          <span className="logo header__logo">Ulearning.</span>
         </Link>
         <nav className="header__nav">
           <ul className="navigation">

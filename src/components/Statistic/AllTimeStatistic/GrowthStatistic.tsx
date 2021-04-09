@@ -51,7 +51,7 @@ const GrowthStatistic = () => {
               ticks: {
                 beginAtZero: true,
                 fontSize: 10,
-                fontColor: 'rgba(255, 255, 255, 0.1)',
+                fontColor: 'rgba(255, 255, 255, 1)',
                 fontFamily: 'Gilroy-Regular',
               },
               scaleLabel: {

@@ -1,6 +1,6 @@
 import React from 'react';
 import GameCard from './GameCard';
-import cardGameData from './cardGameData';
+import cardGameData from '../../data/cardGameData';
 import './GameCards.scss';
 
 const GamesCards = () => (

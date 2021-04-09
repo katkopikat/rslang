@@ -12,6 +12,11 @@
             position: relative;
             margin-top: 2rem;
             margin-bottom: 3rem;
+            
+            @media (max-width: 800px) {
+                font-size: 1.4rem;
+                margin-bottom: 0;
+            }
         }
     }
 
@@ -49,6 +54,10 @@
         margin-bottom: 2rem;
         position: relative;
 
+        // @media (max-width: 800px) {
+        //     margin: 0 1rem;
+        // }
+
         h3 {
             font-size: 1.2rem;
             padding: 0.3rem 0;
@@ -57,6 +66,15 @@
             flex-direction: column;
             font-family: 'Gilroy-Regular';
             margin: 0 6rem;
+
+            @media (max-width: 900px) {
+                margin: 0 2.5rem;
+            }
+
+            @media (max-width: 600px) {
+                margin: 0 0.8rem;
+                font-size: 0.8rem;
+            }
         }
     
         h2 {
@@ -70,6 +88,10 @@
         b {
             font-size: 6rem;
             font-family: 'Gilroy-Heavy';
+
+            @media (max-width: 600px) {
+                font-size: 5rem;
+            }
         }
     
     }
@@ -105,6 +127,10 @@
             margin-bottom: 1rem;
             margin-top: 2rem;
             font-family: 'Gilroy-Bold';
+
+            @media (max-width: 800px) {
+                margin-bottom: 0;
+            }
         }
     }
 
@@ -114,12 +140,17 @@
         align-items: center;
         padding: 6rem 2rem;
         margin: 0 auto;
-
         padding-bottom: 3rem;
+
+        @media (max-width: 500px) {
+            padding: 1rem;
+        }
     
-        // canvas {
-        //     padding: 2rem 1rem;
-        // }
+        h1 {
+            @media (max-width: 800px) {
+                font-size: 1.2rem;
+            }
+        }
     }
 
     &__wave--top {
@@ -150,6 +181,11 @@
     &__switch {
         font-size: 0.8rem;
         margin-bottom: 3rem;
+
+        @media (max-width: 500px) {
+            font-size: 0.6rem;
+            margin-bottom: 1rem;
+        }
         
         .switch__label {
             opacity: 0.8;
@@ -158,6 +194,12 @@
         .switch__label:hover {
             opacity: 1;
             cursor: pointer;
+        }
+
+        .MuiSwitch-root {
+            @media (max-width: 500px) {
+                transform: scale(0.7);
+            }
         }
 
         .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
@@ -175,6 +217,16 @@
     display: flex;
     position: relative;
     z-index: 2;
+
+    
+    @media (max-width: 1000px) {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    @media (max-width: 700px) {
+        flex-direction: column;
+    }
 }
 
 .game-statistic-card {
@@ -186,7 +238,6 @@
     flex-direction: column;
     padding: 1rem;
     margin: 1rem;
-    // background-color: #f3f4f8;
     background-color: #ffffff;
     border-radius: 0.5rem;
     overflow: hidden;
@@ -209,59 +260,6 @@
     svg {
         margin-right: 0.5rem;
     }
-
-    // .card__wave--oasis {
-    //     height: 55%;
-    //     width: 138%;
-    //     position: absolute;
-    //     top: 0;
-    //     left: -5px;
-
-    //     path {
-    //         stroke: none;
-    //         fill: $color-level-one;
-    //     }
-    // }
-
-    // .card__wave--savanna {
-    //     height: 66%;
-    //     width: 244%;
-    //     position: absolute;
-    //     top: 0%;
-    //     left: -207px;
-
-    //     path {
-    //         stroke: none;
-    //         fill: $color-level-three;
-    //     }
-    // }
-
-    // .card__wave--sprint {
-    //     height: 51%;
-    //     width: 195%;
-    //     position: absolute;
-    //     top: -1%;
-    //     left: -7px;
-
-    //     path {
-    //         stroke: none;
-    //         fill: $color-level-four;
-    //     }
-    // }
-
-    // .card__wave--audiocall {
-    //     height: 75%;
-    //     width: 205%;
-    //     position: absolute;
-    //     top: -4%;
-    //     left: 0px;
-
-    //     path {
-    //         stroke: none;
-    //         fill: $color-level-six;
-    //     }
-    // }
-
 
     .circle {
         border-radius: 114px;

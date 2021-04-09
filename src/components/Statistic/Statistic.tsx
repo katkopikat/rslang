@@ -34,13 +34,13 @@ const Statistic = () => {
         <Grid className="charts__content">
           <h1>Статистика за всё время</h1>
           <div className="charts__switch">
-            <span className="switch__label"> Изученные слова за каждый день </span>
+            <span className="switch__label"> Кол-во изученных слов </span>
             <Switch
               checked={switchChart}
               onChange={handleChartSwitch}
               name="checkedA"
             />
-            <span className="switch__label"> Увеличение общего кол-ва изученных слов </span>
+            <span className="switch__label"> Прогресс </span>
           </div>
 
           <Grid container justify="center" spacing={1} xs={8}>

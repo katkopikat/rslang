@@ -1,22 +1,21 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect, useReducer } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Pagination from '@material-ui/lab/Pagination';
-import { useDispatch, useSelector } from 'react-redux';
 import { API_URL, ViewMode } from '../../constants';
+import { useAuth } from '../AuthContext';
+import { fetchWords } from '../../redux/actions/appActions';
+import { RootState } from '../../redux/rootReducer';
+import WordsList from '../WordsList/WordsList';
 import GamesCards from '../GamesCards/GamesCards';
 import Levels from '../LevelsCards/Levels';
 import LevelCard from '../LevelsCards/LevelCard';
 import Settings from './Settings/Settings';
-import WordsList from '../WordsList/WordsList';
-import { useAuth } from '../AuthContext';
-import './Textbook.scss';
-// import { IWord } from '../../interfaces';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import { fetchWords } from '../../redux/actions/appActions';
-import { RootState } from '../../redux/rootReducer';
+import './Textbook.scss';
 
 const wordFilters = {
   excludeDeleted: { 'userWord.optional.isDeleted': { $ne: true } },
@@ -39,6 +38,15 @@ const userWordsUrl = (userId: string, group: number, page: number, filter = {}) 
   return `${API_URL}/users/${userId}/aggregatedWords?group=${group}&filter=${filterQuery}&wordsPerPage=0`;
 };
 
+const groupClasses: Array<string> = [
+  'easy1-group',
+  'easy2-group',
+  'medium1-group',
+  'medium2-group',
+  'hard1-group',
+  'hard2-group',
+];
+
 enum DictTabs {
   Difficult = 1,
   Deleted,
@@ -52,7 +60,6 @@ const Textbook: React.FC = () => {
   const { userId, token } = useAuth();
   const [viewMode, setViewMode] = useState(ViewMode.Textbook);
   const [dictActiveTab, setDictActiveTab] = useState(DictTabs.Difficult);
-  // const [words, setWords] = useState<IWord[]>([]);
   const [group, setGroup] = useState(0);
   const [page, setPage] = useState(0);
   const [wordsUrl, setWordsUrl] = useState(
@@ -106,26 +113,7 @@ const Textbook: React.FC = () => {
   }, [group, page]);
 
   useEffect(() => {
-    switch (group) {
-      case 1:
-        setGroupColorClass('easy2-group');
-        break;
-      case 2:
-        setGroupColorClass('medium1-group');
-        break;
-      case 3:
-        setGroupColorClass('medium2-group');
-        break;
-      case 4:
-        setGroupColorClass('hard1-group');
-        break;
-      case 5:
-        setGroupColorClass('hard2-group');
-        break;
-      default:
-        setGroupColorClass('easy1-group');
-        break;
-    }
+    setGroupColorClass(groupClasses[group]);
   }, [group]);
 
   const handleGroupChange = (value: number | null) => {
@@ -141,7 +129,6 @@ const Textbook: React.FC = () => {
   };
 
   return (
-    // className="pre-publish"
     <div className="header-container">
       <Header />
       <Container>

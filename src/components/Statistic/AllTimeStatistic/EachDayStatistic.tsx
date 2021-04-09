@@ -2,25 +2,6 @@ import React, { useEffect } from 'react';
 import { Chart, ChartPoint } from 'chart.js';
 
 const EachDayStatistic = () => {
-  // const [years, setYears] = useState([]);
-  // const [choosenYear, setChoosenYear] = useState(new Date().getFullYear());
-  //   const yearsList = [];
-  //   const totalByMonth = {};
-
-  // const countYears = () => {
-  //   const yearsList = [];
-
-  //   tempData.forEach((data) => {
-  //     const year = new Date(data.date).getFullYear();
-  //     if (!yearsList.includes(year)) {
-  //       yearsList.push(year);
-  //     }
-  //   });
-
-  //   yearsList.sort((a, b) => b - a);
-
-  //   setYears(yearsList);
-  // };
 
   const generateDaysLabels = () => {
     const days: number[] = [];
@@ -125,16 +106,6 @@ const EachDayStatistic = () => {
   return (
     <>
       <canvas className="bar-container" />
-      {/* { years.map((year) => (
-        <button
-          type="button"
-          onClick={() => setChoosenYear(year)}
-        >
-          {' '}
-          {year}
-          {' '}
-        </button>
-      ))} */}
     </>
   );
 };

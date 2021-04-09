@@ -1,6 +1,6 @@
 import React from 'react';
 import GameStatisticCard from './GameStatisticCard';
-import cardGameData from '../../GamesCards/cardGameData';
+import cardGameData from '../../../data/cardGameData';
 
 const GamesStatistic = () => (
   <>

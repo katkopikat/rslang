@@ -211,16 +211,10 @@ const RegistrationPage: React.FC<ILoginPage> = ({ history, handleChangePage }: I
               >
                 Да, войти!
               </button>
-              {/* <Link to="/login">Sign in</Link> */}
             </div>
           </form>
         </div>
       </div>
-      {/* <img
-        className="auth__img"
-        src="https://res.cloudinary.com/travel-app/image/upload/v1617929190/rslang/login.png"
-        alt="rslang"
-      /> */}
     </>
   );
 };

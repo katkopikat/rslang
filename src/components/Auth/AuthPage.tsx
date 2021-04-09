@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import LoginPage from './LoginPage';
 import ILoginPage from './interface';
 import RegistrationPage from './RegistrationPage';
-import './LoginPage.scss';
 import './AuthPage.scss';
 import '../MainPage/BgAnimation.scss';
 

@@ -8,8 +8,6 @@ import {
 import { useAuth } from '../AuthContext';
 import ILoginPage from './interface';
 
-import './LoginPage.scss';
-
 const useStyles = makeStyles((theme) => ({
   form: {
     width: '100%',
@@ -133,15 +131,8 @@ const LoginPage: React.FC<ILoginPage> = ({ history, handleChangePage }: ILoginPa
               </button>
             </div>
           </form>
-
         </div>
-
       </div>
-      {/* <img
-        className="auth__img"
-        src="https://res.cloudinary.com/travel-app/image/upload/v1617929190/rslang/login.png"
-        alt="rslang"
-      /> */}
     </>
   );
 };
