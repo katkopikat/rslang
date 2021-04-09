@@ -71,7 +71,6 @@ const Savanna = ({ wordsList }: ISavanna) => {
   const [isEnd, setIsEnd] = useState<boolean>(false);
   const [isStart, setIsStart] = useState<boolean>(false);
   const [canIChoose, setCanIChoose] = useState<boolean>(true);
-  const [backgroundPosition, setBackgroundPosition] = useState(50);
 
   // for lives indicator
   const [lostLives, setLostLives] = useState<number>(0);
@@ -185,7 +184,6 @@ const Savanna = ({ wordsList }: ISavanna) => {
       if (id === currentWord?.id) {
         setCanIChoose(false);
         setIsCorrect(true);
-        setBackgroundPosition(backgroundPosition + 2);
         setCorrectAnswers([...correctAnswers, currentWord]);
         setClassName(classNames.successFall);
         setTimeout(() => {

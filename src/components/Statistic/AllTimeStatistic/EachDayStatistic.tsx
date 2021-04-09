@@ -118,6 +118,8 @@ const EachDayStatistic = () => {
 
   useEffect(() => {
     createChart();
+    // TODO
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

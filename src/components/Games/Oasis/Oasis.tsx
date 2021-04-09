@@ -17,6 +17,8 @@ import { IWord } from '../../../interfaces';
 import initialState from '../wordInitialState';
 import StartScreen from '../Components/GameStartScreen/StartScreen';
 
+import unigueElFilter from '../../../helpers/unigueElFilter';
+
 interface ILetterStatus {
   letter: string;
   status: string;
@@ -88,9 +90,9 @@ const Oasis: React.FC<IOasis> = ({ words }) => {
         setMaxStreak(streak + 1);
       }
     } else {
-      colorLetterInWrongWord(userAnswer, questWord);
       setUserWord('');
       setWrong(true);
+      colorLetterInWrongWord(userAnswer, questWord);
       setWrongAnswers([...wrongAnswers, currentWord]);
       setStreak(0);
     }
@@ -142,8 +144,8 @@ const Oasis: React.FC<IOasis> = ({ words }) => {
   useEffect(() => {
     if (words.length) {
       if (currentIndex === words.length) {
-        console.log(maxStreak);
         setEndGame(true);
+        setCorrectAnswers(unigueElFilter(correctAnswers, wrongAnswers));
         // checkLS();
       } else {
         const word = words[currentIndex];
@@ -153,7 +155,7 @@ const Oasis: React.FC<IOasis> = ({ words }) => {
         setDisableCheckBtn(false);
       }
     }
-  }, [words, currentIndex, maxStreak]);
+  }, [words, currentIndex]);
 
   return (
     <>
