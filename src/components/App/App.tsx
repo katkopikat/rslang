@@ -25,6 +25,7 @@ interface HistoryProps extends RouteComponentProps<any> {}
 
 const App: React.FC = () => {
   const words = useSelector((state: RootState) => shuffle(state.app.words));
+  const gameIndex = useSelector((state: RootState) => state.app.gameIndex);
 
   return (
     <>
@@ -50,20 +51,20 @@ const App: React.FC = () => {
 
           <Route
             path="/games/savanna"
-            render={() => <Savanna wordsList={words} />}
+            render={() => <Savanna wordsList={words} key={gameIndex} />}
           />
 
           <Route
             path="/games/oasis"
-            render={() => <Oasis words={words} />}
+            render={() => <Oasis words={words} key={gameIndex} />}
           />
           <Route
             path="/games/sprint"
-            render={() => <Sprint wordsList={words} />}
+            render={() => <Sprint wordsList={words} key={gameIndex} />}
           />
           <Route
             path="/games/audiocall"
-            render={() => <AudioCall words={words} />}
+            render={() => <AudioCall words={words} key={gameIndex} />}
           />
         </AuthProvider>
       </Router>
