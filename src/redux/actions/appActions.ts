@@ -1,5 +1,5 @@
 import request from '../../helpers/request';
-import { SET_WORDS, SET_IS_LEVEL } from '../types';
+import { SET_WORDS, SET_IS_LEVEL, SET_GAME_INDEX } from '../types';
 
 export const setWords = (words: any) => ({
   type: SET_WORDS,
@@ -15,4 +15,9 @@ export const fetchWords = (url: string, token: string = '') => async (dispatch: 
 export const setIsLevel = (isLevel: boolean) => ({
   type: SET_IS_LEVEL,
   value: isLevel,
+});
+
+export const setGameIndex = (index: number) => ({
+  type: SET_GAME_INDEX,
+  value: index,
 });

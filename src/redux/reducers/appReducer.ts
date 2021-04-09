@@ -1,4 +1,4 @@
-import { SET_WORDS, SET_IS_LEVEL } from '../types';
+import { SET_WORDS, SET_IS_LEVEL, SET_GAME_INDEX } from '../types';
 
 interface IAction {
   type: string;
@@ -9,6 +9,7 @@ interface IAction {
 const initialState = {
   words: [],
   isLevel: true,
+  gameIndex: 0,
 };
 
 const appReducer = (state = initialState, action: IAction) => {
@@ -22,6 +23,11 @@ const appReducer = (state = initialState, action: IAction) => {
       return {
         ...state,
         isLevel: action.value,
+      };
+    case SET_GAME_INDEX:
+      return {
+        ...state,
+        gameIndex: action.value,
       };
 
     default:

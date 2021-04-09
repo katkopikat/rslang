@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import SwipeableViews from 'react-swipeable-views';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -12,10 +13,12 @@ import Counting from './ResultsCounting/Counting';
 import WordList from './WordList/WordList';
 import { IWord } from '../../../../interfaces';
 import './GameResults.scss';
+import { setGameIndex } from '../../../../redux/actions/appActions';
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   root: {
     '& > *': {
+      padding: 0,
       margin: theme.spacing(0.3),
       width: '200px',
       marginBottom: '15px',
@@ -33,6 +36,8 @@ const GameResults: React.FC<IGameResults> = ({
   correct,
 }: IGameResults) => {
   const [index, setIndex] = useState<number>(0);
+
+  const dispatch = useDispatch();
 
   const handleChangeIndex = (i: number) => {
     setIndex(i);
@@ -67,8 +72,8 @@ const GameResults: React.FC<IGameResults> = ({
           textColor="primary"
           centered
         >
-          <Tab label="Результат" />
-          <Tab label="Посмотреть мои слова" />
+          <Tab className="tabs-container" label="Результат" />
+          <Tab className="tabs-container" label="Посмотреть мои слова" />
         </Tabs>
         <SwipeableViews index={index} onChangeIndex={handleChangeIndex}>
           <div className="results-wrapper results-wrapper__main">
@@ -85,15 +90,18 @@ const GameResults: React.FC<IGameResults> = ({
           </div>
         </SwipeableViews>
         <div className={`${classes.root} results__buttons`}>
-          {/* TODO Кнопка сыграть еще раз  */}
-          <Button variant="contained" color="primary">
+          <Button
+            className="results__buttons_new-game"
+            variant="contained"
+            color="primary"
+            onClick={() => dispatch(setGameIndex(Math.random()))}
+          >
             Сыграть еще раз
           </Button>
-          <Link to="/textbook">
-            <Button variant="contained" color="primary">
-              Перейти в учебник
-            </Button>
-          </Link>
+
+          <Button variant="contained" color="primary">
+            <Link className="button-link" to="/textbook">Перейти в учебник</Link>
+          </Button>
         </div>
       </ModalWindow>
     </div>
