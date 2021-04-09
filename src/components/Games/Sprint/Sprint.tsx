@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import {
   Button,
   Card,
-  Typography,
   Badge,
 } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import { IWord } from '../../../interfaces';
-import { createUserWord, setUserWord } from '../../../api';
+import { setUserWord } from '../../../api';
 import shuffleArray from '../../../helpers/shuffleArray';
 import StartScreen from '../Components/GameStartScreen/StartScreen';
 import GameResults from '../Components/GameResults/GameResults';
@@ -95,7 +94,6 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
           setMultiply(multiply + 1);
         } else setCurStreak(curStreak + 1);
         if (maxStreak < streak) setMaxStreak(streak + 1);
-        console.log(maxStreak);
       }
     } else {
       setCountError(countError + 1);
@@ -105,16 +103,15 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
       if (currentWord) setWrongAnswers([...wrongAnswers, currentWord]);
     }
     if (currentWord !== undefined) {
-      // const result = await
-      // createUserWord(currentWord, 'studied', 'sprint', answer === isCurrentWorldCorrect);
       const result = await setUserWord(
         currentWord,
         // 'studied',
         'sprint',
         answer === isCurrentWorldCorrect,
       );
-      console.log(result);
+      return result;
     }
+    return null;
   };
 
   const handleKey: any = (e: React.KeyboardEvent) => {
@@ -137,7 +134,7 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
     <>
       <div className="sprint">
         {!isGameStart && (<StartScreen game="sprint" onClick={() => setIsGmeStart(true)} />)}
-        {isGameStart && (
+        {isGameStart && !isGameEnd && (
         <div className="sprint-wrapper">
           <div className="sprint-stat">
             <div className="score">{`score: ${score}`}</div>
@@ -147,8 +144,8 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
             <div className="timer">{`time: ${timeLeft}`}</div>
           </div>
           <Card className="sprint_card">
-            <Typography variant="h5" component="h2">{ currentWord?.word }</Typography>
-            <Typography>{ currentTranslate?.wordTranslate }</Typography>
+            <h2>{ currentWord?.word }</h2>
+            <h3>{ currentTranslate?.wordTranslate }</h3>
             <div className="buttons">
               <Button
                 type="button"

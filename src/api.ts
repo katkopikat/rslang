@@ -1,4 +1,3 @@
-// import * as deepClone from 'rfdc';
 import request from './helpers/request';
 import { API_URL_USERS } from './constants';
 import { IWord } from './interfaces';
@@ -25,6 +24,9 @@ interface IOptionalWord {
   isDeleted: boolean;
   addTime: Date;
   allTry: number;
+  // for local statistic
+  // allGamesRight: number;
+  // allGamesWrong: number
   games: IGames;
   // games: { [key: string]: IOptionalGame };
 }
@@ -33,6 +35,8 @@ interface IWordBody {
   difficulty: string,
   optional: IOptionalWord
 }
+
+// TODO use games for auth statistic
 
 const standartBody: IWordBody = {
   difficulty: 'hard',
@@ -58,6 +62,9 @@ const standartBody: IWordBody = {
       },
     },
     allTry: 0,
+    // for local statistic
+    // allGamesRight: 0,
+    // allGamesWrong: 0,
   },
 };
 
@@ -99,23 +106,12 @@ export const createUserWord = async (
   body.difficulty = difficulty;
   const currentGame = GameNames[game as keyof typeof GameNames];
   if (isCorrect) {
-    // const currRight = standartBody.optional.games[currentGame].right;
-    // body.optional.games[currentGame].right = currRight + 1;
+    body.optional.games[currentGame].right += 1;
     body.optional.games[currentGame].right += 1;
   } else {
-    // const currWrong = standartBody.optional.games[currentGame].wrong;
-    // body.optional.games[currentGame].wrong = currWrong + 1;
     body.optional.games[currentGame].wrong += 1;
   }
   body.optional.allTry += 1;
-  // const newGame:IOptionalGame = {
-  //   right: isCorrect ? 1 : 0,
-  //   wrong: isCorrect ? 0 : 1,
-  // };
-  // console.log('curr Game', currentGame);
-
-  // // body.optional[currentGame] = newGame;
-  // body.optional.games[currentGame] = newGame;
   if (token) {
     try {
       const data = await request('POST', `${API_URL_USERS}/${userId}/words/${wordId}`, body, token);
@@ -136,20 +132,13 @@ export const updateUserWord = async (
   const userId = localStorage.getItem('userId');
   const token = localStorage.getItem('token');
   const { id: wordId } = word;
-  // const body = { ...oldBody };
   const body = deepClone(oldBody);
   const currentGame = GameNames[game as keyof typeof GameNames];
   if (isCorrect) {
-    // const currRight = oldBody.optional.games[currentGame].right;
-    // body.optional.games[currentGame].right = currRight + 1;
     body.optional.games[currentGame].right += 1;
   } else {
-    // const currWrong = oldBody.optional.games[currentGame].wrong;
-    // body.optional.games[currentGame].wrong = currWrong + 1;
     body.optional.games[currentGame].wrong += 1;
   }
-  // const currAllTry = oldBody.optional.allTry;
-  // body.optional.allTry = currAllTry + 1;
   body.optional.addTime = new Date();
   body.optional.allTry += 1;
   if (token) {
@@ -176,11 +165,6 @@ export const getUserWord = async (
     } catch (error) {
       throw new Error(error);
     }
-    // .then(async (data) => {
-    //   const result = await data;
-    //   return result;
-    // })
-    // .catch((e) => console.log(e));
   }
   return false;
 };
@@ -197,28 +181,26 @@ export const setUserWord = async (
     const getWordResult = await getUserWord(word, userId, token);
     if (typeof getWordResult !== 'boolean' && getWordResult.ok) {
       const oldResult = deepClone(await getWordResult.json());
-      console.log('b', oldResult);
       delete oldResult.id;
       delete oldResult.wordId;
-      console.log('a', oldResult);
-      // const pickedResult:IWordBody = ({difficulty, optional} = oldResult, {difficulty, optional});
+      // const pickedResult:IWordBody =
+      // ({difficulty, optional} = oldResult, {difficulty, optional});
       const data = await updateUserWord(
         word,
         // difficulty,
         game,
         isCorrect,
-        // { difficulty, optional } =
         oldResult,
       );
-      console.log('from update', data);
-    } else {
-      const data = await createUserWord(
-        word,
-        'studied',
-        game,
-        isCorrect,
-      );
-      console.log('from create', data);
+      return data;
     }
+    const data = await createUserWord(
+      word,
+      'studied',
+      game,
+      isCorrect,
+    );
+    return data;
   }
+  return null;
 };

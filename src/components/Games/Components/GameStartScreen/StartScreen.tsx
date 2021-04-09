@@ -62,9 +62,11 @@ const StartScreen = ({ game, onClick }: IStartScreen) => {
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    (async () => {
-      dispatch(fetchWords(wordsUrl));
-    })();
+    if (isLevel) {
+      (async () => {
+        dispatch(fetchWords(wordsUrl));
+      })();
+    }
   }, [wordsUrl]);
 
   const handleClick = (id: number) => {

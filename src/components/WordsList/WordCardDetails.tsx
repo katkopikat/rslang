@@ -10,7 +10,7 @@ import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import IconButton from '@material-ui/core/IconButton';
 import player from '../../utils/AudioPlayer';
 import { IWord } from '../../interfaces';
-import { API_URL } from '../../constants';
+import { API_URL, ViewMode } from '../../constants';
 import request from '../../helpers/request';
 import { useAuth } from '../AuthContext';
 
@@ -24,9 +24,17 @@ interface IProps {
   word: IWord;
   showTranslate: boolean;
   showBtns: boolean;
+  forceUpdate: () => void;
+  viewMode: ViewMode;
 }
 
-const WordCardDetails = ({ word, showTranslate, showBtns }: IProps) => {
+const WordCardDetails = ({
+  word,
+  showTranslate,
+  showBtns,
+  forceUpdate,
+  viewMode,
+}: IProps) => {
   const classes = useStyles();
   const { userId, token } = useAuth();
 
@@ -38,18 +46,29 @@ const WordCardDetails = ({ word, showTranslate, showBtns }: IProps) => {
 
   const playWordAudio = () => player.play();
 
-  const deleteUserWord = () => {
+  const deleteUserWord = async () => {
     if (!userId) return;
     const userWordsApi = `${API_URL}/users/${userId}/words/${word.id}`;
-    const wordParam = { optional: { deleted: true } };
-    request('POST', userWordsApi, wordParam, token);
+    const wordParam = { optional: { isDeleted: true } };
+    if (word.userWord) await request('PUT', userWordsApi, wordParam, token);
+    else await request('POST', userWordsApi, wordParam, token);
+    forceUpdate();
   };
 
-  const setWordDifficult = () => {
+  const setWordDifficult = async () => {
     if (!userId) return;
     const userWordsApi = `${API_URL}/users/${userId}/words/${word.id}`;
     const wordParam = { difficulty: 'difficult' };
-    request('POST', userWordsApi, wordParam, token);
+    if (word.userWord) await request('PUT', userWordsApi, wordParam, token);
+    else await request('POST', userWordsApi, wordParam, token);
+    forceUpdate();
+  };
+
+  const restoreUserWord = async () => {
+    if (!userId) return;
+    const userWordsApi = `${API_URL}/users/${userId}/words/${word.id}`;
+    await request('DELETE', userWordsApi, false, token);
+    forceUpdate();
   };
 
   if (!word) return (<></>);
@@ -68,28 +87,42 @@ const WordCardDetails = ({ word, showTranslate, showBtns }: IProps) => {
           <span className="word-transcription">{word?.transcription}</span>
           <IconButton onClick={playWordAudio}><VolumeUpIcon /></IconButton>
         </div>
-        {showBtns
-          ? (
-            <CardActions>
-              <Button
-                size="small"
-                variant="outlined"
-                id="add-in-hard"
-                onClick={setWordDifficult}
-              >
-                + в сложные слова
-              </Button>
-              <Button
-                size="small"
-                variant="outlined"
-                id="delete-word"
-                onClick={deleteUserWord}
-              >
-                удалить слово
-              </Button>
-            </CardActions>
-          )
-          : null}
+        {showBtns && viewMode === ViewMode.Textbook && (
+          <CardActions>
+            <Button
+              size="small"
+              variant="outlined"
+              id="add-in-hard"
+              className="userActionButton"
+              onClick={setWordDifficult}
+            >
+              + в сложные слова
+            </Button>
+            <Button
+              size="small"
+              variant="outlined"
+              id="delete-word"
+              className="userActionButton"
+              onClick={deleteUserWord}
+            >
+              удалить слово
+            </Button>
+          </CardActions>
+        )}
+
+        {showBtns && viewMode === ViewMode.Dictionary && (
+          <CardActions>
+            <Button
+              size="small"
+              variant="outlined"
+              id="restore-word"
+              className="userActionButton"
+              onClick={restoreUserWord}
+            >
+              Восстановить
+            </Button>
+          </CardActions>
+        )}
 
         <div className="word-description">
           <h3 className="word-subheading"> Значение </h3>

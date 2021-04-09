@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Chart } from 'chart.js';
+import { Chart, ChartPoint } from 'chart.js';
 
 const EachDayStatistic = () => {
   // const [years, setYears] = useState([]);
@@ -33,7 +33,7 @@ const EachDayStatistic = () => {
 
   const createChart = () => {
     const barContainer = document.querySelector('.bar-container') as HTMLCanvasElement;
-    
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const barChart = new Chart(barContainer, {
       type: 'bar',
@@ -43,12 +43,28 @@ const EachDayStatistic = () => {
           {
             minBarLength: 2,
             label: 'Изученные слова',
-            data: ['13', '9', '0', '10', '15', '4', '', '1', '8', '13', '9', '8', '13', '6', '8', '10', '9', '12'],
-            backgroundColor:
-             'rgba(76, 203, 183, 1)',
-            borderColor: [
-              'rgba(76, 203, 183, 1)',
-            ],
+            data: [
+              '13',
+              '9',
+              '0',
+              '10',
+              '15',
+              '4',
+              '',
+              '1',
+              '8',
+              '13',
+              '9',
+              '8',
+              '13',
+              '6',
+              '8',
+              '10',
+              '9',
+              '12',
+            ] as ChartPoint[],
+            backgroundColor: 'rgba(76, 203, 183, 1)',
+            borderColor: ['rgba(76, 203, 183, 1)'],
             borderWidth: 1,
           },
         ],
@@ -92,15 +108,17 @@ const EachDayStatistic = () => {
             },
           ],
         },
-        gridLines: {
-          color: 'rgba(255, 255, 255, 0.5)',
-        },
+        // gridLines: {
+        //   color: 'rgba(255, 255, 255, 0.5)',
+        // },
       },
 
     });
   };
 
-  useEffect(() => { createChart(); }, []);
+  useEffect(() => {
+    createChart();
+  }, []);
 
   return (
     <>

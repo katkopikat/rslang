@@ -4,7 +4,7 @@ interface IBgGradient {
   gameName: string;
 }
 
-const BgGradient: React.FC<IBgGradient> = ({ gameName }) => (
+const BgGradient: React.FC<IBgGradient> = ({ gameName }: IBgGradient) => (
   <>
     <div className={`bg game-bg-${gameName}`} />
     <div className="bg bg2" />

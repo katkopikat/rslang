@@ -10,7 +10,7 @@
     color: #2c2647;
     background-color: #f3f4f8;
 }
-    
+
 .card-word {
         margin: 0.5rem;
         width: 180px;
@@ -45,53 +45,53 @@
 }
 
 .easy1-group {
-    .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word{
+    .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, .userActionButton {
         background-color: $color-level-one;
     }
 }
 
 .easy2-group {
-	.card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word{
+	.card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, .userActionButton {
         background-color: $color-level-two;
     }
 }
 
 .medium1-group {
-    .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word {
+    .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, .userActionButton  {
         background-color: $color-level-three;
     }
 }
 
 .medium2-group {
-    .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word {
+    .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, .userActionButton  {
         background-color: $color-level-four;
     }
 }
 
 .hard1-group {
-    .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word  {
+    .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, .userActionButton   {
         color: white !important;
         background-color: $color-level-five;
     }
 }
 
 .hard2-group {
-    .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, #add-in-hard, #delete-word  {
+    .card-word:hover, .active-word, .MuiPaginationItem-textPrimary.Mui-selected, .userActionButton   {
         background-color: $color-level-six;
         color: white !important;;
     }
 }
 
 #card-details {
-    border-top-left-radius: 11rem; 
+    border-top-left-radius: 11rem;
 
         .word {
-    
+
             &-word {
                 font-size: 2.5rem;
                 font-family: 'Gilroy-SemiBold';
             }
-    
+
             &-transcription {
                 font-size: 1.2rem;
                 font-family: 'Gilroy-Medium';
@@ -116,7 +116,7 @@
 
                 p {
                     margin-bottom: 0.6rem;
-                } 
+                }
             }
         }
 
@@ -136,11 +136,19 @@
         .word-image {
                 height: 200px;
                 border-bottom-right-radius: 11rem;
-                border-top-left-radius: 11rem; 
+                border-top-left-radius: 11rem;
         }
 
         .MuiPaper-root {
             border-top-left-radius: 11rem !important;
         }
-            
+
+}
+
+.difficult-word:after {
+    content: 'СЛОЖНА';
+    color: red;
+    position: relative;
+    top: -55px;
+    left: 110px;
 }
