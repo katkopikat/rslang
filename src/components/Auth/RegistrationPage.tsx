@@ -3,7 +3,6 @@ import {
   Button,
   makeStyles,
   TextField,
-  Typography,
   Fab,
   Popover,
 } from '@material-ui/core';
@@ -13,12 +12,6 @@ import { useAuth } from '../AuthContext';
 import ILoginPage from './interface';
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    margin: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
   form: {
     width: '100%',
     marginTop: theme.spacing(1),
@@ -30,9 +23,6 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(2, 0, 1),
     backgroundColor: theme.palette.grey[900],
     color: theme.palette.grey[50],
-  },
-  typography: {
-    padding: theme.spacing(2),
   },
 }));
 
@@ -106,25 +96,26 @@ const RegistrationPage: React.FC<ILoginPage> = ({ history, handleChangePage }: I
   return (
     <>
       <div className="auth__content">
-        <h1> Зарегистрируйся в RS Lang </h1>
+        <h1> Зарегистрируйся в Ulearning</h1>
         <p>  и изучай английский, используя все возможности приложения! </p>
         <div>
 
           <Popover
+            className="auth__popover"
             id={id}
             open={openPopover}
             anchorEl={signUpButton}
             onClose={handleClose}
             anchorOrigin={{
-              vertical: 'top',
+              vertical: 'center',
               horizontal: 'center',
             }}
             transformOrigin={{
-              vertical: 'bottom',
+              vertical: 'center',
               horizontal: 'center',
             }}
           >
-            <Typography className={classes.typography}>{errors}</Typography>
+            <p>{errors}</p>
           </Popover>
           <form
             noValidate
@@ -225,11 +216,11 @@ const RegistrationPage: React.FC<ILoginPage> = ({ history, handleChangePage }: I
           </form>
         </div>
       </div>
-      <img
+      {/* <img
         className="auth__img"
-        src="https://res.cloudinary.com/travel-app/image/upload/v1617908537/rslang/lo_r0477k.png"
+        src="https://res.cloudinary.com/travel-app/image/upload/v1617929190/rslang/login.png"
         alt="rslang"
-      />
+      /> */}
     </>
   );
 };

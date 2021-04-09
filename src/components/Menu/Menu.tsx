@@ -11,7 +11,7 @@ const Menu: React.FC = () => {
   return (
     <nav className="header">
       <div className="wrapper header__wrapper">
-        <Link to="/"><span className="logo header__logo">RS LANG</span></Link>
+        <Link to="/"><span className="logo header__logo">Ulearning</span></Link>
         <nav className="header__nav">
           <ul className="navigation">
             <Link to="/textbook"><li className="navigation__item">Учебник</li></Link>

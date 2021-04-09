@@ -150,11 +150,10 @@ const Oasis: React.FC<IOasis> = ({ words }) => {
         setUserWord('');
         setWrong(false);
         setCurrentWord(word);
-
         setDisableCheckBtn(false);
       }
     }
-  }, [words, currentIndex]);
+  }, [words, currentIndex, maxStreak]);
 
   return (
     <>

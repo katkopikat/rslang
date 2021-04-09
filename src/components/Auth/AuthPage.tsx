@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import LoginPage from './LoginPage';
 import ILoginPage from './interface';
 import RegistrationPage from './RegistrationPage';
@@ -15,9 +16,11 @@ const AuthPage: React.FC<ILoginPage> = ({ history }: ILoginPage) => {
 
   return (
     <>
+      <Link to="/"><span className="logo auth__logo">Ulearning.</span></Link>
       <section className={`auth wave-bg-${page === 'registration' ? 'registr' : 'login'} anim`}>
         <div className="inner">
-          <div className="wrapper greeting__wrapper">
+          <div className="wrapper auth__wrapper">
+
             {
             page === 'registration'
 
@@ -25,9 +28,9 @@ const AuthPage: React.FC<ILoginPage> = ({ history }: ILoginPage) => {
               : <LoginPage history={history} handleChangePage={handleChangePage} />
             }
             <img
-              className="greeting__img"
-              src=""
-              alt="login"
+              className="auth__img"
+              src="https://res.cloudinary.com/travel-app/image/upload/v1617929190/rslang/login.png"
+              alt="rslang"
             />
           </div>
           <svg
