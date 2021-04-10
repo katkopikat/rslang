@@ -6,13 +6,13 @@ const GamesStatistic = () => (
   <>
     <div className="games-statistic-wrapper">
       { cardGameData.map((game) => (
-        <GameStatisticCard
-          learnedWords={15}
-          procentCorrectAnsw={75}
-          longestCorrectSer={13}
-          name={game.name}
+        <GameStatisticCard // TODO DATA: данные по каждой игре за день
+          learnedWords={15} // кол-во изученных слов
+          procentCorrectAnsw={75} // кол-во правильных ответов
+          longestStreak={13} // длинная серия
+          name={game.name} // название игры
           key={game.name}
-          id={game.id}
+          // id={game.id}
         />
       ))}
     </div>

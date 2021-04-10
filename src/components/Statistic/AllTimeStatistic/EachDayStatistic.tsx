@@ -1,17 +1,12 @@
 import React, { useEffect } from 'react';
 import { Chart, ChartPoint } from 'chart.js';
 
-const EachDayStatistic = () => {
+interface IEachDayStatistic {
+  datesList: Array<string>;
+  wordsListByDay: Array<number>;
+}
 
-  const generateDaysLabels = () => {
-    const days: number[] = [];
-
-    for (let i = 1; i <= 31; i += 1) {
-      days.push(i);
-    }
-    return days;
-  };
-
+const EachDayStatistic = ({ datesList, wordsListByDay }: IEachDayStatistic) => {
   const createChart = () => {
     const barContainer = document.querySelector('.bar-container') as HTMLCanvasElement;
 
@@ -19,31 +14,12 @@ const EachDayStatistic = () => {
     const barChart = new Chart(barContainer, {
       type: 'bar',
       data: {
-        labels: generateDaysLabels(),
+        labels: datesList,
         datasets: [
           {
             minBarLength: 2,
             label: 'Изученные слова',
-            data: [
-              '13',
-              '9',
-              '0',
-              '10',
-              '15',
-              '4',
-              '',
-              '1',
-              '8',
-              '13',
-              '9',
-              '8',
-              '13',
-              '6',
-              '8',
-              '10',
-              '9',
-              '12',
-            ] as ChartPoint[],
+            data: wordsListByDay as ChartPoint[],
             backgroundColor: 'rgba(76, 203, 183, 1)',
             borderColor: ['rgba(76, 203, 183, 1)'],
             borderWidth: 1,
@@ -89,9 +65,6 @@ const EachDayStatistic = () => {
             },
           ],
         },
-        // gridLines: {
-        //   color: 'rgba(255, 255, 255, 0.5)',
-        // },
       },
 
     });

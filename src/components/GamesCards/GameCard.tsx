@@ -20,13 +20,13 @@ const GameCards = ({
     <Link to={linkTo}>
       <div
         role="presentation"
-        className="card-games"
+        className="card-game"
         onClick={() => dispatch(setIsLevel(false))}
         onKeyDown={() => null}
       >
-        <img className="card-games-image" src={img} alt={name} />
-        <div className="card-games-text">
-          <div className="card-games-badge">{badge}</div>
+        <img className="card-game-image" src={img} alt={name} />
+        <div className="card-game-text">
+          <div className="card-game-badge">{badge}</div>
           <h2>{name}</h2>
           <p>{description}</p>
         </div>

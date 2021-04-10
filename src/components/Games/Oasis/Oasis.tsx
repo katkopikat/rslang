@@ -1,40 +1,28 @@
-/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
 import StatusBadge from './Components/StatusBadge';
 import Hints from './Components/Hints';
 import Letters from './Components/Letters';
 import Sentence from './Components/Sentence';
-
 import GameResults from '../Components/GameResults/GameResults';
-// import BgGradient from '../BgGradient';
-import './Oasis.scss';
-
-import '../Styles/background.scss';
 import { IWord } from '../../../interfaces';
 import initialState from '../wordInitialState';
 import StartScreen from '../Components/GameStartScreen/StartScreen';
-
 import unigueElFilter from '../../../helpers/unigueElFilter';
+import './Oasis.scss';
+import '../Styles/background.scss';
 
 interface ILetterStatus {
   letter: string;
   status: string;
 }
 
-// interface IStatistic {
-//   date: Date;
-//   correct: number;
-//   correctSeries: number;
-// }
-
 interface IOasis {
-  words: IWord[];
+  wordsList: IWord[];
 }
 
-const Oasis: React.FC<IOasis> = ({ words }) => {
+const Oasis = ({ wordsList }: IOasis) => {
   const [currentWord, setCurrentWord] = useState<IWord>(initialState);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [userWord, setUserWord] = useState<string>('');
@@ -98,32 +86,6 @@ const Oasis: React.FC<IOasis> = ({ words }) => {
     }
   };
 
-  // for statistic
-  // const saveStatisticInLS = () => {
-  //   const statistic: IStatistic = {
-  //     date: new Date(),
-  //     correct: countCorrect,
-  //     correctSeries,
-  //   };
-  //   localStorage.setItem('writeWordGame', statistic);
-  // };
-
-  // const checkLS = () => {
-  //   const savedData: string | undefined = localStorage.getItem('writeWordGame');
-
-  //   if (savedData) {
-  //     const dataObj: IStatistic = JSON.parse(savedData);
-  //     if (dataObj.date.getDay() === (new Date()).getDay()) {
-  //       // ДОЛЖНЫ СЛОЖИТЬ ДАННЫЕ
-  //     } else {
-  //       saveStatisticInLS();
-  //     }
-  //   } else {
-  //     saveStatisticInLS();
-  //   }
-  // };
-
-  // handle events
   const handleFocus = () => {
     setUserWord('');
     setWrong(false);
@@ -142,20 +104,23 @@ const Oasis: React.FC<IOasis> = ({ words }) => {
   });
 
   useEffect(() => {
-    if (words.length) {
-      if (currentIndex === words.length) {
+    if (wordsList.length) {
+      if (currentIndex === wordsList.length) {
         setEndGame(true);
         setCorrectAnswers(unigueElFilter(correctAnswers, wrongAnswers));
-        // checkLS();
       } else {
-        const word = words[currentIndex];
+        const word = wordsList[currentIndex];
         setUserWord('');
         setWrong(false);
         setCurrentWord(word);
         setDisableCheckBtn(false);
       }
     }
-  }, [words, currentIndex]);
+
+  /* if correctAnswers and wrongAnswers added in the dependencies,
+  then the component is updated, although this is not necessary */
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [wordsList, currentIndex]);
 
   return (
     <>

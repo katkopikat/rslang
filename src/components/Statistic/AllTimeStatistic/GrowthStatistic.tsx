@@ -1,32 +1,24 @@
 import React, { useEffect } from 'react';
-import { Chart } from 'chart.js';
+import { Chart, ChartPoint } from 'chart.js';
 
-const GrowthStatistic = () => {
+interface IGrowthStatistic {
+  datesList: Array<string>;
+  wordsPeriodtList: Array<number>;
+}
+
+const GrowthStatistic = ({ datesList, wordsPeriodtList }: IGrowthStatistic) => {
   const createChart = () => {
     const chartContainer = document.querySelector('.growth-container') as HTMLCanvasElement;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const lineChart = new Chart(chartContainer, {
       type: 'line',
       data: {
-        labels: [
-          '31.03.2021',
-          '17.01.2021',
-          '15.12.2020',
-          '1дата1',
-          'дата1',
-          'дата1',
-          '31.03.2021',
-          '17.01.2021',
-          '15.12.2020',
-          '1дата1',
-          'дата1',
-          'дата1',
-        ],
+        labels: datesList,
         datasets: [
           {
             minBarLength: 2,
             label: ' Изучено слов к этому дню ',
-            data: [5, 5, 12, 12, 12, 22, 31, 50, 50, 50, 62, 70, 78],
+            data: wordsPeriodtList as ChartPoint[],
             backgroundColor: ['rgba(67, 121, 255, 0.9)'],
             borderColor: ['rgba(76, 203, 183, 1)'],
             borderWidth: 3,
@@ -75,20 +67,17 @@ const GrowthStatistic = () => {
                 fontColor: '#fff',
                 fontFamily: 'Gilroy-Regular',
                 fontSize: 14,
-
               },
             },
           ],
         },
-        // gridLines: {
-        //   color: 'rgba(255, 255, 255, 0.5)',
-        // },
       },
     });
   };
 
   useEffect(() => {
     createChart();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <canvas className="growth-container" />;

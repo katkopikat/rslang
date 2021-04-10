@@ -1,8 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect, useReducer } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
 import Pagination from '@material-ui/lab/Pagination';
 import { API_URL, ViewMode } from '../../constants';
 import { useAuth } from '../AuthContext';
@@ -15,6 +13,7 @@ import LevelCard from '../LevelsCards/LevelCard';
 import Settings from './Settings/Settings';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import BgWave from '../BgWave/BGWave';
 import './Textbook.scss';
 
 const wordFilters = {
@@ -129,20 +128,20 @@ const Textbook: React.FC = () => {
   };
 
   return (
-    <div className="header-container">
+    <>
       <Header />
-      <Container>
-        <div className="main-heading">
+      <div className="textbook wrapper">
+        <div className="textbook__heading">
           <button
             type="button"
-            className={`main-heading--${viewMode === ViewMode.Textbook ? 'active' : 'unactive'}`}
+            className={`textbook__heading-${viewMode === ViewMode.Textbook ? 'active' : 'unactive'}`}
             onClick={() => setViewMode(ViewMode.Textbook)}
           >
             Учебник
           </button>
           <button
             type="button"
-            className={`main-heading--${viewMode === ViewMode.Dictionary ? 'active' : 'unactive'}`}
+            className={`textbook__heading-${viewMode === ViewMode.Dictionary ? 'active' : 'unactive'}`}
             onClick={() => userId && setViewMode(ViewMode.Dictionary)}
           >
             Словарь
@@ -155,73 +154,63 @@ const Textbook: React.FC = () => {
             setShowBtns={setShowBtns}
           />
         </div>
-        <h2 className="main-subheading"> Уровни сложности слов </h2>
+        <h2 className="textbook__subheading"> Уровни сложности слов </h2>
         <Levels handleGroupChange={handleGroupChange} activeGroup={group} />
 
         {viewMode === ViewMode.Dictionary && (
-        <div className="levels-wrapper">
+        <div className="textbook__levels levels-wrapper levels-status">
           <LevelCard
             name="Сложные"
-            words=""
+            words="Слов: 17"
             abbr="C"
-            level={DictTabs.Difficult}
+            level={DictTabs.Difficult} // 1
             activeGroup={dictActiveTab}
             handleGroupChange={() => setDictActiveTab(DictTabs.Difficult)}
           />
           <LevelCard
             name="Удаленные"
-            words=""
+            words="Cлов: 134"
             abbr="У"
-            level={DictTabs.Deleted}
+            level={DictTabs.Deleted} // 2
             activeGroup={dictActiveTab}
             handleGroupChange={() => setDictActiveTab(DictTabs.Deleted)}
           />
           <LevelCard
             name="Изучаемые"
-            words=""
+            words="Слов: 68"
             abbr="И"
-            level={DictTabs.Learning}
+            level={DictTabs.Learning} // 3
             activeGroup={dictActiveTab}
             handleGroupChange={() => setDictActiveTab(DictTabs.Learning)}
           />
         </div>
         )}
 
-        <Grid
-          container
-          justify="center"
-          spacing={6}
-          className={groupColorClass}
-        >
-          <Grid item>
-            <h1>Слова</h1>
-            <WordsList
-              words={words}
-              showTranslate={showTranslate}
-              showBtns={showBtns}
-              forceUpdate={forceUpdate}
-              viewMode={viewMode}
-            />
-          </Grid>
-
-          <Grid item>
-            <Pagination
-              count={30}
-              page={page + 1}
-              onChange={handlePageChange}
-              color="primary"
-            />
-          </Grid>
-
-          <Grid item className="games-card-container">
+        <div className={groupColorClass}>
+          <h1>Слова</h1>
+          <WordsList
+            words={words}
+            showTranslate={showTranslate}
+            showBtns={showBtns}
+            forceUpdate={forceUpdate}
+            viewMode={viewMode}
+          />
+          <Pagination
+            className="textbook__pagination"
+            count={30}
+            page={page + 1}
+            onChange={handlePageChange}
+            color="primary"
+          />
+          <div className="games-card__container">
             <h1>Игры</h1>
             <h3>Закрепи новые слова при помощи игр.</h3>
             <GamesCards />
-          </Grid>
-        </Grid>
-      </Container>
+          </div>
+        </div>
+      </div>
       <Footer />
-    </div>
+    </>
   );
 };
 

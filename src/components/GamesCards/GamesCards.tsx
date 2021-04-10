@@ -5,7 +5,7 @@ import './GameCards.scss';
 
 const GamesCards = () => (
   <>
-    <div className="card-games-wrapper">
+    <div className="games-card__wrapper">
       { cardGameData.map((game) => (
         <GameCard
           linkTo={game.linkTo}

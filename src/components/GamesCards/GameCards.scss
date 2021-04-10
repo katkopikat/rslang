@@ -1,65 +1,93 @@
-.games-card-container {
-	h3 {
-		margin: 0 0 1rem 1rem;
-		font-family: 'Gilroy-SemiBold';
-        font-size: 1rem;
-    	color: #2c2647;
-	}
-}
-
-
-.card-games-wrapper {
-    display: flex;
-}
-.card-games{
-    background-color: #f3f4f8;
-    border-radius: 0.5rem;
-    width: 270px;
-    height: 325px;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column-reverse;
-    padding: 1rem;
-    margin: 1rem;
-    position: relative;
-    align-items: center;
-
-    &-image {
-        width: 400px;
-    }
-
-
-    &-text {
+.games-card {
+    &__wrapper {
         display: flex;
-        flex-direction: column;
-        padding-top: 1rem;
 
-        h2 {
-            font-size: 1.7rem;
-            font-family: 'Gilroy-Heavy';
+        justify-content: space-between;
+        gap: 1rem;
+        align-items: center;
+
+        @media (max-width: 1115px)  {
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        p {
-            font-size: 0.9rem;
-            font-family: 'Gilroy-SemiBold';
+        @media (max-width: 500px)  {
+            flex-direction: column;
         }
+
+            a {
+                text-decoration: none;
+            }
+
+            .card-game {
+                background-color: #f3f4f8;
+                border-radius: 0.5rem;
+                width: 250px;
+                height: 325px;
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column-reverse;
+                padding: 1rem;
+                position: relative;
+                align-items: center;
+                overflow: hidden;
+
+                @media (max-width: 1115px)  {
+                    width: 300px;
+                }
+
+                @media (max-width: 700px)  {
+                    width: 270px;
+                }
+        
+        
+                &:hover {
+                    border-bottom: #2c2647 solid 2px;
+                }
+        
+                
+                &-badge {
+                    background-color: #FFC53D;
+                    display: inline-block;
+                    width: fit-content;
+                    font-family: 'Open Sans';
+                    padding: 0.2rem;
+                    border-radius: 5px;
+                    color: #2c2647;
+                    
+                }
+        
+                &-image {
+                    width: 400px;
+                }
+        
+                &-text {
+                    display: flex;
+                    flex-direction: column;
+                    padding-top: 1rem;
+        
+                    h2 {
+                        font-size: 1.7rem;
+                        font-family: 'Gilroy-Heavy';
+                    }
+        
+                    p {
+                        font-size: 0.9rem;
+                        font-family: 'Gilroy-SemiBold';
+                        color: #2c2647;
+                    }
+                }
+            }
+        
     }
+
+   &__container {
+    h3 {
+        margin-bottom: 1rem;
+        font-family: 'Gilroy-SemiBold';
+        font-size: 1rem;
+        color: #2c2647;
+        }
+    } 
 }
 
-.card-games:hover {
-    border-bottom: #2c2647 solid 2px;
-}
-
-a {
-    text-decoration: none;
-    color: #2c2647;
-}
-
-.card-games-badge {
-    background-color: #FFC53D;
-    display: inline-block;
-    width: fit-content;
-    font-family: 'Open Sans';
-    padding: 0.2rem;
-    border-radius: 5px;
-}

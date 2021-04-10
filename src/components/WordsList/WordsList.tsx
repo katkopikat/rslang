@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import Grid from '@material-ui/core/Grid';
 import WordCardSmall from './WordCardSmall';
 import WordCardDetails from './WordCardDetails';
 import { IWord } from '../../interfaces';
 import { ViewMode } from '../../constants';
+
+import './WordsList.scss';
 
 interface IProps {
   words: IWord[];
@@ -25,8 +26,8 @@ const WordsList = ({
   useEffect(() => setActiveWord(words[0]), [words]);
 
   return (
-    <Grid container spacing={1}>
-      <Grid container item spacing={1} xs={8}>
+    <div className="textbook__word-container">
+      <div className="grid-container">
         { words.map((word) => (
           <WordCardSmall
             word={word}
@@ -37,19 +38,18 @@ const WordsList = ({
             showTranslate={showTranslate}
           />
         ))}
-      </Grid>
-      <Grid container item xs={4}>
-        <Grid item xs>
-          <WordCardDetails
-            word={activeWord}
-            showBtns={showBtns}
-            showTranslate={showTranslate}
-            forceUpdate={forceUpdate}
-            viewMode={viewMode}
-          />
-        </Grid>
-      </Grid>
-    </Grid>
+      </div>
+
+      <div className="card-detail">
+        <WordCardDetails
+          word={activeWord}
+          showBtns={showBtns}
+          showTranslate={showTranslate}
+          forceUpdate={forceUpdate}
+          viewMode={viewMode}
+        />
+      </div>
+    </div>
   );
 };
 

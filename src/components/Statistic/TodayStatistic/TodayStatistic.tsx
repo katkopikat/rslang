@@ -1,20 +1,19 @@
 /* eslint-disable react/jsx-one-expression-per-line */
-import React, { useState } from 'react';
+import React from 'react';
 import GamesStatistic from './GamesStatistic';
 
-const TodayStatistic = () => {
-  const [learnedWords, setLearnedWords] = useState<number>(13);
-  const [procentCorrect, setProcentCorrect] = useState<number>(74);
+interface ITodayStatistic {
+  learnedWords: number;
+  correctPercent: number;
+}
 
-  return (
-    <div className="wrapper">
-      <div className="statistic__today">
-        <h3> <b> {learnedWords} </b> слов изучено</h3>
-        <h3> <b> {procentCorrect}% </b> правильных ответов</h3>
-      </div>
-      <GamesStatistic />
+const TodayStatistic = ({ learnedWords = 0, correctPercent = 0 }:ITodayStatistic) => (
+  <div className="wrapper">
+    <div className="statistic__today">
+      <h3> <b> {learnedWords} </b> слов изучено</h3>
+      <h3> <b> {correctPercent}% </b> правильных ответов</h3>
     </div>
-  );
-};
-
+    <GamesStatistic />
+  </div>
+);
 export default TodayStatistic;
