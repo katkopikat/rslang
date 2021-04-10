@@ -109,6 +109,10 @@
 
 .charts {
 
+    &__container {
+        max-width: 65vw;
+    }
+
     &__wrapper {
         position: relative;
         background-color: #524cb7;
@@ -132,7 +136,7 @@
         padding: 6rem 2rem;
         margin: 0 auto;
         padding-bottom: 3rem;
-        margin-bottom: 3rem;
+        margin-bottom: 6rem;
 
         @media (max-width: 500px) {
             padding: 1rem;

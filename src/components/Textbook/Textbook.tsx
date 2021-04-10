@@ -13,7 +13,6 @@ import LevelCard from '../LevelsCards/LevelCard';
 import Settings from './Settings/Settings';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import BgWave from '../BgWave/BGWave';
 import './Textbook.scss';
 
 const wordFilters = {
@@ -163,7 +162,7 @@ const Textbook: React.FC = () => {
             name="Сложные"
             words="Слов: 17"
             abbr="C"
-            level={DictTabs.Difficult} // 1
+            level={DictTabs.Difficult}
             activeGroup={dictActiveTab}
             handleGroupChange={() => setDictActiveTab(DictTabs.Difficult)}
           />
@@ -171,7 +170,7 @@ const Textbook: React.FC = () => {
             name="Удаленные"
             words="Cлов: 134"
             abbr="У"
-            level={DictTabs.Deleted} // 2
+            level={DictTabs.Deleted}
             activeGroup={dictActiveTab}
             handleGroupChange={() => setDictActiveTab(DictTabs.Deleted)}
           />
@@ -179,7 +178,7 @@ const Textbook: React.FC = () => {
             name="Изучаемые"
             words="Слов: 68"
             abbr="И"
-            level={DictTabs.Learning} // 3
+            level={DictTabs.Learning}
             activeGroup={dictActiveTab}
             handleGroupChange={() => setDictActiveTab(DictTabs.Learning)}
           />

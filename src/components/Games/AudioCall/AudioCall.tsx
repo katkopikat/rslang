@@ -22,12 +22,12 @@ enum GameState {
 }
 
 interface IProps {
-  words: IWord[];
+  wordsList: IWord[];
 }
 
 const numWordOptions = 5;
 
-const AudioCall = ({ words }: IProps): JSX.Element => {
+const AudioCall = ({ wordsList }: IProps): JSX.Element => {
   const classes = useStyles();
   const [gameState, setGameState] = useState(GameState.StartScreen);
   const [wordsToGuess, setWordsToGuess] = useState([] as IWord[]);
@@ -40,10 +40,10 @@ const AudioCall = ({ words }: IProps): JSX.Element => {
 
   // new game
   useEffect(() => {
-    if (!words) return;
-    setWordsToGuess(shuffle<IWord>(words).slice(0, 10));
+    if (!wordsList) return;
+    setWordsToGuess(shuffle<IWord>(wordsList).slice(0, 10));
     answers.current = { wrong: [] as IWord[], right: [] as IWord[] };
-  }, [words]);
+  }, [wordsList]);
 
   const handleChoiceClick = (word: IWord) => {
     if (gameState !== GameState.Question) return;
@@ -79,14 +79,14 @@ const AudioCall = ({ words }: IProps): JSX.Element => {
   useEffect(() => {
     if (!wordsToGuess.length || gameState !== GameState.Question) return;
     const guessingWord = wordsToGuess[currentWordIndex];
-    const wrongWords = shuffle<IWord>(words)
+    const wrongWords = shuffle<IWord>(wordsList)
       .filter((word) => word.id !== guessingWord.id)
       .slice(0, numWordOptions - 1);
     setLevelWords(
       shuffle<IWord>([guessingWord, ...wrongWords]),
     );
     player.play(guessingWord.audio);
-  }, [currentWordIndex, gameState, words, wordsToGuess]);
+  }, [currentWordIndex, gameState, wordsList, wordsToGuess]);
 
   useEffect(() => {
     if (gameState !== GameState.Question && gameState !== GameState.Answer) return undefined;

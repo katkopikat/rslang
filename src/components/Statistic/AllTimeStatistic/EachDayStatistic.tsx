@@ -8,7 +8,7 @@ interface IEachDayStatistic {
 
 const EachDayStatistic = ({ datesList, wordsListByDay }: IEachDayStatistic) => {
   const createChart = () => {
-    const barContainer = document.querySelector('.bar-container') as HTMLCanvasElement;
+    const barContainer = document.querySelector('.charts__container') as HTMLCanvasElement;
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const barChart = new Chart(barContainer, {
@@ -78,7 +78,7 @@ const EachDayStatistic = ({ datesList, wordsListByDay }: IEachDayStatistic) => {
 
   return (
     <>
-      <canvas className="bar-container" />
+      <canvas className="charts__container" />
     </>
   );
 };

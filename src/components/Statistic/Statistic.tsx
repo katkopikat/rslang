@@ -57,12 +57,10 @@ const Statistic = () => {
             />
             <span className="switch__label"> Прогресс </span>
           </div>
-
-          <div>
-            { switchChart
-              ? <GrowthStatistic datesList={datesList} wordsPeriodtList={wordsPeriodtList} />
-              : <EachDayStatistic datesList={datesList} wordsListByDay={wordsListByDay} /> }
-            { /* TODO DATA:
+          { switchChart
+            ? <GrowthStatistic datesList={datesList} wordsPeriodtList={wordsPeriodtList} />
+            : <EachDayStatistic datesList={datesList} wordsListByDay={wordsListByDay} /> }
+          { /* TODO DATA:
                       GrowthStatistic datesList: массив дат, в которые юзер учил какие-то слова
                       GrowthStatistic wordsPeriodtList: массив чисел, каждое число
                                       - общее количество изученных слов к этому дню
@@ -71,7 +69,6 @@ const Statistic = () => {
                       EachDayStatistic wordsListByDay - массив чисел - кол-во слов,
                                        изученных в эти даты по каждому дню)
             */}
-          </div>
         </div>
         <svg
           className="charts__wave--bottom"

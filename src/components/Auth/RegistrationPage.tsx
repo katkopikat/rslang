@@ -9,7 +9,7 @@ import {
 import CheckIcon from '@material-ui/icons/Check';
 import AddIcon from '@material-ui/icons/Add';
 import { useAuth } from '../AuthContext';
-import ILoginPage from './interface';
+import { ILoginPage } from './interface';
 
 const useStyles = makeStyles((theme) => ({
   form: {

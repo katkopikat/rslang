@@ -248,11 +248,28 @@
     &-registr {
         animation: gradient-login-registr 0.5s ease;
         animation-fill-mode:forwards;
+
+        
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active
+        {
+        box-shadow: 0 0 0 30px #15b4a7 inset !important;
+        }
     }
 
     &-login {
         animation: gradient-registr-login 0.5s ease;
         animation-fill-mode:forwards;
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover, 
+        input:-webkit-autofill:focus, 
+        input:-webkit-autofill:active
+        {
+        box-shadow: 0 0 0 30px #595ed6 inset !important;
+        }
     }
 }
 

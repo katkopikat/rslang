@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import LoginPage from './LoginPage';
-import ILoginPage from './interface';
+import { IAuthPage } from './interface';
 import RegistrationPage from './RegistrationPage';
 import './AuthPage.scss';
 import '../MainPage/BgAnimation.scss';
 
-const AuthPage: React.FC<ILoginPage> = ({ history }: ILoginPage) => {
+const AuthPage: React.FC<IAuthPage> = ({ history } : IAuthPage) => {
   const [page, setPage] = useState('registration');
 
   const handleChangePage = (redirectTo: string) => {

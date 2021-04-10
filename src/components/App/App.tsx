@@ -65,7 +65,7 @@ const App: React.FC = () => {
 
           <Route
             path="/games/oasis"
-            render={() => <Oasis words={words} key={gameIndex} />}
+            render={() => <Oasis wordsList={words} key={gameIndex} />}
           />
           <Route
             path="/games/sprint"
@@ -73,7 +73,7 @@ const App: React.FC = () => {
           />
           <Route
             path="/games/audiocall"
-            render={() => <AudioCall words={words} key={gameIndex} />}
+            render={() => <AudioCall wordsList={words} key={gameIndex} />}
           />
         </AuthProvider>
       </Router>

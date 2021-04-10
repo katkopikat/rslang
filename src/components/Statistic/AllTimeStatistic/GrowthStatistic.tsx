@@ -8,7 +8,7 @@ interface IGrowthStatistic {
 
 const GrowthStatistic = ({ datesList, wordsPeriodtList }: IGrowthStatistic) => {
   const createChart = () => {
-    const chartContainer = document.querySelector('.growth-container') as HTMLCanvasElement;
+    const chartContainer = document.querySelector('.charts__container') as HTMLCanvasElement;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const lineChart = new Chart(chartContainer, {
       type: 'line',
@@ -80,7 +80,7 @@ const GrowthStatistic = ({ datesList, wordsPeriodtList }: IGrowthStatistic) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <canvas className="growth-container" />;
+  return <canvas className="charts__container" />;
 };
 
 export default GrowthStatistic;

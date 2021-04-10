@@ -6,7 +6,7 @@ import {
   Popover,
 } from '@material-ui/core';
 import { useAuth } from '../AuthContext';
-import ILoginPage from './interface';
+import { ILoginPage } from './interface';
 
 const useStyles = makeStyles((theme) => ({
   form: {
