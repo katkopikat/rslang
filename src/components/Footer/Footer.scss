@@ -46,6 +46,13 @@
       text-decoration: underline;
     }
   }
+
+  .inner {
+    path {
+      stroke: none;
+      fill: white;
+    }
+  }
 }
 
 .footer__logo {

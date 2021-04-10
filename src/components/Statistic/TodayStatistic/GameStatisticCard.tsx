@@ -6,12 +6,12 @@ import DoneAllIcon from '@material-ui/icons/DoneAll';
 interface IGameStatisticCard {
   learnedWords: number;
   procentCorrectAnsw: number;
-  longestCorrectSer: number;
+  longestStreak: number;
   name: string;
 }
 
 const GameStatisticCard = ({
-  learnedWords, procentCorrectAnsw, longestCorrectSer, name,
+  learnedWords, procentCorrectAnsw, longestStreak, name,
 } : IGameStatisticCard) => (
   <div className="game-statistic-card">
     <h2>
@@ -27,7 +27,7 @@ const GameStatisticCard = ({
     </h3>
     <h3>
       <DoneAllIcon />
-      {`Самая длинная серия правильных ответов: ${longestCorrectSer}.`}
+      {`Самая длинная серия правильных ответов: ${longestStreak}.`}
     </h3>
     <div className="circle" />
   </div>

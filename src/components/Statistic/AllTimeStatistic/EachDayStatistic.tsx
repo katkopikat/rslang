@@ -1,69 +1,25 @@
 import React, { useEffect } from 'react';
 import { Chart, ChartPoint } from 'chart.js';
 
-const EachDayStatistic = () => {
-  // const [years, setYears] = useState([]);
-  // const [choosenYear, setChoosenYear] = useState(new Date().getFullYear());
-  //   const yearsList = [];
-  //   const totalByMonth = {};
+interface IEachDayStatistic {
+  datesList: Array<string>;
+  wordsListByDay: Array<number>;
+}
 
-  // const countYears = () => {
-  //   const yearsList = [];
-
-  //   tempData.forEach((data) => {
-  //     const year = new Date(data.date).getFullYear();
-  //     if (!yearsList.includes(year)) {
-  //       yearsList.push(year);
-  //     }
-  //   });
-
-  //   yearsList.sort((a, b) => b - a);
-
-  //   setYears(yearsList);
-  // };
-
-  const generateDaysLabels = () => {
-    const days: number[] = [];
-
-    for (let i = 1; i <= 31; i += 1) {
-      days.push(i);
-    }
-    return days;
-  };
-
+const EachDayStatistic = ({ datesList, wordsListByDay }: IEachDayStatistic) => {
   const createChart = () => {
-    const barContainer = document.querySelector(
-      '.bar-container',
-    ) as HTMLCanvasElement;
+    const barContainer = document.querySelector('.bar-container') as HTMLCanvasElement;
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const barChart = new Chart(barContainer, {
       type: 'bar',
       data: {
-        labels: generateDaysLabels(),
+        labels: datesList,
         datasets: [
           {
             minBarLength: 2,
             label: 'Изученные слова',
-            data: [
-              '13',
-              '9',
-              '0',
-              '10',
-              '15',
-              '4',
-              '',
-              '1',
-              '8',
-              '13',
-              '9',
-              '8',
-              '13',
-              '6',
-              '8',
-              '10',
-              '9',
-              '12',
-            ] as ChartPoint[],
+            data: wordsListByDay as ChartPoint[],
             backgroundColor: 'rgba(76, 203, 183, 1)',
             borderColor: ['rgba(76, 203, 183, 1)'],
             borderWidth: 1,
@@ -71,7 +27,7 @@ const EachDayStatistic = () => {
         ],
       },
       options: {
-        title: {
+        legend: {
           display: false,
         },
         scales: {
@@ -80,41 +36,49 @@ const EachDayStatistic = () => {
               ticks: {
                 beginAtZero: true,
                 fontSize: 10,
+                fontColor: 'rgba(255, 255, 255, 1)',
+                fontFamily: 'Gilroy-Regular',
+              },
+
+              scaleLabel: {
+                display: true,
+                labelString: 'Кол-во слов',
+                fontColor: '#fff',
+                fontFamily: 'Gilroy-Regular',
+                fontSize: 14,
               },
             },
           ],
           xAxes: [
             {
               ticks: {
-                fontSize: 10,
+                display: false,
+              },
+
+              scaleLabel: {
+                display: true,
+                labelString: 'Период изучения',
+                fontColor: '#fff',
+                fontFamily: 'Gilroy-Regular',
+                fontSize: 14,
               },
             },
           ],
         },
-        legend: {
-          display: false,
-        },
       },
+
     });
   };
 
   useEffect(() => {
     createChart();
+    // TODO
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <>
       <canvas className="bar-container" />
-      {/* { years.map((year) => (
-        <button
-          type="button"
-          onClick={() => setChoosenYear(year)}
-        >
-          {' '}
-          {year}
-          {' '}
-        </button>
-      ))} */}
     </>
   );
 };

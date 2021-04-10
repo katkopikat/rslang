@@ -1,5 +1,4 @@
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { IWord } from '../../interfaces';
 import './WordCard.scss';
@@ -19,7 +18,7 @@ const WordCardSmall = ({
   const classIfActive = activeId === id ? 'active-word' : '';
   const classIfDifficult = word.userWord?.difficulty === 'difficult' ? 'difficult-word' : '';
   return (
-    <Paper
+    <div
       className={`card-word ${classIfActive} ${classIfDifficult}`}
       onClick={onClick}
     >
@@ -29,7 +28,7 @@ const WordCardSmall = ({
       <Typography>
         {showTranslate ? word.wordTranslate : null}
       </Typography>
-    </Paper>
+    </div>
   );
 };
 export default WordCardSmall;

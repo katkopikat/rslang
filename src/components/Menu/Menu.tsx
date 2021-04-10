@@ -8,10 +8,10 @@ const Menu: React.FC = () => {
   const dispatch = useDispatch();
 
   return (
-    <header className="header">
+    <nav className="header">
       <div className="wrapper header__wrapper">
         <Link to="/">
-          <span className="logo header__logo">RS LANG</span>
+          <span className="logo header__logo">Ulearning.</span>
         </Link>
         <nav className="header__nav">
           <ul className="navigation">
@@ -47,14 +47,14 @@ const Menu: React.FC = () => {
             </Link>
             <li className="navigation__item">О разработчиках</li>
           </ul>
-          <Link to="/login">
+          <Link to="/authorization">
             <button type="button" className="button button_bordered">
               Вход
             </button>
           </Link>
         </nav>
       </div>
-    </header>
+    </nav>
   );
 };
 // import AccountCircle from '@material-ui/icons/AccountCircle';

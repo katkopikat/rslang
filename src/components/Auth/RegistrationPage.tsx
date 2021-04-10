@@ -1,28 +1,17 @@
 import React, { useCallback, useState, useRef } from 'react';
 import {
   Button,
-  Container,
-  CssBaseline,
-  Grid,
   makeStyles,
   TextField,
-  Typography,
   Fab,
   Popover,
 } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import AddIcon from '@material-ui/icons/Add';
-import { Link } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import ILoginPage from './interface';
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    margin: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
   form: {
     width: '100%',
     marginTop: theme.spacing(1),
@@ -35,12 +24,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.grey[900],
     color: theme.palette.grey[50],
   },
-  typography: {
-    padding: theme.spacing(2),
-  },
 }));
 
-const RegistrationPage: React.FC<ILoginPage> = ({ history }: ILoginPage) => {
+const RegistrationPage: React.FC<ILoginPage> = ({ history, handleChangePage }: ILoginPage) => {
   const classes = useStyles();
   const emailInput = useRef<HTMLInputElement>(null);
   const nameInput = useRef<HTMLInputElement>(null);
@@ -108,119 +94,128 @@ const RegistrationPage: React.FC<ILoginPage> = ({ history }: ILoginPage) => {
   };
 
   return (
-    <Container
-      component="main"
-    >
-      <CssBaseline />
-      <Typography component="h1" variant="h5">
-        Зарегистрироваться
-      </Typography>
-      <Popover
-        id={id}
-        open={openPopover}
-        anchorEl={signUpButton}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-      >
-        <Typography className={classes.typography}>{errors}</Typography>
-      </Popover>
-      <form
-        noValidate
-        onSubmit={handleSubmit}
-        className={classes.form}
-      >
-        <TextField
-          inputRef={emailInput}
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="email"
-          label="email"
-          name="email"
-          autoComplete="email"
-          autoFocus
-        />
-        <TextField
-          inputRef={nameInput}
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="name"
-          label="name"
-          name="name"
-          autoComplete="name"
-          autoFocus
-        />
-        <TextField
-          inputRef={passwordInput}
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="password"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-        />
-        <TextField
-          inputRef={confirmPasswordInput}
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          name="confirm-password"
-          label="confirm password"
-          type="password"
-          id="confirm-password"
-          autoComplete="confirm-password"
-        />
-        <label htmlFor="upload-photo">
-          <input
-            onChange={uploadPhoto}
-            style={{ display: 'none' }}
-            id="upload-photo"
-            name="upload-photo"
-            type="file"
-          />
-          <Fab
-            size="small"
-            component="span"
-            aria-label="add"
-            variant="extended"
-            className={`${classes.file} avatar-btn`}
+    <>
+      <div className="auth__content">
+        <h1> Зарегистрируйся в Ulearning</h1>
+        <p>  и изучай английский, используя все возможности приложения! </p>
+        <div>
+
+          <Popover
+            className="auth__popover"
+            id={id}
+            open={openPopover}
+            anchorEl={signUpButton}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: 'center',
+              horizontal: 'center',
+            }}
+            transformOrigin={{
+              vertical: 'center',
+              horizontal: 'center',
+            }}
           >
-            {isLoaded ? <CheckIcon /> : <AddIcon />}
-            {isLoaded ? 'готово' : 'Загрузить аватар'}
-          </Fab>
-        </label>
-        <a href={isLoaded} className="img-link">
-          {isLoaded}
-        </a>
-        <Button
-          type="submit"
-          id="signUpButton"
-          fullWidth
-          variant="contained"
-          color="primary"
-          className={classes.submit}
-        >
-          Sign Up
-        </Button>
-        <Grid container>
-          <Link to="/login">Sign in</Link>
-        </Grid>
-      </form>
-    </Container>
+            <p>{errors}</p>
+          </Popover>
+          <form
+            noValidate
+            onSubmit={handleSubmit}
+            className={classes.form}
+          >
+            <TextField
+              inputRef={emailInput}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="email"
+              name="email"
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              inputRef={nameInput}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="name"
+              label="имя"
+              name="name"
+              autoComplete="name"
+              autoFocus
+            />
+            <TextField
+              inputRef={passwordInput}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="пароль"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <TextField
+              inputRef={confirmPasswordInput}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="confirm-password"
+              label="подтвердите пароль"
+              type="password"
+              id="confirm-password"
+              autoComplete="confirm-password"
+            />
+            <label htmlFor="upload-photo" className="upload-photo">
+              <input
+                onChange={uploadPhoto}
+                style={{ display: 'none' }}
+                id="upload-photo"
+                name="upload-photo"
+                type="file"
+              />
+              <Fab
+                size="small"
+                component="span"
+                aria-label="add"
+                variant="extended"
+                className={`${classes.file} avatar-btn`}
+              >
+                {isLoaded ? <CheckIcon /> : <AddIcon />}
+                {isLoaded ? 'готово' : 'Загрузить аватар'}
+              </Fab>
+            </label>
+            <a href={isLoaded} className="img-link">
+              {isLoaded}
+            </a>
+            <Button
+              type="submit"
+              id="signUpButton"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Зарегистрироваться
+            </Button>
+            <div className="auth__link">
+              <span>Уже с нами? </span>
+              <button
+                className="link-btn"
+                type="button"
+                onClick={() => handleChangePage('login')}
+              >
+                Да, войти!
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </>
   );
 };
 

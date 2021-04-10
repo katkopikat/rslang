@@ -28,24 +28,26 @@
   }
 
   &__title {
-    font-size: 4rem;
+    font-size: 3.5rem;
     margin-bottom: 40px;
-    opacity: 0.8;
     font-family: "Gilroy-Heavy";
 
     &_two {
       font-size: 0.8rem;
-      font-family: "Gilroy-Bold";
+      font-family: 'Gilroy-SemiBold';
       text-transform: uppercase;
       margin-bottom: 20px;
+      letter-spacing: 0.1rem;
     }
   }
 
   &__description {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+    font-family: 'Gilroy-Medium';
+    letter-spacing: 0.05rem;
 
     @media (max-width: 500px) {
-      font-size: 1.2rem;
+      font-size: 1rem;
     }
   }
 
@@ -87,11 +89,28 @@
   width: 40px;
   height: 40px;
   border-radius: 30px;
-  font-family: "Gilroy-Heavy";
+  font-family: 'Gilroy-Medium';
   font-size: 1rem;
-  opacity: 0.6;
+  opacity: 0.7;
+  border: #fff solid 3px;
 
-  &:nth-child(1) {
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+    opacity: 1;
+  }
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}
+
+.level-button.active {
+  border: none;
+  opacity: 1;
+  
+ &:nth-child(1) {
     background-color: $color-level-one;
   }
   &:nth-child(2) {
@@ -110,20 +129,6 @@
     background-color: $color-level-six;
   }
 
-  &:hover {
-    cursor: pointer;
-    transform: scale(1.02);
-    opacity: 1;
-  }
-
-  &:focus,
-  &:active {
-    outline: none;
-  }
-}
-
-.active {
-  opacity: 1;
 }
 
 .level-buttons {

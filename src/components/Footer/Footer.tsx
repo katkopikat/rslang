@@ -13,7 +13,6 @@ const Footer: React.FC = () => (
       >
         <path
           d="M0.00,49.99 C277.31,153.25 209.59,-22.40 500.00,49.99 L500.00,0.00 L0.00,0.00 Z"
-          style={{ stroke: 'none', fill: '#fff' }}
         />
       </svg>
 

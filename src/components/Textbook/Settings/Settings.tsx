@@ -37,6 +37,7 @@ const Settings = ({
       </Button>
 
       <Popover
+        className="settings"
         open={open}
         onClose={closeSettings}
         anchorEl={anchorEl}

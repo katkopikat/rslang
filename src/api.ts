@@ -7,7 +7,7 @@ const deepClone = require('rfdc/default');
 enum GameNames {
   sprint = 'sprint',
   savanna = 'savanna',
-  writeWord = 'writeWord',
+  oasis = 'oasis',
   audioCall = 'audioCall',
 }
 
@@ -92,9 +92,9 @@ export const createUserWord = async (
   //         standartBody.optional.games[GameNames.savanna].right,
   //         standartBody.optional.games[GameNames.savanna].wrong,
   //       },
-  //       [GameNames.writeWord]: {
-  //         standartBody.optional.games[GameNames.writeWord].right,
-  //         standartBody.optional.games[GameNames.writeWord].wrong,
+  //       [GameNames.oasis]: {
+  //         standartBody.optional.games[GameNames.oasis].right,
+  //         standartBody.optional.games[GameNames.oasis].wrong,
   //       },
   //       [GameNames.audioCall]: {
   //         standartBody.optional.games[GameNames.audioCall].right,

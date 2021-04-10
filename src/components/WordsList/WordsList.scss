@@ -1,0 +1,21 @@
+.textbook__word-container {
+    display: flex;
+    margin-top: 1rem;
+    justify-content: space-between;
+
+    @media (max-width: 500px) {
+     flex-direction: column-reverse ;
+     align-items: center;
+    }
+
+    .grid-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+
+        @media (max-width: 500px) {
+          gap: 0.3rem;
+          justify-content: center;
+        }
+    }
+}

@@ -25,6 +25,10 @@
             font-size: 0.85rem;
             flex-shrink: 0;
             background-color: #ffac0d;
+
+            @media (max-width: 500px)  {
+                width: 8rem;
+            }
         }
     
         .MuiButton-label {
@@ -35,20 +39,31 @@
             font-family: 'Gilroy-Bold';
             padding: 3rem;
             font-size: 1.5rem;
+
+            @media (max-width: 750px)  {
+                font-size: 1.3rem;
+            }
+
+            @media (max-width: 500px)  {
+                padding: 0 1.5rem 1.5rem;
+                font-size: 1.1rem;
+            }
         }
     }
 
     &__btns {
         display: flex;
         justify-content: center;
+        max-width: 90vw;
     }
 
     &__input {
         display:  flex;
         flex-direction: column;
-        
+        max-width: 95vw;
 
         .MuiFilledInput-root {
+            outline: none;
             background-color: rgb(255, 255, 255);
             cursor: pointer;
             border-radius: 4px;
@@ -56,17 +71,24 @@
         }
 
         .MuiFilledInput-root:hover, .MuiFilledInput-root:focus {
+            outline: none;
              background-color: rgb(255, 255, 255);
-             border-color: rgb(62, 252, 157);
+             border-color: #ffac0d;
              cursor: pointer;
          }
 
          .MuiFilledInput-underline {
-            border-bottom: 2px solid rgb(255, 255, 255);
+             border: none;
+            // border-bottom: #ffffff solid 4px;
         }
 
+        // .MuiFilledInput-underline:focus {
+        //     border-bottom: #ffac0d solid 4px;
+        // }
+
          .MuiFilledInput-underline:before {
-            border-bottom: 2px solid rgb(255, 255, 255);
+             border: none;
+            // border-bottom: 2px solid rgb(255, 255, 255);
         }
 
         .MuiFilledInput-input {
@@ -84,7 +106,7 @@
 
          .answer {
             text-transform: lowercase;
-            // letter-spacing: -0.14rem;
+            letter-spacing: 0.1rem;
             font-size: 1.5rem;
             font-family: 'Gilroy-Bold';
             position: absolute;
