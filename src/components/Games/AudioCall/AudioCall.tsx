@@ -13,6 +13,7 @@ import { API_URL } from '../../../constants';
 import GameResults from '../Components/GameResults/GameResults';
 import StartPage from '../Components/GameStartScreen/StartScreen';
 import useStyles from './styles';
+import Menu from '../../Menu/Menu';
 
 enum GameState {
   StartScreen,
@@ -132,6 +133,7 @@ const AudioCall = ({ words }: IProps): JSX.Element => {
   if (gameState === GameState.StartScreen) {
     return (
       <Container className={classes.root} maxWidth={false}>
+        <Menu />
         <StartPage game="audiocall" onClick={handleStartClick} />
         <div className="bg_audiocall" />
         <div className="bg_audiocall bg2" />
@@ -142,6 +144,7 @@ const AudioCall = ({ words }: IProps): JSX.Element => {
   if (gameState === GameState.GameOver) {
     return (
       <Container className={classes.root} maxWidth={false}>
+        <Menu />
         <GameResults
           wrong={answers.current.wrong}
           correct={answers.current.right}
@@ -155,6 +158,7 @@ const AudioCall = ({ words }: IProps): JSX.Element => {
 
   return (
     <>
+      <Menu />
       <Container className={classes.root} maxWidth={false}>
         <Grid container direction="column" className={classes.gameGrid}>
           <Grid item container justify="center">

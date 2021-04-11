@@ -6,7 +6,7 @@ import '../Styles/background.scss';
 import Lives from './LivesIndicator/Lives';
 import GameResults from '../Components/GameResults/GameResults';
 import initialState from '../wordInitialState';
-// import BgGradient from '../BgGradient';
+import Menu from '../../Menu/Menu';
 
 import Crystal from './Crystal/Crystal';
 import StartScreen from '../Components/GameStartScreen/StartScreen';
@@ -218,6 +218,7 @@ const Savanna = ({ wordsList }: ISavanna) => {
 
   return (
     <>
+      <Menu />
       <div
         className="savanna"
       >

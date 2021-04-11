@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  Card,
-  Badge,
-} from '@material-ui/core';
+import { Button, Card, Badge } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import { IWord } from '../../../interfaces';
 import { setUserWord } from '../../../api';
 import shuffleArray from '../../../helpers/shuffleArray';
 import StartScreen from '../Components/GameStartScreen/StartScreen';
 import GameResults from '../Components/GameResults/GameResults';
+import Menu from '../../Menu/Menu';
 import './Sprint.scss';
 
 interface ISprint {
@@ -87,7 +84,7 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
       setCurrentIndex(currentIndex + 1);
       if (currentWord) {
         setCorrectAnswers([...correctAnswers, currentWord]);
-        setScore(score + (multiply * 10));
+        setScore(score + multiply * 10);
         setStreak(streak + 1);
         if (curStreak === 3) {
           setCurStreak(0);
@@ -132,47 +129,52 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
 
   return (
     <>
+      <Menu />
       <div className="sprint">
-        {!isGameStart && (<StartScreen game="sprint" onClick={() => setIsGmeStart(true)} />)}
-        {isGameStart && !isGameEnd && (
-        <div className="sprint-wrapper">
-          <div className="sprint-stat">
-            <div className="score">{`score: ${score}`}</div>
-            <Badge badgeContent={curStreak} color="primary">
-              <CheckIcon />
-            </Badge>
-            <div className="timer">{`time: ${timeLeft}`}</div>
-          </div>
-          <Card className="sprint_card">
-            <h2>{ currentWord?.word }</h2>
-            <h3>{ currentTranslate?.wordTranslate }</h3>
-            <div className="buttons">
-              <Button
-                type="button"
-                id="0"
-                style={{ color: 'green' }}
-                variant="outlined"
-                onClick={() => (!isGameEnd ? CheckAnswer(true) : null)}
-              >
-                true
-              </Button>
-              <Button
-                type="button"
-                style={{ color: 'red' }}
-                id="1"
-                onClick={() => (!isGameEnd ? CheckAnswer(false) : null)}
-              >
-                false
-              </Button>
-            </div>
-          </Card>
-          <div className="sprint-stat">
-            <div className="multiply">{`x:${multiply}`}</div>
-            <div className="current-score">{`+${multiply * 10}`}</div>
-          </div>
-        </div>
+        {!isGameStart && (
+          <StartScreen game="sprint" onClick={() => setIsGmeStart(true)} />
         )}
-        {isGameEnd && <GameResults wrong={wrongAnswers} correct={correctAnswers} />}
+        {isGameStart && !isGameEnd && (
+          <div className="sprint-wrapper">
+            <div className="sprint-stat">
+              <div className="score">{`score: ${score}`}</div>
+              <Badge badgeContent={curStreak} color="primary">
+                <CheckIcon />
+              </Badge>
+              <div className="timer">{`time: ${timeLeft}`}</div>
+            </div>
+            <Card className="sprint_card">
+              <h2>{currentWord?.word}</h2>
+              <h3>{currentTranslate?.wordTranslate}</h3>
+              <div className="buttons">
+                <Button
+                  type="button"
+                  id="0"
+                  style={{ color: 'green' }}
+                  variant="outlined"
+                  onClick={() => (!isGameEnd ? CheckAnswer(true) : null)}
+                >
+                  true
+                </Button>
+                <Button
+                  type="button"
+                  style={{ color: 'red' }}
+                  id="1"
+                  onClick={() => (!isGameEnd ? CheckAnswer(false) : null)}
+                >
+                  false
+                </Button>
+              </div>
+            </Card>
+            <div className="sprint-stat">
+              <div className="multiply">{`x:${multiply}`}</div>
+              <div className="current-score">{`+${multiply * 10}`}</div>
+            </div>
+          </div>
+        )}
+        {isGameEnd && (
+          <GameResults wrong={wrongAnswers} correct={correctAnswers} />
+        )}
       </div>
       <div className="bg_sprint" />
       <div className="bg_sprint bg2" />

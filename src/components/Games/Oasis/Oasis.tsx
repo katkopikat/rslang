@@ -16,6 +16,7 @@ import '../Styles/background.scss';
 import { IWord } from '../../../interfaces';
 import initialState from '../wordInitialState';
 import StartScreen from '../Components/GameStartScreen/StartScreen';
+import Menu from '../../Menu/Menu';
 
 interface ILetterStatus {
   letter: string;
@@ -150,6 +151,7 @@ const Oasis: React.FC<IOasis> = ({ words }) => {
 
   return (
     <>
+      <Menu />
       <div className="oasis">
         {!isStartGame && (
           <StartScreen
