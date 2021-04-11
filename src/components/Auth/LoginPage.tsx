@@ -1,25 +1,14 @@
 import React, { useRef, useState } from 'react';
 import {
   Button,
-  Container,
-  CssBaseline,
-  Grid,
   makeStyles,
   TextField,
-  Typography,
   Popover,
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
-import ILoginPage from './interface';
+import { ILoginPage } from './interface';
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    margin: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
   form: {
     width: '100%',
     marginTop: theme.spacing(1),
@@ -27,12 +16,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  typography: {
-    padding: theme.spacing(2),
-  },
 }));
 
-const LoginPage: React.FC<ILoginPage> = ({ history }: ILoginPage) => {
+const LoginPage: React.FC<ILoginPage> = ({ history, handleChangePage }: ILoginPage) => {
   const classes = useStyles();
   const emailInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
@@ -67,73 +53,87 @@ const LoginPage: React.FC<ILoginPage> = ({ history }: ILoginPage) => {
     return false;
   };
   return (
-    <Container
-      component="main"
-    >
-      <CssBaseline />
-      <Typography component="h1" variant="h5">
-        Войти
-      </Typography>
-      <Popover
-        id={id}
-        open={openPopover}
-        anchorEl={signInButton}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'center',
-        }}
-        transformOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-      >
-        <Typography className={classes.typography}>{errors}</Typography>
-      </Popover>
-      <form
-        noValidate
-        onSubmit={handleSignIn}
-        className={classes.form}
-      >
-        <TextField
-          inputRef={emailInput}
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="email"
-          label="email"
-          name="email"
-          autoComplete="email"
-          autoFocus
-        />
-        <TextField
-          inputRef={passwordInput}
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="password"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-        />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          id="signInButton"
-          className={classes.submit}
-        >
-          Sign In
-        </Button>
-        <Grid container>
-          <Link to="/register">register</Link>
-        </Grid>
-      </form>
-    </Container>
+    <>
+      <div className="auth__content">
+        <h1> Уже с нами? </h1>
+        <p>
+          {' '}
+          Войди в свой аккаунт Ulearning!
+          {' '}
+        </p>
+
+        <div className="login__content">
+          <Popover
+            className="auth__popover"
+            id={id}
+            open={openPopover}
+            anchorEl={signInButton}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: 'center',
+              horizontal: 'center',
+            }}
+            transformOrigin={{
+              vertical: 'center',
+              horizontal: 'center',
+            }}
+          >
+            <p>{errors}</p>
+          </Popover>
+          <form
+            noValidate
+            onSubmit={handleSignIn}
+            className={classes.form}
+          >
+            <TextField
+              inputRef={emailInput}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="email"
+              name="email"
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              inputRef={passwordInput}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="пароль"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              id="signInButton"
+              className={classes.submit}
+            >
+              Войти
+            </Button>
+            <div className="auth__link">
+              <span> Еще не с нами? Тогда </span>
+
+              <button
+                className="link-btn"
+                onClick={() => handleChangePage('registration')}
+                type="button"
+              >
+                зарегистрируйся
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </>
   );
 };
 

@@ -37,7 +37,7 @@ const Menu: React.FC = () => {
   }, [isOpen, body?.classList]);
 
   return (
-    <header className="header">
+    <nav className="header">
       <div className="wrapper header__wrapper">
         <div className="header__part">
           <Hamburger onClick={() => setIsOpen(!isOpen)} isOpen={isOpen} />
@@ -117,18 +117,18 @@ const Menu: React.FC = () => {
             className={`header__auth ${isOpen ? 'header__auth_invisible' : ''}`}
           >
             {!userId && (
-              <Link to="/login">
+              <Link to="/authorization">
                 <button type="button" className="button button_bordered">
                   Вход
                 </button>
               </Link>
             )}
-            {!isAuthPage && userId && <Link to="/login">{authLinkEl}</Link>}
+            {!isAuthPage && userId && <Link to="/authorization">{authLinkEl}</Link>}
             {logoutEl}
           </div>
         </div>
       </div>
-    </header>
+    </nav>
   );
 };
 

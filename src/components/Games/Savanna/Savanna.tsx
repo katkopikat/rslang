@@ -12,7 +12,7 @@ import Crystal from './Crystal/Crystal';
 import StartScreen from '../Components/GameStartScreen/StartScreen';
 import Loader from '../Components/Loader/Loader';
 
-import '../BgGradient.scss';
+// import '../BgGradient.scss';
 
 const NUMBER_OF_THE_OPTIONS: number = 4;
 const LIVES: number = 5;

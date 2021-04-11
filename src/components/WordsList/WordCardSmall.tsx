@@ -1,5 +1,4 @@
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { IWord } from '../../interfaces';
 import './WordCard.scss';
@@ -15,13 +14,13 @@ interface IProps {
 const WordCardSmall = ({
   word, activeId, id, onClick, showTranslate,
 }: IProps) => {
-  // <Paper className={activeId === id ? 'card-word active-word' : 'card-word'} onClick={onClick}>
   const classIfActive = activeId === id ? 'active-word' : '';
   const classIfDifficult = word.userWord?.difficulty === 'difficult' ? 'difficult-word' : '';
   return (
-    <Paper
+    <button
       className={`card-word ${classIfActive} ${classIfDifficult}`}
       onClick={onClick}
+      type="button"
     >
       <Typography variant="h5" component="h2" gutterBottom>
         {word.word}
@@ -29,7 +28,7 @@ const WordCardSmall = ({
       <Typography>
         {showTranslate ? word.wordTranslate : null}
       </Typography>
-    </Paper>
+    </button>
   );
 };
 export default WordCardSmall;
