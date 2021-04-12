@@ -9,12 +9,11 @@ import Lives from './LivesIndicator/Lives';
 import GameResults from '../Components/GameResults/GameResults';
 import initialState from '../wordInitialState';
 import Menu from '../../Menu/Menu';
-
 import Crystal from './Crystal/Crystal';
 import StartScreen from '../Components/GameStartScreen/StartScreen';
 import Loader from '../Components/Loader/Loader';
-
 import GameButtons from '../Components/Buttons/Buttons';
+import { setLSStatistic } from '../../../api';
 
 const NUMBER_OF_THE_OPTIONS: number = 4;
 const LIVES: number = 5;
@@ -86,6 +85,8 @@ const Savanna = ({ wordsList }: ISavanna) => {
   // for results
   const [wrongAnswers, setWrongAnswers] = useState<IWord[]>([]);
   const [correctAnswers, setCorrectAnswers] = useState<IWord[]>([]);
+  const [streak, setStreak] = useState<number>(0);
+  const [maxStreak, setMaxScreak] = useState<number>(0);
 
   // for transitions
   const [className, setClassName] = useState<string>('');
@@ -188,6 +189,7 @@ const Savanna = ({ wordsList }: ISavanna) => {
   const handleClick = (id: string) => {
     setCurrentAnswerId(id);
     setIsAnswer(true);
+    console.log(streak, maxStreak);
 
     if (canIChoose) {
       if (id === currentWord?.id) {
@@ -195,10 +197,11 @@ const Savanna = ({ wordsList }: ISavanna) => {
         setIsCorrect(true);
         setCorrectAnswers([...correctAnswers, currentWord]);
         setClassName(classNames.successFall);
+        if (isSoundsOn) playCorrect();
+        setStreak(streak + 1);
         setTimeout(() => {
           setNewWord();
         }, 500);
-        if (isSoundsOn) playCorrect();
       } else {
         setCanIChoose(false);
         setShowAnswer(true);
@@ -207,6 +210,8 @@ const Savanna = ({ wordsList }: ISavanna) => {
         setWrongAnswers([...wrongAnswers, currentWord]);
         setClassName(classNames.fail);
         if (isSoundsOn) playWrong();
+        if (streak > maxStreak) setMaxScreak(streak);
+        setStreak(0);
         setTimeout(() => {
           setNewWord();
         }, 1000);
@@ -227,6 +232,11 @@ const Savanna = ({ wordsList }: ISavanna) => {
     if (!isEnd) window.addEventListener<'keydown'>('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
   });
+
+  useEffect(() => {
+    setLSStatistic('savanna', correctAnswers, wrongAnswers, maxStreak);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEnd]);
 
   return (
     <>
