@@ -13,6 +13,10 @@
     display: block;
   }
 
+  &_visible {
+    display: block;
+  }
+
   .line--1,
   .line--3 {
     --total-length: 126.64183044433594;

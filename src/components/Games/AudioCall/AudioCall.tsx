@@ -14,6 +14,7 @@ import GameResults from '../Components/GameResults/GameResults';
 import StartPage from '../Components/GameStartScreen/StartScreen';
 import useStyles from './styles';
 import Menu from '../../Menu/Menu';
+import GameButtons from '../Components/Buttons/Buttons';
 
 enum GameState {
   StartScreen,
@@ -132,81 +133,90 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
 
   if (gameState === GameState.StartScreen) {
     return (
-      <Container className={classes.root} maxWidth={false}>
-        <Menu />
-        <StartPage game="audiocall" onClick={handleStartClick} />
-        <div className="bg_audiocall" />
-        <div className="bg_audiocall bg2" />
-        <div className="bg_audiocall bg3" />
-      </Container>
+      <div className="wrapper wrapper_audiocall">
+        <GameButtons />
+        <Container className={classes.root} maxWidth={false}>
+          <Menu />
+          <StartPage game="audiocall" onClick={handleStartClick} />
+          <div className="bg_audiocall" />
+          <div className="bg_audiocall bg2" />
+          <div className="bg_audiocall bg3" />
+        </Container>
+      </div>
     );
   }
   if (gameState === GameState.GameOver) {
     return (
-      <Container className={classes.root} maxWidth={false}>
-        <Menu />
-        <GameResults
-          wrong={answers.current.wrong}
-          correct={answers.current.right}
-        />
-        <div className="bg_audiocall" />
-        <div className="bg_audiocall bg2" />
-        <div className="bg_audiocall bg3" />
-      </Container>
+      <div className="wrapper wrapper_audiocall">
+        <GameButtons />
+        <Container className={classes.root} maxWidth={false}>
+          <Menu />
+          <GameResults
+            wrong={answers.current.wrong}
+            correct={answers.current.right}
+          />
+          <div className="bg_audiocall" />
+          <div className="bg_audiocall bg2" />
+          <div className="bg_audiocall bg3" />
+        </Container>
+      </div>
     );
   }
 
   return (
     <>
       <Menu />
-      <Container className={classes.root} maxWidth={false}>
-        <Grid container direction="column" className={classes.gameGrid}>
-          <Grid item container justify="center">
-            <Grid item>
-              {gameState === GameState.Answer ? (
-                <>
-                  <img
-                    className={classes.wordImage}
-                    src={`${API_URL}/${wordsToGuess[currentWordIndex].image}`}
-                    alt=""
-                  />
-                  <Typography variant="h4" align="center">
-                    {wordsToGuess[currentWordIndex].word}
-                    <IconButton onClick={handleSoundClick}>
-                      <VolumeUpIcon className={classes.soundIcon} />
-                    </IconButton>
-                  </Typography>
-                </>
-              ) : (
-                <IconButton onClick={handleSoundClick}>
-                  <VolumeUpIcon className={classes.soundIconBig} />
-                </IconButton>
-              )}
+      <div className="wrapper wrapper_oasis">
+        <GameButtons />
+        <Container className={classes.root} maxWidth={false}>
+          <Grid container direction="column" className={classes.gameGrid}>
+            <Grid item container justify="center">
+              <Grid item>
+                {gameState === GameState.Answer ? (
+                  <>
+                    <img
+                      className={classes.wordImage}
+                      src={`${API_URL}/${wordsToGuess[currentWordIndex].image}`}
+                      alt=""
+                    />
+                    <Typography variant="h4" align="center">
+                      {wordsToGuess[currentWordIndex].word}
+                      <IconButton onClick={handleSoundClick}>
+                        <VolumeUpIcon className={classes.soundIcon} />
+                      </IconButton>
+                    </Typography>
+                  </>
+                ) : (
+                  <IconButton onClick={handleSoundClick}>
+                    <VolumeUpIcon className={classes.soundIconBig} />
+                  </IconButton>
+                )}
+              </Grid>
+            </Grid>
+            <Grid
+              item
+              container
+              justify="space-evenly"
+              className={classes.wordChoise}
+            >
+              {wordsChoice()}
+            </Grid>
+            <Grid item container justify="center">
+              <Grid item>
+                {gameState === GameState.Answer ? (
+                  <Button variant="contained" onClick={handleNextClick}>
+                    <ArrowRightAltIcon className={classes.arrow} />
+                  </Button>
+                ) : (
+                  <Button variant="contained" onClick={handleDontKnowClick}>
+                    Не знаю
+                  </Button>
+                )}
+              </Grid>
             </Grid>
           </Grid>
-          <Grid
-            item
-            container
-            justify="space-evenly"
-            className={classes.wordChoise}
-          >
-            {wordsChoice()}
-          </Grid>
-          <Grid item container justify="center">
-            <Grid item>
-              {gameState === GameState.Answer ? (
-                <Button variant="contained" onClick={handleNextClick}>
-                  <ArrowRightAltIcon className={classes.arrow} />
-                </Button>
-              ) : (
-                <Button variant="contained" onClick={handleDontKnowClick}>
-                  Не знаю
-                </Button>
-              )}
-            </Grid>
-          </Grid>
-        </Grid>
-      </Container>
+        </Container>
+      </div>
       <div className="bg bg_audiocall" />
       <div className="bg bg_audiocall bg2" />
       <div className="bg bg_audiocall bg3" />

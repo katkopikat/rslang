@@ -1,0 +1,72 @@
+@import '../../../../styles/variables';
+
+[data-title] {
+  position: relative;
+}
+[data-title]::before,
+[data-title]::after {
+  line-height: 1;
+  user-select: none;
+  pointer-events: none;
+  position: absolute;
+  display: none;
+  opacity: 0;
+  text-transform: none;
+  font-size: 0.9em;
+}
+
+[data-title]::before {
+  content: "";
+  z-index: 1001;
+  border: 5px solid transparent;
+}
+
+[data-title]::after {
+  content: attr(data-title);
+  z-index: 1000;
+  font-family: Helvetica, sans-serif;
+  text-align: center;
+  min-width: 3em;
+  max-width: 21em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 1ch 1.5ch;
+  border-radius: 0.3ch;
+  box-shadow: 0 1em 2em -0.5em rgba(0, 0, 0, 0.149);
+  background: $color-secondary;
+  color: #fff;
+}
+
+[data-title]:hover::before,
+[data-title]:hover::after {
+  display: block;
+}
+
+[data-title][data-flow^="left"]::before {
+  top: 50%;
+  border-right-width: 0;
+  border-left-color: $color-secondary;;
+  left: calc(0em - 5px);
+  transform: translate(-0.5em, -50%);
+}
+[data-title][data-flow^="left"]::after {
+  top: 50%;
+  right: calc(100% + 5px);
+  transform: translate(-0.5em, -50%);
+}
+
+@keyframes data-titles {
+  to {
+    opacity: 0.9;
+    transform: translate(0, -50%);
+  }
+}
+
+/* FX All The Things */
+[data-title]:not([data-flow]):hover::before,
+[data-title]:not([data-flow]):hover::after,
+[data-title][data-flow^="left"]:hover::before,
+[data-title][data-flow^="left"]:hover::after {
+  animation: data-titles 300ms ease-out forwards;
+}

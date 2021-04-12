@@ -4,10 +4,11 @@ import './Hamburger.scss';
 interface IHamburger {
   onClick: () => void;
   isOpen: boolean;
+  isVisible: boolean;
 }
 
-const Hamburger = ({ onClick, isOpen }: IHamburger) => (
-  <div className="hamburger">
+const Hamburger = ({ onClick, isOpen, isVisible }: IHamburger) => (
+  <div className={`hamburger ${isVisible ? 'hamburger_visible' : ''}`}>
     <div
       className={`hamburger__inner ${isOpen ? 'hamburger_open' : ''}`}
       onClick={onClick}

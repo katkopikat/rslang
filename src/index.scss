@@ -110,3 +110,14 @@ a {
   height: 50%;
   width: 100%;
 }
+
+#root {
+  width: 100vw;
+}
+
+button {
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}

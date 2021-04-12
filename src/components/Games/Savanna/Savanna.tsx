@@ -12,7 +12,7 @@ import Crystal from './Crystal/Crystal';
 import StartScreen from '../Components/GameStartScreen/StartScreen';
 import Loader from '../Components/Loader/Loader';
 
-// import '../BgGradient.scss';
+import GameButtons from '../Components/Buttons/Buttons';
 
 const NUMBER_OF_THE_OPTIONS: number = 4;
 const LIVES: number = 5;
@@ -219,61 +219,60 @@ const Savanna = ({ wordsList }: ISavanna) => {
   return (
     <>
       <Menu />
-      <div
-        className="savanna"
-      >
-        {!isStart && !isLoading && (
-          <StartScreen
-            game="savanna"
-            onClick={() => {
-              setIsLoading(true);
-            }}
-          />
-        )}
-        {isLoading && !isStart && <Loader seconds={count} />}
-        {!isEnd && isStart && (
-          <div className="savanna__wrapper">
-            {newCurrentWord && (
-              <div
-                className={`savanna__question ${className}`}
-                onTransitionEnd={() => {
-                  if (className === classNames.fall && !isAnswer) {
-                    setWrongAnswer();
-                  }
-                }}
-              >
-                <div className="savanna__question-word">
-                  {currentWord && currentWord?.word.toLowerCase()}
-                </div>
+      <div className="savanna">
+        <div className="wrapper savanna__wrapper">
+          <GameButtons />
+          {!isStart && !isLoading && (
+            <StartScreen
+              game="savanna"
+              onClick={() => {
+                setIsLoading(true);
+              }}
+            />
+          )}
+          {isLoading && !isStart && <Loader seconds={count} />}
+          {!isEnd && isStart && (
+          <>
+            <div
+              className={`savanna__question ${className}`}
+              onTransitionEnd={() => {
+                if (className === classNames.fall && !isAnswer) {
+                  setWrongAnswer();
+                }
+              }}
+            >
+              <div className="savanna__question-word">
+                {currentWord && currentWord?.word.toLowerCase()}
               </div>
-            )}
+            </div>
+
             <Lives number={LIVES} disabled={lostLivesArray} />
             <div className="savanna__field">
               <div className="savanna__options">
                 {translateOptions.length > 0
-                  && translateOptions.map((item: any, idx: number) => (
-                    <TranslateOption
-                      key={item.id}
-                      index={idx}
-                      word={item.wordTranslate}
-                      onClick={handleClick}
-                      id={item.id}
-                      isAnswer={showAnswer && item.id === currentWord?.id}
-                      isWrongAnswer={showAnswer && item.id === currentAnswerId}
-                      isPressed={isPressed && item.id === currentAnswerId}
-                    />
-                  ))}
+                    && translateOptions.map((item: any, idx: number) => (
+                      <TranslateOption
+                        key={item.id}
+                        index={idx}
+                        word={item.wordTranslate}
+                        onClick={handleClick}
+                        id={item.id}
+                        isAnswer={showAnswer && item.id === currentWord?.id}
+                        isWrongAnswer={
+                          showAnswer && item.id === currentAnswerId
+                        }
+                        isPressed={isPressed && item.id === currentAnswerId}
+                      />
+                    ))}
               </div>
             </div>
             <Crystal isCorrect={isCorrect} />
-          </div>
-        //       )}
-        //       {isEnd && <GameResults wrong={wrongAnswers} correct={correctAnswers} />}
-        //       <BgGradient gameName="savanna" />
-        //     </div>
-        // =======
-        )}
-        {isEnd && <GameResults wrong={wrongAnswers} correct={correctAnswers} />}
+          </>
+          )}
+          {isEnd && (
+            <GameResults wrong={wrongAnswers} correct={correctAnswers} />
+          )}
+        </div>
       </div>
       <div className="bg_savanna" />
       <div className="bg_savanna bg2" />
