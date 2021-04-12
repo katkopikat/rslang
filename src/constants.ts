@@ -8,3 +8,12 @@ export enum ViewMode {
   Textbook,
   Dictionary,
 }
+
+export enum DictTabs {
+  Difficult = 1,
+  Deleted,
+  Learning,
+  HaveLearned,
+}
+
+export const WORDS_PER_PAGE = 20;
