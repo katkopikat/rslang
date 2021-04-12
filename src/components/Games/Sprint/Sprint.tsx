@@ -3,7 +3,7 @@ import useSound from 'use-sound';
 import { Button, Card, Badge } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import { IWord } from '../../../interfaces';
-import { setUserWord } from '../../../api';
+import { setUserWord, setLSStatistic } from '../../../api';
 import shuffleArray from '../../../helpers/shuffleArray';
 import StartScreen from '../Components/GameStartScreen/StartScreen';
 import GameResults from '../Components/GameResults/GameResults';
@@ -25,12 +25,12 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
   const [correctAnswers, setCorrectAnswers] = useState<IWord[]>([]);
   const [wrongAnswers, setWrongAnswers] = useState<IWord[]>([]);
   const [currentTranslate, setCurrentTranslate] = useState<IWord>();
-  const [isGameStart, setIsGmeStart] = useState<boolean>(false);
+  const [isGameStart, setIsGameStart] = useState<boolean>(false);
   const [isGameEnd, setIsGameEnd] = useState<boolean>(false);
   const [isCurrentWorldCorrect, setIsCurrentWorldCorrect] = useState<boolean>(
     false,
   );
-  const [timeLeft, setTimeLeft] = useState<number>(30);
+  const [timeLeft, setTimeLeft] = useState<number>(3000);
   const [score, setScore] = useState<number>(0);
   const [multiply, setMultiply] = useState<number>(1);
   const [streak, setStreak] = useState<number>(0);
@@ -42,6 +42,12 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
   const [playCorrect] = useSound(sounds.correct);
   const [playWrong] = useSound(sounds.wrong);
   const [playComplete] = useSound(sounds.complete);
+
+  useEffect(() => {
+    console.log('useSetStat', maxStreak);
+    setLSStatistic('sprint', correctAnswers, wrongAnswers, maxStreak);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isGameEnd]);
 
   useEffect(() => {
     setWords(wordsList);
@@ -57,6 +63,7 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
         if (isSoundsOn) playComplete();
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [words, currentIndex]);
 
   useEffect(() => {
@@ -109,6 +116,7 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
       setCurStreak(0);
       setMultiply(1);
       if (isSoundsOn) playWrong();
+      setStreak(0);
       if (currentWord) setWrongAnswers([...wrongAnswers, currentWord]);
     }
     if (currentWord !== undefined) {
@@ -146,7 +154,13 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
         <GameButtons onClick={() => setIsSoundsOn(!isSoundsOn)} />
         <div className="sprint">
           {!isGameStart && (
-            <StartScreen game="sprint" onClick={() => setIsGmeStart(true)} />
+            <StartScreen
+              game="sprint"
+              onClick={() => {
+                setIsGameStart(true);
+                setTimeLeft(30);
+              }}
+            />
           )}
           {isGameStart && !isGameEnd && (
             <div className="sprint-wrapper">
@@ -190,10 +204,10 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
             <GameResults wrong={wrongAnswers} correct={correctAnswers} />
           )}
         </div>
+        <div className="bg_sprint" />
+        <div className="bg_sprint bg2" />
+        <div className="bg_sprint bg3" />
       </div>
-      <div className="bg_sprint" />
-      <div className="bg_sprint bg2" />
-      <div className="bg_sprint bg3" />
     </>
   );
 };
