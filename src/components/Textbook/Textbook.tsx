@@ -2,9 +2,10 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Pagination from '@material-ui/lab/Pagination';
-import { API_URL, ViewMode } from '../../constants';
+import { ViewMode, DictTabs } from '../../constants';
 import { useAuth } from '../AuthContext';
-import { fetchWords } from '../../redux/actions/appActions';
+import { setGroup, setPage, setDictActiveTab } from '../../redux/actions/appActions';
+import wordsApi from '../../redux/actions/wordsApiActions';
 import { RootState } from '../../redux/rootReducer';
 import WordsList from '../WordsList/WordsList';
 import GamesCards from '../GamesCards/GamesCards';
@@ -13,29 +14,7 @@ import LevelCard from '../LevelsCards/LevelCard';
 import Settings from './Settings/Settings';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import BgWave from '../BgWave/BGWave';
 import './Textbook.scss';
-
-const wordFilters = {
-  excludeDeleted: { 'userWord.optional.isDeleted': { $ne: true } },
-  onlyDeleted: { 'userWord.optional.isDeleted': true },
-  onlyDifficult: {
-    $and: [
-      { 'userWord.difficulty': 'difficult' },
-      { 'userWord.optional.isDeleted': { $ne: true } }],
-  },
-  learning: {
-    $and: [
-      { userWord: { $exists: true } },
-      { 'userWord.optional.isDeleted': { $ne: true } }],
-  },
-};
-
-const userWordsUrl = (userId: string, group: number, page: number, filter = {}) => {
-  const filterPage = { page };
-  const filterQuery = encodeURIComponent(JSON.stringify({ ...filterPage, ...filter }));
-  return `${API_URL}/users/${userId}/aggregatedWords?group=${group}&filter=${filterQuery}&wordsPerPage=0`;
-};
 
 const groupClasses: Array<string> = [
   'easy1-group',
@@ -46,64 +25,49 @@ const groupClasses: Array<string> = [
   'hard2-group',
 ];
 
-enum DictTabs {
-  Difficult = 1,
-  Deleted,
-  Learning,
-  HaveLearned,
-}
-
 const Textbook: React.FC = () => {
   const dispatch = useDispatch();
   const words = useSelector((state: RootState) => state.app.words);
+  const group = useSelector((state: RootState) => state.app.group);
+  const page = useSelector((state: RootState) => state.app.page);
+  const paginationCount = useSelector((state: RootState) => state.app.paginationCount);
+  const dictActiveTab = useSelector((state: RootState) => state.app.dictActiveTab);
+  const deletedWordsCount = useSelector((state: RootState) => state.app.deletedWordsCount);
+  const difficultWordsCount = useSelector((state: RootState) => state.app.difficultWordsCount);
+  const learningWordsCount = useSelector((state: RootState) => state.app.learningWordsCount);
   const { userId, token } = useAuth();
   const [viewMode, setViewMode] = useState(ViewMode.Textbook);
-  const [dictActiveTab, setDictActiveTab] = useState(DictTabs.Difficult);
-  const [group, setGroup] = useState(0);
-  const [page, setPage] = useState(0);
-  const [wordsUrl, setWordsUrl] = useState(
-    `${API_URL}/words?group=${group}&page=${page}`,
-  );
-  const [isLoading, setIsLoading] = useState(false);
   const [showTranslate, setShowTranslate] = useState(true);
   const [showBtns, setShowBtns] = useState(true);
   const [groupColorClass, setGroupColorClass] = useState('easy1-group');
   const [wordsListNeedsUpdate, forceUpdate] = useReducer((x) => x + 1, 0);
 
   useEffect(() => {
-    setPage(Number(localStorage.getItem('page')) || 0);
-    setGroup(Number(localStorage.getItem('group')) || 0);
-  }, []);
+    // setPage(Number(localStorage.getItem('page')) || 0);
+    // setGroup(Number(localStorage.getItem('group')) || 0);
+    dispatch(setGroup(Number(localStorage.getItem('group')) || 0));
+    dispatch(setPage(Number(localStorage.getItem('page')) || 0));
+  }, [dispatch]);
 
   useEffect(() => {
-    if (isLoading) return;
     if (userId) {
       if (viewMode === ViewMode.Textbook) {
-        setWordsUrl(userWordsUrl(userId, group, page, wordFilters.excludeDeleted));
+        // setWordsUrl(userWordsUrl(userId, group, page, wordFilters.excludeDeleted));
+        dispatch(wordsApi.fetchForUserTextbook(group, page, userId, token));
       } else if (dictActiveTab === DictTabs.Difficult) {
-        setWordsUrl(userWordsUrl(userId, group, page, wordFilters.onlyDifficult));
+        dispatch(wordsApi.fetchDifficult(group, page, userId, token));
+        dispatch(wordsApi.fetchFilteredCounts(userId, token));
       } else if (dictActiveTab === DictTabs.Deleted) {
-        setWordsUrl(userWordsUrl(userId, group, page, wordFilters.onlyDeleted));
+        dispatch(wordsApi.fetchDeleted(group, page, userId, token));
+        dispatch(wordsApi.fetchFilteredCounts(userId, token));
       } else if (dictActiveTab === DictTabs.Learning) {
-        setWordsUrl(userWordsUrl(userId, group, page, wordFilters.learning));
+        dispatch(wordsApi.fetchLearning(group, page, userId, token));
+        dispatch(wordsApi.fetchFilteredCounts(userId, token));
       }
-    } else setWordsUrl(`${API_URL}/words?group=${group}&page=${page}`);
-  }, [group, page, isLoading, userId, viewMode, dictActiveTab]);
-
-  /* eslint-disable react-hooks/exhaustive-deps */
-  useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      dispatch(fetchWords(wordsUrl, userId ? token : ''));
-      setIsLoading(false);
-      // setisLoading(true);
-      // // const wordsResponce = await fetch(wordsUrl);
-      // const wordsResponce = await request('GET', wordsUrl, false, userId ? token : '');
-      // const wordsResult = await wordsResponce.json();
-      // setisLoading(false);
-      // setWords(wordsResult);
-    })();
-  }, [wordsUrl, token, userId, wordsListNeedsUpdate]);
+    } else {
+      dispatch(wordsApi.fetchForAnonTextbook(group, page));
+    }
+  }, [group, page, userId, token, viewMode, dictActiveTab, wordsListNeedsUpdate, dispatch]);
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
@@ -117,14 +81,15 @@ const Textbook: React.FC = () => {
 
   const handleGroupChange = (value: number | null) => {
     if (value === null) return;
-    setGroup(value);
+    dispatch(setGroup(value));
+    dispatch(setPage(0));
   };
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
     value: number,
   ) => {
-    setPage(value - 1);
+    dispatch(setPage(value - 1));
   };
 
   return (
@@ -135,17 +100,25 @@ const Textbook: React.FC = () => {
           <button
             type="button"
             className={`textbook__heading-${viewMode === ViewMode.Textbook ? 'active' : 'unactive'}`}
-            onClick={() => setViewMode(ViewMode.Textbook)}
+            onClick={() => {
+              setViewMode(ViewMode.Textbook);
+              dispatch(setPage(0));
+            }}
           >
             Учебник
           </button>
+          {userId && (
           <button
             type="button"
             className={`textbook__heading-${viewMode === ViewMode.Dictionary ? 'active' : 'unactive'}`}
-            onClick={() => userId && setViewMode(ViewMode.Dictionary)}
+            onClick={() => {
+              setViewMode(ViewMode.Dictionary);
+              dispatch(setPage(0));
+            }}
           >
             Словарь
           </button>
+          )}
 
           <Settings
             showTranslate={showTranslate}
@@ -161,27 +134,36 @@ const Textbook: React.FC = () => {
         <div className="textbook__levels levels-wrapper levels-status">
           <LevelCard
             name="Сложные"
-            words="Слов: 17"
+            words={`Слов: ${difficultWordsCount}`}
             abbr="C"
             level={DictTabs.Difficult} // 1
             activeGroup={dictActiveTab}
-            handleGroupChange={() => setDictActiveTab(DictTabs.Difficult)}
+            handleGroupChange={() => {
+              dispatch(setDictActiveTab(DictTabs.Difficult));
+              dispatch(setPage(0));
+            }}
           />
           <LevelCard
             name="Удаленные"
-            words="Cлов: 134"
+            words={`Слов: ${deletedWordsCount}`}
             abbr="У"
             level={DictTabs.Deleted} // 2
             activeGroup={dictActiveTab}
-            handleGroupChange={() => setDictActiveTab(DictTabs.Deleted)}
+            handleGroupChange={() => {
+              dispatch(setDictActiveTab(DictTabs.Deleted));
+              dispatch(setPage(0));
+            }}
           />
           <LevelCard
             name="Изучаемые"
-            words="Слов: 68"
+            words={`Слов: ${learningWordsCount}`}
             abbr="И"
             level={DictTabs.Learning} // 3
             activeGroup={dictActiveTab}
-            handleGroupChange={() => setDictActiveTab(DictTabs.Learning)}
+            handleGroupChange={() => {
+              dispatch(setDictActiveTab(DictTabs.Learning));
+              dispatch(setPage(0));
+            }}
           />
         </div>
         )}
@@ -195,13 +177,20 @@ const Textbook: React.FC = () => {
             forceUpdate={forceUpdate}
             viewMode={viewMode}
           />
+          { words.length > 0 && (
           <Pagination
             className="textbook__pagination"
-            count={30}
+            count={paginationCount}
             page={page + 1}
             onChange={handlePageChange}
             color="primary"
+            // renderItem={(item) => {
+            //   console.log(item);
+            //   if (item.page === 3 && item.type === 'page') return null;
+            //   return <PaginationItem {...item} />;
+            // }}
           />
+          )}
           <div className="games-card__container">
             <h1>Игры</h1>
             <h3>Закрепи новые слова при помощи игр.</h3>
