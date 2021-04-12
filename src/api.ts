@@ -33,6 +33,9 @@ interface IWordBody {
   optional: IOptionalWord
 }
 
+export type ILSGames = {
+  [key in GameNames]: ILSStatisticOptionalGames;
+};
 interface ILSStatisticOptionalGames extends IOptionalGame {
   rightPercent: number;
   bestSeries: number;
@@ -265,7 +268,7 @@ const isToday = (checkDate:Date) => {
   && checkDate.getFullYear() === today.getFullYear();
 };
 
-const getLSStatistic = ():ILSStatistic|undefined => {
+export const getLSStatistic = ():ILSStatistic|undefined => {
   const item = localStorage.getItem('statistic');
   if (typeof item === 'string') {
     const result = JSON.parse(item);

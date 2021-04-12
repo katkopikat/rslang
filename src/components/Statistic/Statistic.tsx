@@ -3,6 +3,8 @@ import Switch from '@material-ui/core/Switch';
 import EachDayStatistic from './AllTimeStatistic/EachDayStatistic';
 import GrowthStatistic from './AllTimeStatistic/GrowthStatistic';
 import TodayStatistic from './TodayStatistic/TodayStatistic';
+import { getLSStatistic } from '../../api';
+import { gamesDefault } from '../../data/apiData';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import BGWave from '../BgWave/BGWave';
@@ -25,6 +27,7 @@ const datesList: Array<string> = [
 ];
 const wordsListByDay: Array<number> = [3, 8, 15, 8, 7, 0, 0, 11, 18, 5, 8, 21];
 const wordsPeriodtList: Array<number> = [5, 5, 12, 12, 12, 22, 31, 50, 50, 50, 62, 70, 78];
+const dataLSStatistic = getLSStatistic();
 
 const Statistic = () => {
   const [switchChart, setSwitch] = useState(true);
@@ -41,7 +44,11 @@ const Statistic = () => {
         <BGWave classWave="statistic__wave--top" />
         {/* // TODO DATA learnedWords -  общее количество изученных слов за день
             // TODO DATA correctPercent- общий процент правильных ответов за день */}
-        <TodayStatistic learnedWords={13} correctPercent={74} />
+        <TodayStatistic
+          learnedWords={dataLSStatistic?.allNewWords || 0}
+          correctPercent={dataLSStatistic?.allGamesRightPercent || 0}
+          games={dataLSStatistic?.games || gamesDefault}
+        />
         <BGWave classWave="statistic__wave--bottom" />
       </section>
       <section className="charts__wrapper">
