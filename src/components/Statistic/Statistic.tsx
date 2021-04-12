@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Switch from '@material-ui/core/Switch';
 import EachDayStatistic from './AllTimeStatistic/EachDayStatistic';
 import GrowthStatistic from './AllTimeStatistic/GrowthStatistic';
@@ -27,14 +27,18 @@ const datesList: Array<string> = [
 ];
 const wordsListByDay: Array<number> = [3, 8, 15, 8, 7, 0, 0, 11, 18, 5, 8, 21];
 const wordsPeriodtList: Array<number> = [5, 5, 12, 12, 12, 22, 31, 50, 50, 50, 62, 70, 78];
-const dataLSStatistic = getLSStatistic();
 
 const Statistic = () => {
   const [switchChart, setSwitch] = useState(true);
+  const [dataLSStatistic, setDataLSStatistic] = useState(getLSStatistic());
 
   const handleChartSwitch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSwitch(event.target.checked);
   };
+
+  useEffect(() => {
+    setDataLSStatistic(getLSStatistic());
+  }, []);
 
   return (
     <>
@@ -42,8 +46,6 @@ const Statistic = () => {
       <section className="statistic__wrapper">
         <h1>Статистика за сегодня</h1>
         <BGWave classWave="statistic__wave--top" />
-        {/* // TODO DATA learnedWords -  общее количество изученных слов за день
-            // TODO DATA correctPercent- общий процент правильных ответов за день */}
         <TodayStatistic
           learnedWords={dataLSStatistic?.allNewWords || 0}
           correctPercent={dataLSStatistic?.allGamesRightPercent || 0}

@@ -38,7 +38,6 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
   const [maxStreak, setMaxStreak] = useState<number>(0);
 
   useEffect(() => {
-    console.log('useSetStat', maxStreak);
     setLSStatistic('sprint', correctAnswers, wrongAnswers, maxStreak);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isGameEnd]);

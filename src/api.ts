@@ -323,7 +323,7 @@ export const setLSStatistic = (
     const newAllGameRight = lastAllGameRigh + correctAnswers.length;
     const newAllGamesWrong = lastAllGameWrong + wrongAnswers.length;
     const newAllGamesRightPercent = ((newAllGameRight
-       / (newAllGameRight + newAllGamesWrong)) * 100).toFixed(2);
+       / (newAllGameRight + newAllGamesWrong)) * 100).toFixed(0);
     const newLSStat:ILSStatistic = deepClone(lastLSStat);
     newLSStat.date = new Date();
     newLSStat.allGamesRight = newAllGameRight;
@@ -336,7 +336,7 @@ export const setLSStatistic = (
     newLSStat.games[currentGame].wrong += wrongAnswers.length;
     const newGameRightPercent = ((newLSStat.games[currentGame].right
       / (newLSStat.games[currentGame].right + newLSStat.games[currentGame].wrong)) * 100)
-      .toFixed(2);
+      .toFixed(0);
     newLSStat.games[currentGame].rightPercent = +newGameRightPercent || 0;
     if (newLSStat.games[currentGame].bestSeries < bestStreak) {
       newLSStat.games[currentGame].bestSeries = bestStreak;
@@ -352,7 +352,7 @@ export const setLSStatistic = (
     newLSStat.allNewWords = [...wrongAnswers, ...correctAnswers].length;
     newLSStat.wordsList = [...wrongAnswers, ...correctAnswers];
     const rightPercent = ((correctAnswers.length
-      / (correctAnswers.length + wrongAnswers.length)) * 100).toFixed(2);
+      / (correctAnswers.length + wrongAnswers.length)) * 100).toFixed(0);
     newLSStat.allGamesRightPercent = +rightPercent || 0;
     const currentGame = GameNames[gameName as keyof typeof GameNames];
     newLSStat.games[currentGame].right += correctAnswers.length;
