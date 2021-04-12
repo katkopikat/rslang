@@ -133,33 +133,37 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
 
   if (gameState === GameState.StartScreen) {
     return (
-      <div className="wrapper wrapper_audiocall">
-        <GameButtons />
-        <Container className={classes.root} maxWidth={false}>
-          <Menu />
-          <StartPage game="audiocall" onClick={handleStartClick} />
-          <div className="bg_audiocall" />
-          <div className="bg_audiocall bg2" />
-          <div className="bg_audiocall bg3" />
-        </Container>
-      </div>
+      <>
+        <Menu />
+        <div className="wrapper wrapper_audiocall">
+          <GameButtons />
+          <Container className={classes.root} maxWidth={false}>
+            <StartPage game="audiocall" onClick={handleStartClick} />
+            <div className="bg_audiocall" />
+            <div className="bg_audiocall bg2" />
+            <div className="bg_audiocall bg3" />
+          </Container>
+        </div>
+      </>
     );
   }
   if (gameState === GameState.GameOver) {
     return (
-      <div className="wrapper wrapper_audiocall">
-        <GameButtons />
-        <Container className={classes.root} maxWidth={false}>
-          <Menu />
-          <GameResults
-            wrong={answers.current.wrong}
-            correct={answers.current.right}
-          />
-          <div className="bg_audiocall" />
-          <div className="bg_audiocall bg2" />
-          <div className="bg_audiocall bg3" />
-        </Container>
-      </div>
+      <>
+        <Menu />
+        <div className="wrapper wrapper_audiocall">
+          <GameButtons />
+          <Container className={classes.root} maxWidth={false}>
+            <GameResults
+              wrong={answers.current.wrong}
+              correct={answers.current.right}
+            />
+            <div className="bg_audiocall" />
+            <div className="bg_audiocall bg2" />
+            <div className="bg_audiocall bg3" />
+          </Container>
+        </div>
+      </>
     );
   }
 

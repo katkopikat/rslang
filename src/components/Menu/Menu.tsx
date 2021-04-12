@@ -33,9 +33,13 @@ const Menu: React.FC = () => {
     }
   }, [currentURL.pathname]);
 
+  const handleEvent = () => {
+    setIsOpen(false);
+  };
+
   useEffect(() => {
-    window.addEventListener('resize', () => setIsOpen(false));
-    return () => window.removeEventListener('resize', () => setIsOpen(false));
+    window.addEventListener('resize', handleEvent);
+    return () => window.removeEventListener('resize', handleEvent);
   }, []);
 
   useEffect(() => {
@@ -62,7 +66,7 @@ const Menu: React.FC = () => {
               isOpen={isOpen}
               isVisible={isGameMenu}
             />
-            <Link to="/" className="logo_link">
+            <Link to="/" className="logo_link" onClick={handleEvent}>
               <span
                 className={`logo header__logo ${
                   isOpen ? 'header__logo_active' : ''
@@ -73,7 +77,11 @@ const Menu: React.FC = () => {
             </Link>
           </div>
           <div className="header__part">
-            <div className="circle__wrapper">
+            <div
+              className={`circle__wrapper ${
+                isOpen ? 'circle__wrapper_active' : ''
+              }`}
+            >
               <div
                 className={`header__circle  ${
                   isOpen ? 'header__circle_active' : ''
@@ -90,10 +98,10 @@ const Menu: React.FC = () => {
                   }`}
                 >
                   <ul className={`navigation ${isOpen ? 'animate' : ''}`}>
-                    <Link to="/">
+                    <Link to="/" onClick={handleEvent}>
                       <li className="anim_one navigation__item">Главная</li>
                     </Link>
-                    <Link to="/textbook">
+                    <Link to="/textbook" onClick={handleEvent}>
                       <li className="anim_two navigation__item">Учебник</li>
                     </Link>
                     <li className="navigation__item navigation__item_list">
@@ -105,25 +113,25 @@ const Menu: React.FC = () => {
                         onClick={() => dispatch(setIsLevel(true))}
                         onKeyDown={() => null}
                       >
-                        <Link to="/games/savanna">
+                        <Link to="/games/savanna" onClick={handleEvent}>
                           <li className="anim_four anim-item navigation_submenu__item item_one">
                             <div className="item-dot_savanna" />
                             <div>Саванна</div>
                           </li>
                         </Link>
-                        <Link to="/games/oasis">
+                        <Link to="/games/oasis" onClick={handleEvent}>
                           <li className="anim_five anim-item navigation_submenu__item">
                             <div className="item-dot_oasis" />
                             <div>Оазис</div>
                           </li>
                         </Link>
-                        <Link to="/games/sprint">
+                        <Link to="/games/sprint" onClick={handleEvent}>
                           <li className="anim_six anim-item navigation_submenu__item">
                             <div className="item-dot_sprint" />
                             <div>Спринт</div>
                           </li>
                         </Link>
-                        <Link to="/games/audiocall">
+                        <Link to="/games/audiocall" onClick={handleEvent}>
                           <li className="anim_seven anim-item navigation_submenu__item">
                             <div className="item-dot_audio" />
                             <div>Аудиовызов</div>
@@ -131,7 +139,7 @@ const Menu: React.FC = () => {
                         </Link>
                       </ul>
                     </li>
-                    <Link to="/statistic">
+                    <Link to="/statistic" onClick={handleEvent}>
                       <li className="anim_eight anim-item navigation__item">
                         Статистика
                       </li>

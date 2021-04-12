@@ -552,6 +552,13 @@
     top: 0;
     left: 0;
     overflow: hidden;
+    box-shadow: 0 30px 80px 0 rgba(91, 91, 91, 0.25);
+    visibility: hidden;
+    transition-delay: 0.1s;
+
+    &_active {
+      visibility: visible;
+    }
   }
 }
 
