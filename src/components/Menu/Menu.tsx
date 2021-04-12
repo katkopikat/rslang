@@ -161,7 +161,7 @@ const Menu: React.FC = () => {
                 </Link>
               )}
               {!isAuthPage && userId && (
-                <Link to="/authorization">{authLinkEl}</Link>
+                authLinkEl
               )}
               {logoutEl}
             </div>

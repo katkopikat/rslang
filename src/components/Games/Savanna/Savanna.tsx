@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import useSound from 'use-sound';
 import shuffle from '../../../commonFunc/shuffle';
 import { IWord } from '../../../interfaces';
 import './Savanna.scss';
 import '../Styles/background.scss';
+import sounds from '../sounds';
 import Lives from './LivesIndicator/Lives';
 import GameResults from '../Components/GameResults/GameResults';
 import initialState from '../wordInitialState';
@@ -94,6 +96,12 @@ const Savanna = ({ wordsList }: ISavanna) => {
   const [count, setCount] = useState<number>(3);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  // sounds
+  const [isSoundsOn, setIsSoundsOn] = useState<boolean>(true);
+  const [playCorrect] = useSound(sounds.correct);
+  const [playWrong] = useSound(sounds.wrong);
+  const [playComplete] = useSound(sounds.complete);
+
   const tick = () => {
     if (isLoading && count > 0) {
       setCount(count - 1);
@@ -132,6 +140,7 @@ const Savanna = ({ wordsList }: ISavanna) => {
       } else {
         timer = setTimeout(() => {
           setIsEnd(true);
+          if (isSoundsOn) playComplete();
         }, 1000);
       }
     }
@@ -189,6 +198,7 @@ const Savanna = ({ wordsList }: ISavanna) => {
         setTimeout(() => {
           setNewWord();
         }, 500);
+        if (isSoundsOn) playCorrect();
       } else {
         setCanIChoose(false);
         setShowAnswer(true);
@@ -196,6 +206,7 @@ const Savanna = ({ wordsList }: ISavanna) => {
         setLostLivesArray([...lostLivesArray, lostLives]);
         setWrongAnswers([...wrongAnswers, currentWord]);
         setClassName(classNames.fail);
+        if (isSoundsOn) playWrong();
         setTimeout(() => {
           setNewWord();
         }, 1000);
@@ -205,6 +216,7 @@ const Savanna = ({ wordsList }: ISavanna) => {
 
   const handleKeyPress: any = (event: React.KeyboardEvent) => {
     setIsPressed(true);
+    if (!translateOptions[0]) return;
     if (event.key === '1') handleClick(translateOptions[0].id);
     if (event.key === '2') handleClick(translateOptions[1].id);
     if (event.key === '3') handleClick(translateOptions[2].id);
@@ -221,7 +233,7 @@ const Savanna = ({ wordsList }: ISavanna) => {
       <Menu />
       <div className="savanna">
         <div className="wrapper savanna__wrapper">
-          <GameButtons />
+          <GameButtons onClick={() => setIsSoundsOn(!isSoundsOn)} />
           {!isStart && !isLoading && (
             <StartScreen
               game="savanna"

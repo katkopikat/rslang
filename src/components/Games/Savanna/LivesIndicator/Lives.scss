@@ -6,6 +6,12 @@
   padding: 5px 0;
   margin-right: 100px;
 
+  @media (max-width: 400px) {
+    justify-content: flex-start;
+    padding: 50px 0;
+    margin-right: 0;
+  }
+
   &>* {
     margin: 0 2px;
   }

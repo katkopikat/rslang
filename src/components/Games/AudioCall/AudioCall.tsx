@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import useSound from 'use-sound';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -15,6 +16,7 @@ import StartPage from '../Components/GameStartScreen/StartScreen';
 import useStyles from './styles';
 import Menu from '../../Menu/Menu';
 import GameButtons from '../Components/Buttons/Buttons';
+import sounds from '../sounds';
 
 enum GameState {
   StartScreen,
@@ -40,6 +42,12 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
   // statistics
   const answers = useRef({ wrong: [] as IWord[], right: [] as IWord[] });
 
+  // sounds
+  const [isSoundsOn, setIsSoundsOn] = useState<boolean>(true);
+  const [playCorrect] = useSound(sounds.correct);
+  const [playWrong] = useSound(sounds.wrong);
+  const [playComplete] = useSound(sounds.complete);
+
   // new game
   useEffect(() => {
     if (!wordsList) return;
@@ -54,7 +62,11 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
     const guessingWord = wordsToGuess[currentWordIndex];
     if (word.id === guessingWord.id) {
       answers.current.right.push(guessingWord);
-    } else answers.current.wrong.push(guessingWord);
+      if (isSoundsOn) playCorrect();
+    } else {
+      answers.current.wrong.push(guessingWord);
+      if (isSoundsOn) playWrong();
+    }
   };
 
   const handleStartClick = () => {
@@ -66,7 +78,10 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
       setCurrentWordIndex(currentWordIndex + 1);
       setGameState(GameState.Question);
       setSelectedWord(null);
-    } else setGameState(GameState.GameOver);
+    } else {
+      if (isSoundsOn) playComplete();
+      setGameState(GameState.GameOver);
+    }
   };
 
   const handleDontKnowClick = () => {
@@ -136,7 +151,7 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
       <>
         <Menu />
         <div className="wrapper wrapper_audiocall">
-          <GameButtons />
+          <GameButtons onClick={() => setIsSoundsOn(!isSoundsOn)} />
           <Container className={classes.root} maxWidth={false}>
             <StartPage game="audiocall" onClick={handleStartClick} />
             <div className="bg_audiocall" />
@@ -152,7 +167,7 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
       <>
         <Menu />
         <div className="wrapper wrapper_audiocall">
-          <GameButtons />
+          <GameButtons onClick={() => setIsSoundsOn(!isSoundsOn)} />
           <Container className={classes.root} maxWidth={false}>
             <GameResults
               wrong={answers.current.wrong}
@@ -171,7 +186,7 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
     <>
       <Menu />
       <div className="wrapper wrapper_oasis">
-        <GameButtons />
+        <GameButtons onClick={() => setIsSoundsOn(!isSoundsOn)} />
         <Container className={classes.root} maxWidth={false}>
           <Grid container direction="column" className={classes.gameGrid}>
             <Grid item container justify="center">

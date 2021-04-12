@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import useSound from 'use-sound';
 import { Button, Card, Badge } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import { IWord } from '../../../interfaces';
@@ -9,6 +10,7 @@ import GameResults from '../Components/GameResults/GameResults';
 import Menu from '../../Menu/Menu';
 import './Sprint.scss';
 import GameButtons from '../Components/Buttons/Buttons';
+import sounds from '../sounds';
 
 interface ISprint {
   wordsList: IWord[];
@@ -35,6 +37,12 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
   const [curStreak, setCurStreak] = useState<number>(0);
   const [maxStreak, setMaxStreak] = useState<number>(0);
 
+  // sounds
+  const [isSoundsOn, setIsSoundsOn] = useState<boolean>(true);
+  const [playCorrect] = useSound(sounds.correct);
+  const [playWrong] = useSound(sounds.wrong);
+  const [playComplete] = useSound(sounds.complete);
+
   useEffect(() => {
     setWords(wordsList);
     setCurrentIndex(0);
@@ -46,6 +54,7 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
         setCurrentWord(words[currentIndex]);
       } else {
         setIsGameEnd(true);
+        if (isSoundsOn) playComplete();
       }
     }
   }, [words, currentIndex]);
@@ -83,6 +92,7 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
     if (answer === isCurrentWorldCorrect) {
       setCountCorrect(countCorrect + 1);
       setCurrentIndex(currentIndex + 1);
+      if (isSoundsOn) playCorrect();
       if (currentWord) {
         setCorrectAnswers([...correctAnswers, currentWord]);
         setScore(score + multiply * 10);
@@ -98,6 +108,7 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
       setCurrentIndex(currentIndex + 1);
       setCurStreak(0);
       setMultiply(1);
+      if (isSoundsOn) playWrong();
       if (currentWord) setWrongAnswers([...wrongAnswers, currentWord]);
     }
     if (currentWord !== undefined) {
@@ -132,7 +143,7 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
     <>
       <Menu />
       <div className="wrapper wrapper_sprint">
-        <GameButtons />
+        <GameButtons onClick={() => setIsSoundsOn(!isSoundsOn)} />
         <div className="sprint">
           {!isGameStart && (
             <StartScreen game="sprint" onClick={() => setIsGmeStart(true)} />
