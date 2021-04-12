@@ -1,7 +1,8 @@
 import React from 'react';
 import GameStatisticCard from './GameStatisticCard';
-import cardGameData from '../../../data/cardGameData';
+// import cardGameData from '../../../data/cardGameData';
 import { ILSGames } from '../../../api';
+import { gameTranslate } from '../../../data/apiData';
 
 const GamesStatistic = ({ games }: { games: ILSGames }) => (
   <>
@@ -16,12 +17,12 @@ const GamesStatistic = ({ games }: { games: ILSGames }) => (
           // id={game.id}
         />
       ))} */}
-      { Object.entries(games).map((item) => (
+      { Object.entries(games).map((item, index) => (
         <GameStatisticCard // TODO DATA: данные по каждой игре за день
           learnedWords={item[1].newWords} // кол-во изученных слов
           procentCorrectAnsw={item[1].rightPercent} // кол-во правильных ответов
           longestStreak={item[1].bestSeries} // длинная серия
-          name={item[0]} // название игры
+          name={gameTranslate[index]} // название игры
           key={item[0]}
           // id={game.id}
         />

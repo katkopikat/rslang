@@ -33,4 +33,4 @@ export const gamesDefault = {
   },
 };
 
-export const a = {};
+export const gameTranslate = ['Спринт', 'Саванна', 'Оазис', 'Аудиовызов'];
