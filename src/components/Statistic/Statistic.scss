@@ -108,9 +108,12 @@
 }
 
 .charts {
-
     &__container {
         max-width: 65vw;
+
+        @media (max-width: 500px) {
+            max-width: 80vw;
+        }
     }
 
     &__wrapper {
@@ -137,14 +140,17 @@
         margin: 0 auto;
         padding-bottom: 3rem;
         margin-bottom: 6rem;
+        max-width: 65vw;
 
         @media (max-width: 500px) {
+            margin-bottom: 1rem;
             padding: 1rem;
+            max-width: 80vw;
         }
     
         h1 {
             @media (max-width: 800px) {
-                font-size: 1.2rem;
+                font-size: 1.1rem;
             }
         }
     }
