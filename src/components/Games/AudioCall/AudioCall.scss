@@ -1,0 +1,64 @@
+.MuiContainer-root.root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.gameGrid {
+  max-width: 900px;
+}
+
+.MuiSvgIcon-root.soundIconBig {
+  font-size: 90px;
+  border-radius: 50%;
+  box-shadow: 0 0 20px #fff;
+  margin: 20px;
+  color: #fff;
+}
+
+.soundIcon {
+  color: #fff;
+}
+
+.MuiGrid-item.wordChoise {
+  margin: 50px 0;
+}
+
+.MuiButton-root {
+  &.answerOption {
+    transition: none;
+    color: #fff;
+    border: 1px solid #fff6;
+  }
+
+  &.answerOptionRight, &.answerOptionRight:hover {
+    background: lightgreen;
+  }
+
+  &.answerOptionWrong, &.answerOptionWrong:hover {
+    background: lightcoral;
+  }
+}
+
+.MuiSvgIcon-root.arrow {
+  font-size: 40px;
+  margin: -10px 20px;
+}
+
+.wordImage {
+  // width: 50vw;
+  // max-width: 300px;
+  height: 50vmin;
+  max-height: 200px;
+  display: block;
+  margin-bottom: 20px;
+  border-radius: 20px;
+}
+
+.MuiTypography-root.current-word {
+  color: #f8f8f8;
+  font-family: 'Gilroy-Bold';
+}

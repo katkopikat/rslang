@@ -13,10 +13,11 @@ import shuffle from '../../../helpers/shuffleArray';
 import { API_URL } from '../../../constants';
 import GameResults from '../Components/GameResults/GameResults';
 import StartPage from '../Components/GameStartScreen/StartScreen';
-import useStyles from './styles';
+// import useStyles from './styles';
 import Menu from '../../Menu/Menu';
 import GameButtons from '../Components/Buttons/Buttons';
 import sounds from '../sounds';
+import './AudioCall.scss';
 
 enum GameState {
   StartScreen,
@@ -32,7 +33,7 @@ interface IProps {
 const numWordOptions = 5;
 
 const AudioCall = ({ wordsList }: IProps): JSX.Element => {
-  const classes = useStyles();
+  // const classes = useStyles();
   const [gameState, setGameState] = useState(GameState.StartScreen);
   const [wordsToGuess, setWordsToGuess] = useState([] as IWord[]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -124,10 +125,11 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
   });
 
   const AnswerOption = (word: IWord, index: number) => {
-    let style = classes.answerOption;
+    // let style = classes.answerOption;
+    let style = 'answerOption';
     if (gameState === GameState.Answer) {
-      if (word.id === selectedWord?.id) style = classes.answerOptionWrong;
-      if (word.id === wordsToGuess[currentWordIndex].id) style = classes.answerOptionRight;
+      if (word.id === selectedWord?.id) style = 'answerOptionWrong';
+      if (word.id === wordsToGuess[currentWordIndex].id) style = 'answerOptionRight';
     }
     return (
       <Button
@@ -152,7 +154,7 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
         <Menu />
         <div className="wrapper wrapper_audiocall">
           <GameButtons onClick={() => setIsSoundsOn(!isSoundsOn)} />
-          <Container className={classes.root} maxWidth={false}>
+          <Container className="root" maxWidth={false}>
             <StartPage game="audiocall" onClick={handleStartClick} />
             <div className="bg_audiocall" />
             <div className="bg_audiocall bg2" />
@@ -168,7 +170,7 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
         <Menu />
         <div className="wrapper wrapper_audiocall">
           <GameButtons onClick={() => setIsSoundsOn(!isSoundsOn)} />
-          <Container className={classes.root} maxWidth={false}>
+          <Container className="root" maxWidth={false}>
             <GameResults
               wrong={answers.current.wrong}
               correct={answers.current.right}
@@ -187,27 +189,27 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
       <Menu />
       <div className="wrapper wrapper_oasis">
         <GameButtons onClick={() => setIsSoundsOn(!isSoundsOn)} />
-        <Container className={classes.root} maxWidth={false}>
-          <Grid container direction="column" className={classes.gameGrid}>
+        <Container className="root" maxWidth={false}>
+          <Grid container direction="column" className="gameGrid">
             <Grid item container justify="center">
               <Grid item>
                 {gameState === GameState.Answer ? (
                   <>
                     <img
-                      className={classes.wordImage}
+                      className="wordImage"
                       src={`${API_URL}/${wordsToGuess[currentWordIndex].image}`}
                       alt=""
                     />
-                    <Typography variant="h4" align="center">
+                    <Typography variant="h4" align="center" className="current-word">
                       {wordsToGuess[currentWordIndex].word}
                       <IconButton onClick={handleSoundClick}>
-                        <VolumeUpIcon className={classes.soundIcon} />
+                        <VolumeUpIcon className="soundIcon" />
                       </IconButton>
                     </Typography>
                   </>
                 ) : (
                   <IconButton onClick={handleSoundClick}>
-                    <VolumeUpIcon className={classes.soundIconBig} />
+                    <VolumeUpIcon className="soundIconBig" />
                   </IconButton>
                 )}
               </Grid>
@@ -216,7 +218,7 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
               item
               container
               justify="space-evenly"
-              className={classes.wordChoise}
+              className="wordChoise"
             >
               {wordsChoice()}
             </Grid>
@@ -224,7 +226,7 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
               <Grid item>
                 {gameState === GameState.Answer ? (
                   <Button variant="contained" onClick={handleNextClick}>
-                    <ArrowRightAltIcon className={classes.arrow} />
+                    <ArrowRightAltIcon className="arrow" />
                   </Button>
                 ) : (
                   <Button variant="contained" onClick={handleDontKnowClick}>
