@@ -74,7 +74,6 @@ const Savanna = ({ wordsList }: ISavanna) => {
   const [canIChoose, setCanIChoose] = useState<boolean>(true);
 
   const [skipWordCount, setSkipWordCount] = useState<number>(0);
-  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
 
   // for lives indicator
   const [lostLives, setLostLives] = useState<number>(0);
@@ -105,6 +104,7 @@ const Savanna = ({ wordsList }: ISavanna) => {
   const [playCorrect] = useSound(sounds.correct);
   const [playWrong] = useSound(sounds.wrong);
   const [playComplete] = useSound(sounds.complete);
+  const [playSkip] = useSound(sounds.skip);
 
   const tick = () => {
     if (isLoading && count > 0) {
@@ -178,11 +178,11 @@ const Savanna = ({ wordsList }: ISavanna) => {
 
   const skipWord = () => {
     setSkipWordCount(skipWordCount + 1);
-    if (skipWordCount >= 2) setIsButtonDisabled(true);
     setIsAnswer(true);
     setShowAnswer(true);
     setWrongAnswers([...wrongAnswers, currentWord]);
     setClassName(classNames.fail);
+    if(isSoundsOn) playSkip();
     setTimeout(() => {
       setNewWord();
     }, 600);
@@ -287,7 +287,7 @@ const Savanna = ({ wordsList }: ISavanna) => {
                 <button
                   className="skip-word-btn"
                   onClick={skipWord}
-                  disabled={isButtonDisabled}
+                  disabled={skipWordCount >= 3}
                   type="button"
                 >
                   Пропустить слово
