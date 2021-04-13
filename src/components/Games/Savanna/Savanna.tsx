@@ -73,6 +73,9 @@ const Savanna = ({ wordsList }: ISavanna) => {
   const [isStart, setIsStart] = useState<boolean>(false);
   const [canIChoose, setCanIChoose] = useState<boolean>(true);
 
+  const [skipWordCount, setSkipWordCount] = useState<number>(0);
+  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
+
   // for lives indicator
   const [lostLives, setLostLives] = useState<number>(0);
   const [lostLivesArray, setLostLivesArray] = useState<number[]>([]);
@@ -165,13 +168,24 @@ const Savanna = ({ wordsList }: ISavanna) => {
     setNewCurrentWord(false);
     setShowAnswer(false);
     setIsPressed(false);
-    setIsCorrect(false);
     setClassName(classNames.successEnd);
     setTimeout(() => {
       setClassName(classNames.fall);
       setIsAnswer(false);
       setCanIChoose(true);
     }, 500);
+  };
+
+  const skipWord = () => {
+    setSkipWordCount(skipWordCount + 1);
+    if (skipWordCount >= 2) setIsButtonDisabled(true);
+    setIsAnswer(true);
+    setShowAnswer(true);
+    setWrongAnswers([...wrongAnswers, currentWord]);
+    setClassName(classNames.fail);
+    setTimeout(() => {
+      setNewWord();
+    }, 600);
   };
 
   const setWrongAnswer = () => {
@@ -235,7 +249,7 @@ const Savanna = ({ wordsList }: ISavanna) => {
 
   useEffect(() => {
     setLSStatistic('savanna', correctAnswers, wrongAnswers, maxStreak);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEnd]);
 
   return (
@@ -254,24 +268,34 @@ const Savanna = ({ wordsList }: ISavanna) => {
           )}
           {isLoading && !isStart && <Loader seconds={count} />}
           {!isEnd && isStart && (
-          <>
-            <div
-              className={`savanna__question ${className}`}
-              onTransitionEnd={() => {
-                if (className === classNames.fall && !isAnswer) {
-                  setWrongAnswer();
-                }
-              }}
-            >
-              <div className="savanna__question-word">
-                {currentWord && currentWord?.word.toLowerCase()}
+            <>
+              <div
+                className={`savanna__question ${className}`}
+                onTransitionEnd={() => {
+                  if (className === classNames.fall && !isAnswer) {
+                    setWrongAnswer();
+                  }
+                }}
+              >
+                <div className="savanna__question-word">
+                  {currentWord && currentWord?.word.toLowerCase()}
+                </div>
               </div>
-            </div>
 
-            <Lives number={LIVES} disabled={lostLivesArray} />
-            <div className="savanna__field">
-              <div className="savanna__options">
-                {translateOptions.length > 0
+              <Lives number={LIVES} disabled={lostLivesArray} />
+              <div className="skip-word-btn__wrapper">
+                <button
+                  className="skip-word-btn"
+                  onClick={skipWord}
+                  disabled={isButtonDisabled}
+                  type="button"
+                >
+                  Пропустить слово
+                </button>
+              </div>
+              <div className="savanna__field">
+                <div className="savanna__options">
+                  {translateOptions.length > 0
                     && translateOptions.map((item: any, idx: number) => (
                       <TranslateOption
                         key={item.id}
@@ -286,10 +310,10 @@ const Savanna = ({ wordsList }: ISavanna) => {
                         isPressed={isPressed && item.id === currentAnswerId}
                       />
                     ))}
+                </div>
               </div>
-            </div>
-            <Crystal isCorrect={isCorrect} />
-          </>
+              <Crystal isCorrect={isCorrect} />
+            </>
           )}
           {isEnd && (
             <GameResults wrong={wrongAnswers} correct={correctAnswers} />
