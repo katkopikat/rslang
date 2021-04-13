@@ -3,7 +3,7 @@ import Switch from '@material-ui/core/Switch';
 import EachDayStatistic from './AllTimeStatistic/EachDayStatistic';
 import GrowthStatistic from './AllTimeStatistic/GrowthStatistic';
 import TodayStatistic from './TodayStatistic/TodayStatistic';
-import { getLSStatistic } from '../../api';
+import { getLSStatistic, getUserStatistic, IStatItem, standardUserStatItem } from '../../api';
 import { gamesDefault } from '../../data/apiData';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -11,26 +11,28 @@ import BGWave from '../BgWave/BGWave';
 import './Statistic.scss';
 
 // TEMP DATA, когда будут данные из БД - удалить
-const datesList: Array<string> = [
-  '31.03.2021',
-  '17.01.2021',
-  '15.12.2020',
-  '1дата1',
-  'дата1',
-  'дата1',
-  '31.03.2021',
-  '17.01.2021',
-  '15.12.2020',
-  '1дата1',
-  'дата1',
-  'дата1',
-];
-const wordsListByDay: Array<number> = [3, 8, 15, 8, 7, 0, 0, 11, 18, 5, 8, 21];
-const wordsPeriodtList: Array<number> = [5, 5, 12, 12, 12, 22, 31, 50, 50, 50, 62, 70, 78];
+// const datesList: Array<string> = [
+//   '31.03.2021',
+//   '17.01.2021',
+//   '15.12.2020',
+//   '1дата1',
+//   'дата1',
+//   'дата1',
+//   '31.03.2021',
+//   '17.01.2021',
+//   '15.12.2020',
+//   '1дата1',
+//   'дата1',
+//   'дата1',
+// ];
+// const wordsListByDay: Array<number> = [3, 8, 15, 8, 7, 0, 0, 11, 18, 5, 8, 21];
+// const wordsPeriodtList: Array<number> = [5, 5, 12, 12, 12, 22, 31, 50, 50, 50, 62, 70, 78];
 
 const Statistic = () => {
   const [switchChart, setSwitch] = useState(true);
   const [dataLSStatistic, setDataLSStatistic] = useState(getLSStatistic());
+  const [dataUserStatisticArray, setDataUserStatisticArray] = useState([] as IStatItem[]);
+  // const [dataUserStatisticAllWords, setDataUserStatisticAllWords] = useState(undefined);
 
   const handleChartSwitch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSwitch(event.target.checked);
@@ -38,6 +40,22 @@ const Statistic = () => {
 
   useEffect(() => {
     setDataLSStatistic(getLSStatistic());
+    async function fetchData() {
+      const response = await getUserStatistic();
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        console.log(JSON.parse(data.optional.stat));
+        setDataUserStatisticArray(JSON.parse(data.optional.stat));
+        // setDataUserStatisticAllWords(data.learnedWords);
+        // setDataUserStatistic();
+      } else {
+        setDataUserStatisticArray([standardUserStatItem]);
+        // setDataUserStatisticAllWords(undefined);
+      }
+    }
+    fetchData();
+    // )();
   }, []);
 
   return (
@@ -67,8 +85,20 @@ const Statistic = () => {
             <span className="switch__label"> Прогресс </span>
           </div>
           { switchChart
-            ? <GrowthStatistic datesList={datesList} wordsPeriodtList={wordsPeriodtList} />
-            : <EachDayStatistic datesList={datesList} wordsListByDay={wordsListByDay} /> }
+            ? (
+              <GrowthStatistic
+                // datesList={dataUserStatisticArray || []}
+                // wordsPeriodtList={dataUserStatisticArray || []}
+                data={dataUserStatisticArray || []}
+              />
+            )
+            : (
+              <EachDayStatistic
+                // datesList={dataUserStatisticArray || []}
+                // wordsListByDay={dataUserStatisticArray || []}
+                data={dataUserStatisticArray || []}
+              />
+            ) }
           { /* TODO DATA:
                       GrowthStatistic datesList: массив дат, в которые юзер учил какие-то слова
                       GrowthStatistic wordsPeriodtList: массив чисел, каждое число

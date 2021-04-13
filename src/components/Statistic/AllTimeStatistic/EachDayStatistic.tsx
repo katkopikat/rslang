@@ -1,12 +1,18 @@
 import React, { useEffect } from 'react';
 import { Chart, ChartPoint } from 'chart.js';
+import { IStatItem } from '../../../api';
 
-interface IEachDayStatistic {
-  datesList: Array<string>;
-  wordsListByDay: Array<number>;
-}
+// interface IEachDayStatistic {
+//   datesList: Array<string>;
+//   wordsListByDay: Array<number>;
+// }
+const getDatesList = (array:IStatItem[]) => array.map((item) => item.date);
+const getWordsListByDay = (array:IStatItem[]) => array.map((item) => item.newWords);
 
-const EachDayStatistic = ({ datesList, wordsListByDay }: IEachDayStatistic) => {
+// const EachDayStatistic = ({ datesList, wordsListByDay }: IEachDayStatistic) => {
+const EachDayStatistic = ({ data } : { data: IStatItem[] }) => {
+  const datesList = getDatesList(data);
+  const wordsListByDay = getWordsListByDay(data);
   const createChart = () => {
     const barContainer = document.querySelector('.charts__container') as HTMLCanvasElement;
 

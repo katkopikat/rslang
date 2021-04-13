@@ -95,7 +95,7 @@ const standardLSStatistic: ILSStatistic = {
   },
 };
 
-type IStatItem = {
+export type IStatItem = {
   date: Date,
   // wordList: IWord[],
   newWords: number,
@@ -116,7 +116,7 @@ interface IUserStatisticStringify {
   }
 }
 
-const standardUserStatItem : IStatItem = {
+export const standardUserStatItem : IStatItem = {
   date: new Date(),
   // wordList: [],
   newWords: 0,
@@ -165,7 +165,7 @@ const isToday = (checkDate:Date) => {
   && checkDate.getFullYear() === today.getFullYear();
 };
 
-const getUserStatistic = async (
+export const getUserStatistic = async (
   // userId: string,
   // token: string,
 ) => {

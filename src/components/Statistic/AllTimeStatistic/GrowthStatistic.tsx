@@ -1,12 +1,20 @@
 import React, { useEffect } from 'react';
 import { Chart, ChartPoint } from 'chart.js';
+import { IStatItem } from '../../../api';
 
-interface IGrowthStatistic {
-  datesList: Array<string>;
-  wordsPeriodtList: Array<number>;
-}
+// interface IGrowthStatistic {
+//   datesList: Array<string>;
+//   wordsPeriodtList: Array<number>;
+// }
 
-const GrowthStatistic = ({ datesList, wordsPeriodtList }: IGrowthStatistic) => {
+const getDatesList = (array:IStatItem[]) => array.map((item) => item.date);
+const getAllWordsList = (array:IStatItem[]) => array.map((item) => item.allWords);
+// const newArray = (array:IStatItem[], name:string) => array.map((item) => item[name]);
+
+// const GrowthStatistic = ({ datesList, wordsPeriodtList }: IStatItem[]) => {
+const GrowthStatistic = ({ data } : { data: IStatItem[] }) => {
+  const datesList = getDatesList(data);
+  const wordsPeriodtList = getAllWordsList(data);
   const createChart = () => {
     const chartContainer = document.querySelector('.charts__container') as HTMLCanvasElement;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
