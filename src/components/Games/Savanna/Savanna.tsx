@@ -195,6 +195,8 @@ const Savanna = ({ wordsList }: ISavanna) => {
     setLostLivesArray([...lostLivesArray, lostLives]);
     setWrongAnswers([...wrongAnswers, currentWord]);
     setClassName(classNames.fail);
+    if (isSoundsOn) playWrong();
+
     setTimeout(() => {
       setNewWord();
     }, 600);
@@ -203,7 +205,6 @@ const Savanna = ({ wordsList }: ISavanna) => {
   const handleClick = (id: string) => {
     setCurrentAnswerId(id);
     setIsAnswer(true);
-    console.log(streak, maxStreak);
 
     if (canIChoose) {
       if (id === currentWord?.id) {
