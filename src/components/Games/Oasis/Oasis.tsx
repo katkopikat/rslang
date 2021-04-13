@@ -12,7 +12,7 @@ import initialState from '../wordInitialState';
 import StartScreen from '../Components/GameStartScreen/StartScreen';
 import Menu from '../../Menu/Menu';
 import unigueElFilter from '../../../helpers/unigueElFilter';
-import { setLSStatistic } from '../../../api';
+import { setLSStatistic, setUserStatistic } from '../../../api';
 import GameButtons from '../Components/Buttons/Buttons';
 import BgGradient from '../Components/BgGradient/BgGradient';
 import './Oasis.scss';
@@ -142,6 +142,9 @@ const Oasis = ({ wordsList }: IOasis) => {
   useEffect(() => {
     setCorrectAnswers(unigueElFilter(correctAnswers, wrongAnswers));
     setLSStatistic('oasis', correctAnswers, wrongAnswers, maxStreak);
+    if (isEndGame && isStartGame) {
+      setUserStatistic(correctAnswers, wrongAnswers);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEndGame]);
 

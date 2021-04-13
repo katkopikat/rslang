@@ -191,7 +191,7 @@ const Textbook: React.FC = () => {
             // }}
           />
           )}
-          <div className="games-card__container">
+          <div className={`games-card__container ${words.length ? '' : 'games-card-inactive'}`}>
             <h1>Игры</h1>
             <h3>Закрепи новые слова при помощи игр.</h3>
             <GamesCards />

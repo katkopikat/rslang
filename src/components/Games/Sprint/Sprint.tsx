@@ -5,7 +5,7 @@ import CheckIcon from '@material-ui/icons/Check';
 import AccessAlarmsIcon from '@material-ui/icons/AccessAlarms';
 import CloseIcon from '@material-ui/icons/Close';
 import { IWord } from '../../../interfaces';
-import { setUserWord, setLSStatistic } from '../../../api';
+import { setUserWord, setLSStatistic, setUserStatistic } from '../../../api';
 import shuffleArray from '../../../helpers/shuffleArray';
 import StartScreen from '../Components/GameStartScreen/StartScreen';
 import GameResults from '../Components/GameResults/GameResults';
@@ -49,9 +49,11 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
   const [playComplete] = useSound(sounds.complete);
 
   useEffect(() => {
-    console.log('useSetStat', maxStreak);
     setLSStatistic('sprint', correctAnswers, wrongAnswers, maxStreak);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (isGameEnd && isGameStart) {
+      setUserStatistic(correctAnswers, wrongAnswers);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isGameEnd]);
 
   useEffect(() => {

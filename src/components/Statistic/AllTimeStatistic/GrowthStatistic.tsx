@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { Line } from 'react-chartjs-2';
+import { IStatItem } from '../../../api';
 
-interface IGrowthStatistic {
-  datesList: Array<string>;
-  wordsPeriodtList: Array<number>;
-}
+const getDatesList = (array:IStatItem[]) => array.map((item) => item.date);
+const getAllWordsList = (array:IStatItem[]) => array.map((item) => item.allWords);
 
-const GrowthStatistic = ({ datesList, wordsPeriodtList }: IGrowthStatistic) => {
+const GrowthStatistic = ({ data } : { data: IStatItem[] }) => {
   const isMobile = useMediaQuery({ query: '(max-width: 500px)' });
   const [borderWidth, setBorderWidth] = useState(2);
   const [pointRadius, setPointRadius] = useState(5);
   const [pointHoverRadius, setPointHoverRadius] = useState(10);
   const [fontSize, setFontSize] = useState(14);
   const [fontSizeY, setFontSizeY] = useState(10);
+
+  const datesList = getDatesList(data);
+  const wordsPeriodtList = getAllWordsList(data);
 
   useEffect(() => {
     if (isMobile) {
@@ -31,7 +33,7 @@ const GrowthStatistic = ({ datesList, wordsPeriodtList }: IGrowthStatistic) => {
     }
   }, [isMobile]);
 
-  const data = {
+  const dataSett = {
     labels: datesList,
     datasets: [
       {
@@ -49,7 +51,7 @@ const GrowthStatistic = ({ datesList, wordsPeriodtList }: IGrowthStatistic) => {
     ],
   };
 
-  const options = {
+  const optionsSett = {
     legend: {
       display: false,
     },
@@ -89,7 +91,7 @@ const GrowthStatistic = ({ datesList, wordsPeriodtList }: IGrowthStatistic) => {
   };
 
   return (
-    <Line data={data} options={options} />
+    <Line data={dataSett} options={optionsSett} />
   );
 };
 

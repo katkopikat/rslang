@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { Bar } from 'react-chartjs-2';
+import { IStatItem } from '../../../api';
 
-interface IEachDayStatistic {
-  datesList: Array<string>;
-  wordsListByDay: Array<number>;
-}
+const getDatesList = (array:IStatItem[]) => array.map((item) => item.date);
+const getWordsListByDay = (array:IStatItem[]) => array.map((item) => item.newWords);
 
-const EachDayStatistic = ({ datesList, wordsListByDay }: IEachDayStatistic) => {
+const EachDayStatistic = ({ data } : { data: IStatItem[] }) => {
+  const datesList = getDatesList(data);
+  const wordsListByDay = getWordsListByDay(data);
+
   const isMobile = useMediaQuery({ query: '(max-width: 500px)' });
   const [fontSize, setFontSize] = useState(14);
   const [fontSizeY, setFontSizeY] = useState(8);
@@ -22,7 +24,7 @@ const EachDayStatistic = ({ datesList, wordsListByDay }: IEachDayStatistic) => {
     }
   }, [isMobile]);
 
-  const data = {
+  const dataSett = {
     labels: datesList,
     datasets: [
       {
@@ -36,7 +38,7 @@ const EachDayStatistic = ({ datesList, wordsListByDay }: IEachDayStatistic) => {
     ],
   };
 
-  const options = {
+  const optionsSett = {
     legend: {
       display: false,
     },
@@ -77,13 +79,9 @@ const EachDayStatistic = ({ datesList, wordsListByDay }: IEachDayStatistic) => {
     },
   };
 
-  // useEffect(() => {
-
-  // }, []);
-
   return (
     <>
-      <Bar data={data} options={options} />
+      <Bar data={dataSett} options={optionsSett} />
     </>
   );
 };

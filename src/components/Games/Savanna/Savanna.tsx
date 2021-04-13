@@ -11,7 +11,7 @@ import Crystal from './Crystal/Crystal';
 import StartScreen from '../Components/GameStartScreen/StartScreen';
 import Loader from '../Components/Loader/Loader';
 import GameButtons from '../Components/Buttons/Buttons';
-import { setLSStatistic } from '../../../api';
+import { setLSStatistic, setUserStatistic } from '../../../api';
 import BgGradient from '../Components/BgGradient/BgGradient';
 import './Savanna.scss';
 import '../Styles/background.scss';
@@ -252,6 +252,9 @@ const Savanna = ({ wordsList }: ISavanna) => {
 
   useEffect(() => {
     setLSStatistic('savanna', correctAnswers, wrongAnswers, maxStreak);
+    if (isEnd && isStart) {
+      setUserStatistic(correctAnswers, wrongAnswers);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEnd]);
 
