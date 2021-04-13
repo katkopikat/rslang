@@ -25,7 +25,7 @@ const WordsList = ({
 
   useEffect(() => setActiveWord(words[0]), [words]);
 
-  if (!words.length) return <h3 className="wordslist-nowords">нет слов в этом разделе</h3>;
+  if (!words.length) return <h3 className="wordslist-nowords">В этом разделе еще нет слов.</h3>;
   return (
     <div className="textbook__word-container">
       <div className="grid-container">

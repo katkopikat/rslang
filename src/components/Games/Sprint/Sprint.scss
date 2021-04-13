@@ -7,24 +7,157 @@
   flex-direction: column;
   position: relative;
 
-  &-stat {
+  &__wrapper {
     display: flex;
-    justify-content: space-around;
-    min-width: 480px;
-    flex-direction: row;
-    font-size: 1.5rem;
+    flex-direction: column;
+    align-items: center;
   }
-  .MuiBadge-colorPrimary {
-    color: #fff;
-    background-color: #35c77f;
-}
-  .sprint_card{
+
+  &__content {
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
-    min-width: 220px;
   }
+
+  &__timer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.5rem;
+    margin-bottom: 3rem;
+
+    svg {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  &__stat {
+    display: flex;
+    margin-bottom: 1.5rem;
+
+    &-multiply {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      border: 3px solid #f0f0f0a1;
+      padding: 0.4rem 1rem;
+      border-radius: 2rem;
+      margin-right: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1rem;
+
+      svg {
+        font-size: 1.2rem;
+        margin: 0 0.5rem;
+      }
+    }
+
+    &-current-score {
+      margin-left: 1rem;
+    }
+  }
+
+  &__score {
+    font-size: 0.9rem;
+    border: 3px solid #ffc53d;
+    padding: 0.4rem 1rem;
+    border-radius: 2rem;
+    color: #ffc53d;
+    font-family: 'Gilroy-Bold';
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+  }
+
+  &__words {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      letter-spacing: 0.15rem;
+      margin-bottom: 3rem;
+
+      h2 {
+        color: #FFC53D;
+        font-size: 3rem;
+        font-family: 'Gilroy-SemiBold';
+        padding: 0.5rem;
+     }
+
+      h4:first-of-type{
+        color: white;
+        margin: 0.3rem;
+        font-family: 'Gilroy-Regular';
+        font-size: 0.9rem;
+        letter-spacing: 0.2rem;
+      }
+
+      h4:last-of-type {
+        color: white;
+        margin: 0.3rem;
+        font-family: 'Gilroy-Regular';
+        font-size: 1.4rem;
+        letter-spacing: 0.2rem;
+      }
+  }
+
+  &__btns {
+    color: white;
+    font-family: 'Gilroy-Medium';
+    font-size: 1rem;
+    border-radius: none;
+    margin-top: 5rem;
+
+      &-true {
+        padding: 0.6rem 1.3rem;
+        background: none;
+        color: #35c77f;
+        font-size: 0.9rem;
+        font-family: 'Gilroy-SemiBold';
+        letter-spacing: 0.05rem;
+        border: 3px solid #35c77f;
+        border-bottom-left-radius: 1.5rem;
+        border-top-left-radius: 1.5rem;
+        border-right: none;
+
+        &:hover {
+          background-color: #35c77f;
+          color: white;
+          cursor: pointer;
+        }
+      }
+
+      &-false {
+        border: 3px solid #f50057;
+        border-top-right-radius: 1.5rem;
+        border-bottom-right-radius: 1.5rem;
+        padding: 0.6rem 1.3rem;
+        background: none;
+        color: #f50057;
+        font-size: 0.9rem;
+        font-family: 'Gilroy-SemiBold';
+        letter-spacing: 0.05rem;
+        padding: 0.6rem 1.3rem;
+
+        &:hover {
+          background-color: #f50057;
+          color: white;
+          cursor: pointer;
+        }
+      }
+  }
+
+  .MuiBadge-root {
+    svg {
+      font-size: 4rem;
+      opacity: 0.1;
+    }
+  }
+
+  .MuiBadge-colorPrimary {
+    color: black;
+    background-color: #ffc53d;
+  }
+
 }
 
 .wrapper_sprint {

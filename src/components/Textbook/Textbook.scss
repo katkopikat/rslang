@@ -79,5 +79,13 @@ background-color: bg-color;
 		display: flex;
 		gap: 1rem;
 	}
+
+	.wordslist-nowords {
+		margin-top: 0.5rem;
+		margin-bottom: 4rem;
+		font-size: 1rem;
+		font-family: 'Gilroy-RegularItalic';
+		color: #2c2647;
+	}
 }
 

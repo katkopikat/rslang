@@ -12,9 +12,12 @@ import initialState from '../wordInitialState';
 import StartScreen from '../Components/GameStartScreen/StartScreen';
 import Menu from '../../Menu/Menu';
 import unigueElFilter from '../../../helpers/unigueElFilter';
+import { setLSStatistic, setUserStatistic } from '../../../api';
+import GameButtons from '../Components/Buttons/Buttons';
+import BgGradient from '../Components/BgGradient/BgGradient';
 import './Oasis.scss';
 import '../Styles/background.scss';
-import GameButtons from '../Components/Buttons/Buttons';
+import '../../MainPage/BgAnimation.scss';
 import sounds from '../sounds';
 
 interface ILetterStatus {
@@ -131,10 +134,19 @@ const Oasis = ({ wordsList }: IOasis) => {
       }
     }
 
-    /* if correctAnswers and wrongAnswers added in the dependencies,
+  /* if correctAnswers and wrongAnswers added in the dependencies,
   then the component is updated, although this is not necessary */
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wordsList, currentIndex]);
+
+  useEffect(() => {
+    setCorrectAnswers(unigueElFilter(correctAnswers, wrongAnswers));
+    setLSStatistic('oasis', correctAnswers, wrongAnswers, maxStreak);
+    if (isEndGame && isStartGame) {
+      setUserStatistic(correctAnswers, wrongAnswers);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEndGame]);
 
   return (
     <>
@@ -143,72 +155,70 @@ const Oasis = ({ wordsList }: IOasis) => {
         <GameButtons onClick={() => setIsSoundsOn(!isSoundsOn)} />
         <div className="oasis">
           {!isStartGame && (
-            <StartScreen game="oasis" onClick={() => setIsStartGame(true)} />
+          <StartScreen
+            game="oasis"
+            onClick={() => setIsStartGame(true)}
+          />
           )}
 
           {!isEndGame && isStartGame && (
-            <div className="oasis__wrapper">
-              <StatusBadge correct={countCorrect} error={countWrong} />
-              <Hints currentWord={currentWord} setUserWord={setUserWord} />
-              <Sentence currentWord={currentWord} />
+          <div className="oasis__wrapper">
+            <StatusBadge correct={countCorrect} error={countWrong} />
+            <Hints currentWord={currentWord} setUserWord={setUserWord} />
+            <Sentence currentWord={currentWord} />
 
-              <form className="oasis__input" noValidate autoComplete="off">
-                {wrongWord ? <Letters letterList={letterList} /> : null}
-                <TextField
-                  id="standard-basic"
-                  variant="filled"
-                  value={userWord}
-                  onChange={(e) => {
-                    setUserWord(e.target.value);
+            <form className="oasis__input" noValidate autoComplete="off">
+              {wrongWord ? <Letters letterList={letterList} /> : null}
+              <TextField
+                id="standard-basic"
+                variant="filled"
+                value={userWord}
+                onChange={(e) => {
+                  setUserWord(e.target.value);
+                }}
+                onFocus={() => handleFocus()}
+              />
+
+              {disableCheckBtn ? (
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    setCurrentIndex(currentIndex + 1);
                   }}
-                  onFocus={() => handleFocus()}
-                />
+                >
+                  Далее
+                </Button>
+              ) : (
+                <div className="oasis__btns">
+                  <Button
+                    variant="contained"
+                    onBlur={() => setWrong(false)}
+                    onClick={() => {
+                      checkAnswer(userWord, currentWord.word);
+                    }}
+                  >
+                    Проверить
+                  </Button>
 
-                {disableCheckBtn ? (
                   <Button
                     variant="contained"
                     onClick={() => {
-                      setCurrentIndex(currentIndex + 1);
+                      showAnswer();
                     }}
                   >
-                    Далее
+                    Не знаю
                   </Button>
-                ) : (
-                  <div className="oasis__btns">
-                    <Button
-                      variant="contained"
-                      onBlur={() => setWrong(false)}
-                      onClick={() => {
-                        checkAnswer(userWord, currentWord.word);
-                      }}
-                    >
-                      Проверить
-                    </Button>
-
-                    <Button
-                      variant="contained"
-                      onClick={() => {
-                        showAnswer();
-                      }}
-                    >
-                      Не знаю
-                    </Button>
-                  </div>
-                )}
-              </form>
-            </div>
+                </div>
+              )}
+            </form>
+          </div>
           )}
           {isEndGame && (
-            <GameResults wrong={wrongAnswers} correct={correctAnswers} />
+          <GameResults wrong={wrongAnswers} correct={correctAnswers} />
           )}
         </div>
       </div>
-      {/*
-      <BgGradient gameName="oasis" />  */}
-
-      <div className="bg_oasis" />
-      <div className="bg_oasis bg2" />
-      <div className="bg_oasis bg3" />
+      <BgGradient gameName="oasis" />
     </>
   );
 };

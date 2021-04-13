@@ -11,6 +11,10 @@
   height: 100vh;
   padding: 50px 0;
 
+  @media (max-width: 500px) {
+    width: auto;
+  }
+
   &_block-one {
     height: 100%;
     display: flex;
@@ -21,6 +25,9 @@
 
   &_block-two {
     width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
     @media (max-width: 500px) {
       width: 90%;
@@ -31,6 +38,10 @@
     font-size: 3.5rem;
     margin-bottom: 40px;
     font-family: "Gilroy-Heavy";
+
+    @media (max-width: 500px) {
+      font-size: 2.5rem;
+    }
 
     &_two {
       font-size: 0.8rem;
@@ -93,6 +104,13 @@
   font-size: 1rem;
   opacity: 0.7;
   border: #fff solid 2px;
+  flex-shrink: 0;
+  margin: 0.2rem;
+
+  @media (max-width: 500px) {
+    width: 35px;
+    height: 35px;
+  }
 
   &:hover {
     cursor: pointer;

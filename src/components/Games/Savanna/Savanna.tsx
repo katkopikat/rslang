@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import useSound from 'use-sound';
 import shuffle from '../../../commonFunc/shuffle';
 import { IWord } from '../../../interfaces';
-import './Savanna.scss';
-import '../Styles/background.scss';
 import sounds from '../sounds';
 import Lives from './LivesIndicator/Lives';
 import GameResults from '../Components/GameResults/GameResults';
@@ -13,7 +11,11 @@ import Crystal from './Crystal/Crystal';
 import StartScreen from '../Components/GameStartScreen/StartScreen';
 import Loader from '../Components/Loader/Loader';
 import GameButtons from '../Components/Buttons/Buttons';
-import { setLSStatistic } from '../../../api';
+import { setLSStatistic, setUserStatistic } from '../../../api';
+import BgGradient from '../Components/BgGradient/BgGradient';
+import './Savanna.scss';
+import '../Styles/background.scss';
+import '../../MainPage/BgAnimation.scss';
 
 const NUMBER_OF_THE_OPTIONS: number = 4;
 const LIVES: number = 5;
@@ -182,7 +184,7 @@ const Savanna = ({ wordsList }: ISavanna) => {
     setShowAnswer(true);
     setWrongAnswers([...wrongAnswers, currentWord]);
     setClassName(classNames.fail);
-    if(isSoundsOn) playSkip();
+    if (isSoundsOn) playSkip();
     setTimeout(() => {
       setNewWord();
     }, 600);
@@ -250,6 +252,9 @@ const Savanna = ({ wordsList }: ISavanna) => {
 
   useEffect(() => {
     setLSStatistic('savanna', correctAnswers, wrongAnswers, maxStreak);
+    if (isEnd && isStart) {
+      setUserStatistic(correctAnswers, wrongAnswers);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEnd]);
 
@@ -321,9 +326,7 @@ const Savanna = ({ wordsList }: ISavanna) => {
           )}
         </div>
       </div>
-      <div className="bg_savanna" />
-      <div className="bg_savanna bg2" />
-      <div className="bg_savanna bg3" />
+      <BgGradient gameName="savanna" />
     </>
   );
 };

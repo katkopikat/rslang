@@ -9,9 +9,7 @@ import { useSelector } from 'react-redux';
 import MainPage from '../MainPage/MainPage';
 import Textbook from '../Textbook/Textbook';
 import Statistic from '../Statistic/Statistic';
-// import LoginPage from '../Auth/LoginPage';
 import AuthPage from '../Auth/AuthPage';
-// import RegistrationPage from '../Auth/RegistrationPage';
 
 import Oasis from '../Games/Oasis/Oasis';
 import Savanna from '../Games/Savanna/Savanna';
@@ -40,23 +38,9 @@ const App: React.FC = () => {
             )}
           />
 
-          {/* <Route
-            path="/login"
-            render={({ history }: HistoryProps) => (
-              <LoginPage history={history} />
-            )}
-          />
-          <Route
-            path="/register"
-            render={({ history }: HistoryProps) => (
-              <RegistrationPage history={history} />
-            )}
-          /> */}
-
           <Route path="/" exact render={() => <MainPage />} />
           <Route path="/textbook" render={() => <Textbook />} />
           <Route path="/statistic" render={() => <Statistic />} />
-          {/* <Route path="/games/main" render={() => <span> Main </span>} /> */}
 
           <Route
             path="/games/savanna"
