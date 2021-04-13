@@ -117,7 +117,7 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
     if (!wordsToGuess.length || gameState !== GameState.Question) return;
     const guessingWord = wordsToGuess[currentWordIndex];
     let wordsArr: IWord[] = wordsList;
-    if (wordsList.length < 5) {
+    if (wordsList.length < 8) {
       wordsArr = [...wordsList, ...additionalOptions];
     }
     const wrongWords = shuffle<IWord>(wordsArr)

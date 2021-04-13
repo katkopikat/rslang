@@ -94,15 +94,13 @@ const StartScreen = ({ game, onClick }: IStartScreen) => {
         }
       }
     }
-    if (viewMode === ViewMode.Dictionary) {
-      if (words.length < 6) {
-        dispatch(
-          wordsApi.fetchForAdditionalAnswerOptions(
-            group,
-            randomInteger(0, NUMBER_OF_THE_PAGES - 1),
-          ),
-        );
-      }
+    if (words.length < 10) {
+      dispatch(
+        wordsApi.fetchForAdditionalAnswerOptions(
+          group,
+          randomInteger(0, NUMBER_OF_THE_PAGES - 1),
+        ),
+      );
     }
   }, []);
 

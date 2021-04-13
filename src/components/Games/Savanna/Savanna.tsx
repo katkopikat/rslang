@@ -159,7 +159,7 @@ const Savanna = ({ wordsList }: ISavanna) => {
 
   useEffect(() => {
     let wordsArr: IWord[] = words;
-    if (words.length < 4) {
+    if (words.length < 8) {
       wordsArr = [...words, ...additionalOptions];
     }
     const wrong: IWord[] = shuffle(wordsArr)
