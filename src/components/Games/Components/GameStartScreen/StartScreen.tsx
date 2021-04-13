@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../../redux/rootReducer';
-import { fetchWords } from '../../../../redux/actions/appActions';
-import { API_URL } from '../../../../constants';
+import {
+  fetchWords,
+  setGroup,
+  setPage,
+} from '../../../../redux/actions/appActions';
+import { API_URL, ViewMode } from '../../../../constants';
 import './StartScreen.scss';
 import games from '../../../../data/games.json';
 import { IGameDescription } from '../../../../interfaces';
 import randomInteger from '../../../../commonFunc/random';
+
+import wordsApi from '../../../../redux/actions/wordsApiActions';
+import { useAuth } from '../../../AuthContext';
 
 const NUMBER_OF_THE_PAGES = 30;
 
@@ -38,11 +45,18 @@ const Level = ({
 
 const StartScreen = ({ game, onClick }: IStartScreen) => {
   const gamePresets: { [dynamic: string]: IGameDescription } = games;
-  const isLevel = useSelector((state: RootState) => state.app.startGameFromMenu);
-  const dispatch = useDispatch();
 
-  const [group, setGroup] = useState(0);
-  const [page, setPage] = useState(0);
+  const dispatch = useDispatch();
+  const { userId, token } = useAuth();
+
+  const words = useSelector((state: RootState) => state.app.words);
+  const group = useSelector((state: RootState) => state.app.group);
+  const page = useSelector((state: RootState) => state.app.page);
+  const viewMode = useSelector((state: RootState) => state.app.viewMode);
+  const isLevel = useSelector(
+    (state: RootState) => state.app.startGameFromMenu,
+  );
+
   const [active, setActive] = useState<number[]>([]);
   const [buttonActive, setButtonActive] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -69,9 +83,32 @@ const StartScreen = ({ game, onClick }: IStartScreen) => {
     }
   }, [wordsUrl]);
 
+  useEffect(() => {
+    if (viewMode === ViewMode.Textbook) {
+      if (userId && !isLevel) {
+        for (let i = page - 1; i >= 0; i -= 1) {
+          if (words.length >= 20) break;
+          dispatch(
+            wordsApi.fetchAdditionalWordsForGame(group, i, userId, token),
+          );
+        }
+      }
+    }
+    if (viewMode === ViewMode.Dictionary) {
+      if (words.length < 6) {
+        dispatch(
+          wordsApi.fetchForAdditionalAnswerOptions(
+            group,
+            randomInteger(0, NUMBER_OF_THE_PAGES - 1),
+          ),
+        );
+      }
+    }
+  }, []);
+
   const handleClick = (id: number) => {
-    setGroup(id);
-    setPage(randomInteger(0, NUMBER_OF_THE_PAGES - 1));
+    dispatch(setGroup(id));
+    dispatch(setPage(randomInteger(0, NUMBER_OF_THE_PAGES - 1)));
     setButtonDisabled(false);
     setButtonActive(true);
     setActive([id]);

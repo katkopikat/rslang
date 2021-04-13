@@ -1,5 +1,5 @@
 import request from '../../helpers/request';
-import { DictTabs } from '../../constants';
+import { DictTabs, ViewMode } from '../../constants';
 import {
   SET_WORDS,
   SET_IS_LEVEL,
@@ -11,10 +11,23 @@ import {
   SET_DELETED_WORDS_COUNT,
   SET_DIFFICULT_WORDS_COUNT,
   SET_LEARNING_WORDS_COUNT,
+  SET_ADDITIONAL_WORDS,
+  SET_ADDITIONAL_ANSWER_OPTIONS,
+  SET_VIEW_MODE,
 } from '../types';
 
 export const setWords = (words: any) => ({
   type: SET_WORDS,
+  payload: words,
+});
+
+export const setAdditionalWords = (words: any) => ({
+  type: SET_ADDITIONAL_WORDS,
+  payload: words,
+});
+
+export const setAdditionalAnswerOptions = (words: any) => ({
+  type: SET_ADDITIONAL_ANSWER_OPTIONS,
   payload: words,
 });
 
@@ -51,6 +64,11 @@ export const setPaginationCount = (value: number) => ({
 
 export const setDictActiveTab = (value: DictTabs) => ({
   type: SET_DICT_TAB,
+  value,
+});
+
+export const setViewMode = (value: ViewMode) => ({
+  type: SET_VIEW_MODE,
   value,
 });
 

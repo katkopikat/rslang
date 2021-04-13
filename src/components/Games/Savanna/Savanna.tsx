@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import useSound from 'use-sound';
+import { RootState } from '../../../redux/rootReducer';
 import shuffle from '../../../commonFunc/shuffle';
 import { IWord } from '../../../interfaces';
 import sounds from '../sounds';
@@ -108,6 +110,8 @@ const Savanna = ({ wordsList }: ISavanna) => {
   const [playComplete] = useSound(sounds.complete);
   const [playSkip] = useSound(sounds.skip);
 
+  const additionalOptions = useSelector((state: RootState) => state.app.additionalAnswerOptions);
+
   const tick = () => {
     if (isLoading && count > 0) {
       setCount(count - 1);
@@ -154,7 +158,11 @@ const Savanna = ({ wordsList }: ISavanna) => {
   }, [words, newCurrentWord]);
 
   useEffect(() => {
-    const wrong: IWord[] = shuffle(words)
+    let wordsArr: IWord[] = words;
+    if (words.length < 4) {
+      wordsArr = [...words, ...additionalOptions];
+    }
+    const wrong: IWord[] = shuffle(wordsArr)
       .filter((el: IWord) => el.id !== currentWord?.id)
       .slice(0, NUMBER_OF_THE_OPTIONS - 1);
     const right: IWord[] = words.filter(
