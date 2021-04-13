@@ -52,7 +52,7 @@ interface ILSStatistic {
   games: {[key in GameNames] : ILSStatisticOptionalGames};
 }
 
-const standartLSStatistic: ILSStatistic = {
+const standardLSStatistic: ILSStatistic = {
   date: new Date(),
   allGamesRight: 0,
   allGamesWrong: 0,
@@ -95,9 +95,43 @@ const standartLSStatistic: ILSStatistic = {
   },
 };
 
-// TODO use games for auth statistic
+type IStatItem = {
+  date: Date,
+  // wordList: IWord[],
+  newWords: number,
+  allWords: number,
+};
+interface IUserStatistic {
+  learnedWords: number;
+  optional: {
+    stat: IStatItem[],
+    wordList: string[],
+  }
+}
+interface IUserStatisticStringify {
+  learnedWords: number;
+  optional: {
+    stat: string,
+    wordList: string,
+  }
+}
 
-const standartBody: IWordBody = {
+const standardUserStatItem : IStatItem = {
+  date: new Date(),
+  // wordList: [],
+  newWords: 0,
+  allWords: 0,
+};
+
+const standardUserStatistic: IUserStatistic = {
+  learnedWords: 0,
+  optional: {
+    stat: [standardUserStatItem],
+    wordList: [],
+  },
+};
+
+const standardBody: IWordBody = {
   difficulty: 'hard',
   optional: {
     isDeleted: false,
@@ -124,6 +158,150 @@ const standartBody: IWordBody = {
   },
 };
 
+const isToday = (checkDate:Date) => {
+  const today = new Date();
+  return checkDate.getDate() === today.getDate()
+  && checkDate.getMonth() === today.getMonth()
+  && checkDate.getFullYear() === today.getFullYear();
+};
+
+const getUserStatistic = async (
+  // userId: string,
+  // token: string,
+) => {
+  const userId = localStorage.getItem('userId');
+  const token = localStorage.getItem('token');
+  if (token) {
+    try {
+      const data = await request('GET', `${API_URL_USERS}/${userId}/statistics`, false, token);
+      return data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+  throw new Error('auth error');
+};
+
+const getUniqWords = (main:string[], check:string[]) => {
+  let result: string[] = [];
+  check.forEach((item) => {
+    if (main.includes(item) === false) result = [...result, item];
+  });
+  return result;
+};
+// firstArray.filter(
+  // (firstItem) => !secondArray.find((secondItem) => firstItem === secondItem),
+// );
+
+const convertToStringArray = (array:IWord[]) => array.map((item) => item.id);
+
+export const upsertUserStatistic = async (
+  oldBody: IUserStatistic = standardUserStatistic,
+  correctAnswers: IWord[],
+  wrongAnswers: IWord[],
+) => {
+  const userId = localStorage.getItem('userId');
+  const token = localStorage.getItem('token');
+  if (token && userId) {
+    const newBody:IUserStatistic = deepClone(oldBody);
+    const allGameWords = [...correctAnswers, ...wrongAnswers];
+    if (newBody.learnedWords === 0) {
+      // newBody.id = userId;
+      newBody.learnedWords = allGameWords.length;
+      // console.log(newBody.optional);
+      newBody.optional.stat[0].date = new Date();
+      newBody.optional.wordList = convertToStringArray(allGameWords);
+      newBody.optional.stat[0].newWords = allGameWords.length;
+      newBody.optional.stat[0].allWords = allGameWords.length;
+    } else {
+      const lastArrayItem = newBody.optional.stat.length;
+      if (isToday(new Date(newBody.optional.stat[lastArrayItem - 1].date))) {
+        const uniqWordsArray = getUniqWords(
+          newBody.optional.wordList,
+          convertToStringArray(allGameWords),
+        );
+        if (uniqWordsArray.length) {
+          newBody.learnedWords += uniqWordsArray.length;
+          newBody.optional.stat[lastArrayItem - 1].allWords += uniqWordsArray.length;
+          newBody.optional.stat[lastArrayItem - 1].newWords += uniqWordsArray.length;
+          newBody.optional.wordList = [
+            ...newBody.optional.wordList,
+            ...uniqWordsArray,
+          ];
+        }
+      } else {
+        const uniqWordsArray = getUniqWords(
+          newBody.optional.wordList,
+          convertToStringArray(allGameWords),
+        );
+        if (uniqWordsArray.length) {
+          newBody.learnedWords += uniqWordsArray.length;
+          const lastAllWords = newBody.optional.stat[lastArrayItem - 1].allWords;
+          const lastNewWords = uniqWordsArray.length;
+          const lastWordList = [
+            ...newBody.optional.wordList,
+            ...uniqWordsArray,
+          ];
+          newBody.optional.wordList = [...lastWordList];
+          const newArrayItem: IStatItem = {
+            date: new Date(),
+            newWords: lastNewWords,
+            allWords: lastAllWords + uniqWordsArray.length,
+          };
+          newBody.optional.stat = [...newBody.optional.stat, newArrayItem];
+        }
+      }
+    }
+    console.log(JSON.stringify(newBody));
+    console.log(JSON.stringify(newBody).length);
+    console.log(JSON.stringify(newBody.optional));
+    console.log(JSON.stringify(newBody.optional).length);
+    const stringifyBody :IUserStatisticStringify = {
+      learnedWords: newBody.learnedWords,
+      optional: {
+        stat: JSON.stringify(newBody.optional.stat),
+        wordList: JSON.stringify(newBody.optional.wordList),
+      },
+    };
+    // newBody.optional.stat = JSON.stringify(newBody.optional.stat);
+    // newBody.optional.wordList = JSON.stringify(newBody.optional.wordList);
+    try {
+      const data = await request('PUT', `${API_URL_USERS}/${userId}/statistics`, stringifyBody, token);
+      return data;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+  throw new Error('auth error');
+};
+
+export const setUserStatistic = async (
+  correctAnswers: IWord[],
+  wrongAnswers: IWord[],
+) => {
+  const userId = localStorage.getItem('userId');
+  const token = localStorage.getItem('token');
+  if (token && userId) {
+    const getStatResult = await getUserStatistic();
+    if (getStatResult.ok) {
+      const oldStatResult:IUserStatisticStringify = deepClone(await getStatResult.json());
+      // const stat = JSON.parse(oldStatResult.optional.stat);
+      const statResult:IUserStatistic = {
+        learnedWords: oldStatResult.learnedWords,
+        optional: {
+          stat: JSON.parse(oldStatResult.optional.stat),
+          wordList: JSON.parse(oldStatResult.optional.wordList),
+        },
+      };
+      console.log('lastStatRes', statResult);
+      console.log('oldStatResult', oldStatResult);
+      upsertUserStatistic(statResult, correctAnswers, wrongAnswers);
+    } else {
+      upsertUserStatistic(undefined, correctAnswers, wrongAnswers);
+    }
+  }
+};
+
 export const createUserWord = async (
   word:IWord,
   difficulty:string,
@@ -133,28 +311,28 @@ export const createUserWord = async (
   const userId = localStorage.getItem('userId');
   const token = localStorage.getItem('token');
   const { id: wordId } = word;
-  const body:IWordBody = deepClone(standartBody);
+  const body:IWordBody = deepClone(standardBody);
   // const body = {
-  //   ...standartBody,
+  //   ...standardBody,
   //   optional: {
-  //     ...standartBody.optional,
+  //     ...standardBody.optional,
   //     games: {
-  //       ...standartBody.optional.games,
+  //       ...standardBody.optional.games,
   //       [GameNames.sprint]: {
-  //         standartBody.optional.games[GameNames.sprint].right,
-  //         standartBody.optional.games[GameNames.sprint].wrong,
+  //         standardBody.optional.games[GameNames.sprint].right,
+  //         standardBody.optional.games[GameNames.sprint].wrong,
   //       },
   //       [GameNames.savanna]: {
-  //         standartBody.optional.games[GameNames.savanna].right,
-  //         standartBody.optional.games[GameNames.savanna].wrong,
+  //         standardBody.optional.games[GameNames.savanna].right,
+  //         standardBody.optional.games[GameNames.savanna].wrong,
   //       },
   //       [GameNames.oasis]: {
-  //         standartBody.optional.games[GameNames.oasis].right,
-  //         standartBody.optional.games[GameNames.oasis].wrong,
+  //         standardBody.optional.games[GameNames.oasis].right,
+  //         standardBody.optional.games[GameNames.oasis].wrong,
   //       },
   //       [GameNames.audioCall]: {
-  //         standartBody.optional.games[GameNames.audioCall].right,
-  //         standartBody.optional.games[GameNames.audioCall].wrong,
+  //         standardBody.optional.games[GameNames.audioCall].right,
+  //         standardBody.optional.games[GameNames.audioCall].wrong,
   //       },
   //     }
   //   },
@@ -261,13 +439,6 @@ export const setUserWord = async (
   return null;
 };
 
-const isToday = (checkDate:Date) => {
-  const today = new Date();
-  return checkDate.getDate() === today.getDate()
-  && checkDate.getMonth() === today.getMonth()
-  && checkDate.getFullYear() === today.getFullYear();
-};
-
 export const getLSStatistic = ():ILSStatistic|undefined => {
   const item = localStorage.getItem('statistic');
   if (typeof item === 'string') {
@@ -345,7 +516,7 @@ export const setLSStatistic = (
     newLSStat.games[currentGame].wordsList = newGameWordsList;
     updateLSStatistic(newLSStat);
   } else {
-    const newLSStat:ILSStatistic = deepClone(standartLSStatistic);
+    const newLSStat:ILSStatistic = deepClone(standardLSStatistic);
     newLSStat.date = new Date();
     newLSStat.allGamesRight = correctAnswers.length;
     newLSStat.allGamesWrong = wrongAnswers.length;
