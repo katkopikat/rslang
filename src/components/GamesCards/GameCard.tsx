@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setIsLevel } from '../../redux/actions/appActions';
+import { setStartGameFromMenu } from '../../redux/actions/appActions';
 
 interface IGameCard {
   linkTo: string;
@@ -21,7 +21,7 @@ const GameCards = ({
       <div
         role="presentation"
         className="card-game"
-        onClick={() => dispatch(setIsLevel(false))}
+        onClick={() => dispatch(setStartGameFromMenu(false))}
         onKeyDown={() => null}
       >
         <img className="card-game-image" src={img} alt={name} />

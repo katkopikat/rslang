@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import useSound from 'use-sound';
 import shuffle from '../../../commonFunc/shuffle';
 import { IWord } from '../../../interfaces';
-
+import sounds from '../sounds';
 import Lives from './LivesIndicator/Lives';
 import GameResults from '../Components/GameResults/GameResults';
 import initialState from '../wordInitialState';
 import Menu from '../../Menu/Menu';
-
 import Crystal from './Crystal/Crystal';
 import StartScreen from '../Components/GameStartScreen/StartScreen';
 import Loader from '../Components/Loader/Loader';
-
 import GameButtons from '../Components/Buttons/Buttons';
+import { setLSStatistic } from '../../../api';
 import BgGradient from '../Components/BgGradient/BgGradient';
 import './Savanna.scss';
 import '../Styles/background.scss';
@@ -75,6 +75,8 @@ const Savanna = ({ wordsList }: ISavanna) => {
   const [isStart, setIsStart] = useState<boolean>(false);
   const [canIChoose, setCanIChoose] = useState<boolean>(true);
 
+  const [skipWordCount, setSkipWordCount] = useState<number>(0);
+
   // for lives indicator
   const [lostLives, setLostLives] = useState<number>(0);
   const [lostLivesArray, setLostLivesArray] = useState<number[]>([]);
@@ -87,6 +89,8 @@ const Savanna = ({ wordsList }: ISavanna) => {
   // for results
   const [wrongAnswers, setWrongAnswers] = useState<IWord[]>([]);
   const [correctAnswers, setCorrectAnswers] = useState<IWord[]>([]);
+  const [streak, setStreak] = useState<number>(0);
+  const [maxStreak, setMaxScreak] = useState<number>(0);
 
   // for transitions
   const [className, setClassName] = useState<string>('');
@@ -96,6 +100,13 @@ const Savanna = ({ wordsList }: ISavanna) => {
   // for loader
   const [count, setCount] = useState<number>(3);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  // sounds
+  const [isSoundsOn, setIsSoundsOn] = useState<boolean>(true);
+  const [playCorrect] = useSound(sounds.correct);
+  const [playWrong] = useSound(sounds.wrong);
+  const [playComplete] = useSound(sounds.complete);
+  const [playSkip] = useSound(sounds.skip);
 
   const tick = () => {
     if (isLoading && count > 0) {
@@ -135,6 +146,7 @@ const Savanna = ({ wordsList }: ISavanna) => {
       } else {
         timer = setTimeout(() => {
           setIsEnd(true);
+          if (isSoundsOn) playComplete();
         }, 1000);
       }
     }
@@ -158,13 +170,24 @@ const Savanna = ({ wordsList }: ISavanna) => {
     setNewCurrentWord(false);
     setShowAnswer(false);
     setIsPressed(false);
-    setIsCorrect(false);
     setClassName(classNames.successEnd);
     setTimeout(() => {
       setClassName(classNames.fall);
       setIsAnswer(false);
       setCanIChoose(true);
     }, 500);
+  };
+
+  const skipWord = () => {
+    setSkipWordCount(skipWordCount + 1);
+    setIsAnswer(true);
+    setShowAnswer(true);
+    setWrongAnswers([...wrongAnswers, currentWord]);
+    setClassName(classNames.fail);
+    if (isSoundsOn) playSkip();
+    setTimeout(() => {
+      setNewWord();
+    }, 600);
   };
 
   const setWrongAnswer = () => {
@@ -174,6 +197,8 @@ const Savanna = ({ wordsList }: ISavanna) => {
     setLostLivesArray([...lostLivesArray, lostLives]);
     setWrongAnswers([...wrongAnswers, currentWord]);
     setClassName(classNames.fail);
+    if (isSoundsOn) playWrong();
+
     setTimeout(() => {
       setNewWord();
     }, 600);
@@ -189,6 +214,8 @@ const Savanna = ({ wordsList }: ISavanna) => {
         setIsCorrect(true);
         setCorrectAnswers([...correctAnswers, currentWord]);
         setClassName(classNames.successFall);
+        if (isSoundsOn) playCorrect();
+        setStreak(streak + 1);
         setTimeout(() => {
           setNewWord();
         }, 500);
@@ -199,6 +226,9 @@ const Savanna = ({ wordsList }: ISavanna) => {
         setLostLivesArray([...lostLivesArray, lostLives]);
         setWrongAnswers([...wrongAnswers, currentWord]);
         setClassName(classNames.fail);
+        if (isSoundsOn) playWrong();
+        if (streak > maxStreak) setMaxScreak(streak);
+        setStreak(0);
         setTimeout(() => {
           setNewWord();
         }, 1000);
@@ -208,6 +238,7 @@ const Savanna = ({ wordsList }: ISavanna) => {
 
   const handleKeyPress: any = (event: React.KeyboardEvent) => {
     setIsPressed(true);
+    if (!translateOptions[0]) return;
     if (event.key === '1') handleClick(translateOptions[0].id);
     if (event.key === '2') handleClick(translateOptions[1].id);
     if (event.key === '3') handleClick(translateOptions[2].id);
@@ -219,12 +250,17 @@ const Savanna = ({ wordsList }: ISavanna) => {
     return () => window.removeEventListener('keydown', handleKeyPress);
   });
 
+  useEffect(() => {
+    setLSStatistic('savanna', correctAnswers, wrongAnswers, maxStreak);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEnd]);
+
   return (
     <>
       <Menu />
       <div className="savanna">
         <div className="wrapper savanna__wrapper">
-          <GameButtons />
+          <GameButtons onClick={() => setIsSoundsOn(!isSoundsOn)} />
           {!isStart && !isLoading && (
             <StartScreen
               game="savanna"
@@ -235,24 +271,34 @@ const Savanna = ({ wordsList }: ISavanna) => {
           )}
           {isLoading && !isStart && <Loader seconds={count} />}
           {!isEnd && isStart && (
-          <>
-            <div
-              className={`savanna__question ${className}`}
-              onTransitionEnd={() => {
-                if (className === classNames.fall && !isAnswer) {
-                  setWrongAnswer();
-                }
-              }}
-            >
-              <div className="savanna__question-word">
-                {currentWord && currentWord?.word.toLowerCase()}
+            <>
+              <div
+                className={`savanna__question ${className}`}
+                onTransitionEnd={() => {
+                  if (className === classNames.fall && !isAnswer) {
+                    setWrongAnswer();
+                  }
+                }}
+              >
+                <div className="savanna__question-word">
+                  {currentWord && currentWord?.word.toLowerCase()}
+                </div>
               </div>
-            </div>
 
-            <Lives number={LIVES} disabled={lostLivesArray} />
-            <div className="savanna__field">
-              <div className="savanna__options">
-                {translateOptions.length > 0
+              <Lives number={LIVES} disabled={lostLivesArray} />
+              <div className="skip-word-btn__wrapper">
+                <button
+                  className="skip-word-btn"
+                  onClick={skipWord}
+                  disabled={skipWordCount >= 3}
+                  type="button"
+                >
+                  Пропустить слово
+                </button>
+              </div>
+              <div className="savanna__field">
+                <div className="savanna__options">
+                  {translateOptions.length > 0
                     && translateOptions.map((item: any, idx: number) => (
                       <TranslateOption
                         key={item.id}
@@ -267,10 +313,10 @@ const Savanna = ({ wordsList }: ISavanna) => {
                         isPressed={isPressed && item.id === currentAnswerId}
                       />
                     ))}
+                </div>
               </div>
-            </div>
-            <Crystal isCorrect={isCorrect} />
-          </>
+              <Crystal isCorrect={isCorrect} />
+            </>
           )}
           {isEnd && (
             <GameResults wrong={wrongAnswers} correct={correctAnswers} />

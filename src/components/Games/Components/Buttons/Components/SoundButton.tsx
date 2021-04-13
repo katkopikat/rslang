@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import '../GameButtons.scss';
 import '../tooltip.scss';
 
-const SoundButton = () => {
+interface ISoundButton {
+  onClick: () => void;
+}
+
+const SoundButton = ({ onClick }: ISoundButton) => {
   const [isSoundOn, setIsSoundOn] = useState<boolean>(true);
 
   const soundButton = isSoundOn ? (
@@ -13,6 +17,7 @@ const SoundButton = () => {
 
   const handleClick = () => {
     setIsSoundOn(!isSoundOn);
+    onClick();
   };
 
   return (

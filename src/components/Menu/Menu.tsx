@@ -8,7 +8,7 @@ import Avatar from '@material-ui/core/Avatar';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Hamburger from './Hamburger/Hamburger';
 import { useAuth } from '../AuthContext';
-import { setIsLevel } from '../../redux/actions/appActions';
+import { setStartGameFromMenu } from '../../redux/actions/appActions';
 
 const Menu: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -110,7 +110,7 @@ const Menu: React.FC = () => {
                       <ul
                         role="presentation"
                         className="navigation_submenu"
-                        onClick={() => dispatch(setIsLevel(true))}
+                        onClick={() => dispatch(setStartGameFromMenu(true))}
                         onKeyDown={() => null}
                       >
                         <Link to="/games/savanna" onClick={handleEvent}>
@@ -161,7 +161,7 @@ const Menu: React.FC = () => {
                 </Link>
               )}
               {!isAuthPage && userId && (
-                <Link to="/authorization">{authLinkEl}</Link>
+                authLinkEl
               )}
               {logoutEl}
             </div>

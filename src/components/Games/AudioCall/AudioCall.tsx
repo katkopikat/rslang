@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import useSound from 'use-sound';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -11,12 +12,12 @@ import shuffle from '../../../helpers/shuffleArray';
 import { API_URL } from '../../../constants';
 import GameResults from '../Components/GameResults/GameResults';
 import StartPage from '../Components/GameStartScreen/StartScreen';
-import useStyles from './styles';
 import Menu from '../../Menu/Menu';
 import GameButtons from '../Components/Buttons/Buttons';
 import BgGradient from '../Components/BgGradient/BgGradient';
 import '../Styles/background.scss';
 import '../../MainPage/BgAnimation.scss';
+import sounds from '../sounds';
 import './AudioCall.scss';
 
 enum GameState {
@@ -33,7 +34,7 @@ interface IProps {
 const numWordOptions = 5;
 
 const AudioCall = ({ wordsList }: IProps): JSX.Element => {
-  const classes = useStyles();
+  // const classes = useStyles();
   const [gameState, setGameState] = useState(GameState.StartScreen);
   const [wordsToGuess, setWordsToGuess] = useState([] as IWord[]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -42,6 +43,12 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
 
   // statistics
   const answers = useRef({ wrong: [] as IWord[], right: [] as IWord[] });
+
+  // sounds
+  const [isSoundsOn, setIsSoundsOn] = useState<boolean>(true);
+  const [playCorrect] = useSound(sounds.correct);
+  const [playWrong] = useSound(sounds.wrong);
+  const [playComplete] = useSound(sounds.complete);
 
   // new game
   useEffect(() => {
@@ -57,7 +64,11 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
     const guessingWord = wordsToGuess[currentWordIndex];
     if (word.id === guessingWord.id) {
       answers.current.right.push(guessingWord);
-    } else answers.current.wrong.push(guessingWord);
+      if (isSoundsOn) playCorrect();
+    } else {
+      answers.current.wrong.push(guessingWord);
+      if (isSoundsOn) playWrong();
+    }
   };
 
   const handleStartClick = () => {
@@ -69,7 +80,10 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
       setCurrentWordIndex(currentWordIndex + 1);
       setGameState(GameState.Question);
       setSelectedWord(null);
-    } else setGameState(GameState.GameOver);
+    } else {
+      if (isSoundsOn) playComplete();
+      setGameState(GameState.GameOver);
+    }
   };
 
   const handleDontKnowClick = () => {
@@ -112,10 +126,11 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
   });
 
   const AnswerOption = (word: IWord, index: number) => {
-    let style = classes.answerOption;
+    // let style = classes.answerOption;
+    let style = 'answerOption';
     if (gameState === GameState.Answer) {
-      if (word.id === selectedWord?.id) style = classes.answerOptionWrong;
-      if (word.id === wordsToGuess[currentWordIndex].id) style = classes.answerOptionRight;
+      if (word.id === selectedWord?.id) style = 'answerOptionWrong';
+      if (word.id === wordsToGuess[currentWordIndex].id) style = 'answerOptionRight';
     }
     return (
       <Button
@@ -139,7 +154,7 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
       <>
         <Menu />
         <div className="wrapper wrapper_audiocall">
-          <GameButtons />
+          <GameButtons onClick={() => setIsSoundsOn(!isSoundsOn)} />
           <div className="audiocall">
             <StartPage game="audiocall" onClick={handleStartClick} />
             <BgGradient gameName="audiocall" />
@@ -153,7 +168,7 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
       <>
         <Menu />
         <div className="wrapper wrapper_audiocall">
-          <GameButtons />
+          <GameButtons onClick={() => setIsSoundsOn(!isSoundsOn)} />
           <div className="audiocall">
             <GameResults
               wrong={answers.current.wrong}
@@ -170,28 +185,28 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
     <>
       <Menu />
       <div className="wrapper wrapper_audiocall">
-        <GameButtons />
+        <GameButtons onClick={() => setIsSoundsOn(!isSoundsOn)} />
         <div className="audiocall">
-          <Grid container direction="column" className={classes.gameGrid}>
+          <Grid container direction="column" className="gameGrid">
             <Grid item container justify="center">
               <Grid item>
                 {gameState === GameState.Answer ? (
                   <>
                     <img
-                      className={classes.wordImage}
+                      className="wordImage"
                       src={`${API_URL}/${wordsToGuess[currentWordIndex].image}`}
                       alt=""
                     />
-                    <Typography variant="h4" align="center">
+                    <Typography variant="h4" align="center" className="current-word">
                       {wordsToGuess[currentWordIndex].word}
                       <IconButton onClick={handleSoundClick}>
-                        <VolumeUpIcon className={classes.soundIcon} />
+                        <VolumeUpIcon className="soundIcon" />
                       </IconButton>
                     </Typography>
                   </>
                 ) : (
                   <IconButton onClick={handleSoundClick}>
-                    <VolumeUpIcon className={classes.soundIconBig} />
+                    <VolumeUpIcon className="soundIconBig" />
                   </IconButton>
                 )}
               </Grid>
@@ -200,7 +215,7 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
               item
               container
               justify="space-evenly"
-              className={`${classes.wordChoise} audoicall-words`}
+              className="wordChoise audoicall-words"
             >
               {wordsChoice()}
             </Grid>
@@ -208,7 +223,7 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
               <Grid item>
                 {gameState === GameState.Answer ? (
                   <Button variant="contained" onClick={handleNextClick}>
-                    <ArrowRightAltIcon className={classes.arrow} />
+                    <ArrowRightAltIcon className="arrow" />
                   </Button>
                 ) : (
                   <Button variant="contained" onClick={handleDontKnowClick} className="audiocall-btn">

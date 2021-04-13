@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import useSound from 'use-sound';
 import { Badge } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import AccessAlarmsIcon from '@material-ui/icons/AccessAlarms';
 import CloseIcon from '@material-ui/icons/Close';
 import { IWord } from '../../../interfaces';
-import { setUserWord } from '../../../api';
+import { setUserWord, setLSStatistic } from '../../../api';
 import shuffleArray from '../../../helpers/shuffleArray';
 import StartScreen from '../Components/GameStartScreen/StartScreen';
 import GameResults from '../Components/GameResults/GameResults';
@@ -14,6 +15,7 @@ import BgGradient from '../Components/BgGradient/BgGradient';
 import './Sprint.scss';
 import '../Styles/background.scss';
 import '../../MainPage/BgAnimation.scss';
+import sounds from '../sounds';
 
 interface ISprint {
   wordsList: IWord[];
@@ -28,7 +30,7 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
   const [correctAnswers, setCorrectAnswers] = useState<IWord[]>([]);
   const [wrongAnswers, setWrongAnswers] = useState<IWord[]>([]);
   const [currentTranslate, setCurrentTranslate] = useState<IWord>();
-  const [isGameStart, setIsGmeStart] = useState<boolean>(false);
+  const [isGameStart, setIsGameStart] = useState<boolean>(false);
   const [isGameEnd, setIsGameEnd] = useState<boolean>(false);
   const [isCurrentWorldCorrect, setIsCurrentWorldCorrect] = useState<boolean>(
     false,
@@ -39,6 +41,18 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
   const [streak, setStreak] = useState<number>(0);
   const [curStreak, setCurStreak] = useState<number>(0);
   const [maxStreak, setMaxStreak] = useState<number>(0);
+
+  // sounds
+  const [isSoundsOn, setIsSoundsOn] = useState<boolean>(true);
+  const [playCorrect] = useSound(sounds.correct);
+  const [playWrong] = useSound(sounds.wrong);
+  const [playComplete] = useSound(sounds.complete);
+
+  useEffect(() => {
+    console.log('useSetStat', maxStreak);
+    setLSStatistic('sprint', correctAnswers, wrongAnswers, maxStreak);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isGameEnd]);
 
   useEffect(() => {
     setWords(wordsList);
@@ -51,8 +65,10 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
         setCurrentWord(words[currentIndex]);
       } else {
         setIsGameEnd(true);
+        if (isSoundsOn) playComplete();
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [words, currentIndex]);
 
   useEffect(() => {
@@ -88,6 +104,7 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
     if (answer === isCurrentWorldCorrect) {
       setCountCorrect(countCorrect + 1);
       setCurrentIndex(currentIndex + 1);
+      if (isSoundsOn) playCorrect();
       if (currentWord) {
         setCorrectAnswers([...correctAnswers, currentWord]);
         setScore(score + multiply * 10);
@@ -103,12 +120,13 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
       setCurrentIndex(currentIndex + 1);
       setCurStreak(0);
       setMultiply(1);
+      setStreak(0);
+      if (isSoundsOn) playWrong();
       if (currentWord) setWrongAnswers([...wrongAnswers, currentWord]);
     }
     if (currentWord !== undefined) {
       const result = await setUserWord(
         currentWord,
-        // 'studied',
         'sprint',
         answer === isCurrentWorldCorrect,
       );
@@ -137,10 +155,16 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
     <>
       <Menu />
       <div className="wrapper wrapper_sprint">
-        <GameButtons />
+        <GameButtons onClick={() => setIsSoundsOn(!isSoundsOn)} />
         <div className="sprint">
           {!isGameStart && (
-            <StartScreen game="sprint" onClick={() => setIsGmeStart(true)} />
+            <StartScreen
+              game="sprint"
+              onClick={() => {
+                setIsGameStart(true);
+                setTimeLeft(30);
+              }}
+            />
           )}
           {isGameStart && !isGameEnd && (
             <div className="sprint__wrapper">
@@ -201,8 +225,8 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
             <GameResults wrong={wrongAnswers} correct={correctAnswers} />
           )}
         </div>
+        <BgGradient gameName="sprint" />
       </div>
-      <BgGradient gameName="sprint" />
     </>
   );
 };

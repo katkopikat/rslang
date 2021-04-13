@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import useSound from 'use-sound';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import StatusBadge from './Components/StatusBadge';
@@ -17,6 +18,7 @@ import BgGradient from '../Components/BgGradient/BgGradient';
 import './Oasis.scss';
 import '../Styles/background.scss';
 import '../../MainPage/BgAnimation.scss';
+import sounds from '../sounds';
 
 interface ILetterStatus {
   letter: string;
@@ -47,6 +49,12 @@ const Oasis = ({ wordsList }: IOasis) => {
   const [streak, setStreak] = useState<number>(0);
   const [maxStreak, setMaxStreak] = useState<number>(0);
 
+  // sounds
+  const [isSoundsOn, setIsSoundsOn] = useState<boolean>(true);
+  const [playCorrect] = useSound(sounds.correct);
+  const [playWrong] = useSound(sounds.wrong);
+  const [playComplete] = useSound(sounds.complete);
+
   // answers
   const colorLetterInWrongWord = (answer: string, word: string) => {
     const letter: Array<ILetterStatus> = [];
@@ -63,6 +71,7 @@ const Oasis = ({ wordsList }: IOasis) => {
   const showAnswer = () => {
     setUserWord(currentWord.word);
     setCountWrong(countWrong + 1);
+    if (isSoundsOn) playWrong();
     setDisableCheckBtn(true);
     setWrongAnswers([...wrongAnswers, currentWord]);
   };
@@ -77,6 +86,7 @@ const Oasis = ({ wordsList }: IOasis) => {
       setCorrectSeries(correctSeries + 1);
       setUserWord('');
       setWrong(false);
+      if (isSoundsOn) playCorrect();
       setCorrectAnswers([...correctAnswers, currentWord]);
       setStreak(streak + 1);
       if (maxStreak < streak + 1) {
@@ -85,6 +95,7 @@ const Oasis = ({ wordsList }: IOasis) => {
     } else {
       setUserWord('');
       setWrong(true);
+      if (isSoundsOn) playWrong();
       colorLetterInWrongWord(userAnswer, questWord);
       setWrongAnswers([...wrongAnswers, currentWord]);
       setStreak(0);
@@ -112,6 +123,8 @@ const Oasis = ({ wordsList }: IOasis) => {
     if (wordsList.length) {
       if (currentIndex === wordsList.length) {
         setEndGame(true);
+        setCorrectAnswers(unigueElFilter(correctAnswers, wrongAnswers));
+        if (isSoundsOn) playComplete();
       } else {
         const word = wordsList[currentIndex];
         setUserWord('');
@@ -136,7 +149,7 @@ const Oasis = ({ wordsList }: IOasis) => {
     <>
       <Menu />
       <div className="wrapper wrapper_oasis">
-        <GameButtons />
+        <GameButtons onClick={() => setIsSoundsOn(!isSoundsOn)} />
         <div className="oasis">
           {!isStartGame && (
           <StartScreen
