@@ -6,10 +6,9 @@
   position: fixed;
   right: -50%;
   top: 0;
-  z-index: -1;
+  z-index: -2;
 
   &:after {
-    animation: grain 10s steps(5) infinite;
     background-image: url(https://sonictonic.io/wp-content/uploads/2019/11/white-noise.jpg);
     content: "";
     height: 300%;
@@ -27,16 +26,16 @@
 
   &_savanna {
     @extend .bg;
-    background-image: linear-gradient(315deg, #072f48 50%, #13515f 50%);
+    background-image: linear-gradient(315deg, #053f48 50%, #086f58 50%);
   }
 
   &_sprint {
     @extend .bg;
-    background-image: linear-gradient(315deg, #073976 50%, #12569b 50%);
+    background-image: linear-gradient(315deg, #001a86 50%, #132a8c 50%);
   }
   &_audiocall {
     @extend .bg;
-    background-image: linear-gradient(315deg, #280f44 50%, #332162 50%);
+    background-image: linear-gradient(315deg, #8c1b1beb 50%, #bd6b30 50%);
   }
 }
 
@@ -90,4 +89,8 @@
   100% {
     transform: translateX(25%);
   }
+}
+
+.wrapper_audiocall {
+  position: relative;
 }

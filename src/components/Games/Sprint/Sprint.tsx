@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  Card,
-  Badge,
-} from '@material-ui/core';
+import { Badge } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
+import AccessAlarmsIcon from '@material-ui/icons/AccessAlarms';
+import CloseIcon from '@material-ui/icons/Close';
 import { IWord } from '../../../interfaces';
-import { setUserWord, setLSStatistic } from '../../../api';
+import { setUserWord } from '../../../api';
 import shuffleArray from '../../../helpers/shuffleArray';
 import StartScreen from '../Components/GameStartScreen/StartScreen';
 import GameResults from '../Components/GameResults/GameResults';
+import Menu from '../../Menu/Menu';
+import GameButtons from '../Components/Buttons/Buttons';
+import BgGradient from '../Components/BgGradient/BgGradient';
 import './Sprint.scss';
+import '../Styles/background.scss';
+import '../../MainPage/BgAnimation.scss';
 
 interface ISprint {
   wordsList: IWord[];
@@ -25,23 +28,17 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
   const [correctAnswers, setCorrectAnswers] = useState<IWord[]>([]);
   const [wrongAnswers, setWrongAnswers] = useState<IWord[]>([]);
   const [currentTranslate, setCurrentTranslate] = useState<IWord>();
-  const [isGameStart, setIsGameStart] = useState<boolean>(false);
+  const [isGameStart, setIsGmeStart] = useState<boolean>(false);
   const [isGameEnd, setIsGameEnd] = useState<boolean>(false);
   const [isCurrentWorldCorrect, setIsCurrentWorldCorrect] = useState<boolean>(
     false,
   );
-  const [timeLeft, setTimeLeft] = useState<number>(3000);
+  const [timeLeft, setTimeLeft] = useState<number>(30);
   const [score, setScore] = useState<number>(0);
   const [multiply, setMultiply] = useState<number>(1);
   const [streak, setStreak] = useState<number>(0);
   const [curStreak, setCurStreak] = useState<number>(0);
   const [maxStreak, setMaxStreak] = useState<number>(0);
-
-  useEffect(() => {
-    console.log('useSetStat', maxStreak);
-    setLSStatistic('sprint', correctAnswers, wrongAnswers, maxStreak);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isGameEnd]);
 
   useEffect(() => {
     setWords(wordsList);
@@ -93,7 +90,7 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
       setCurrentIndex(currentIndex + 1);
       if (currentWord) {
         setCorrectAnswers([...correctAnswers, currentWord]);
-        setScore(score + (multiply * 10));
+        setScore(score + multiply * 10);
         setStreak(streak + 1);
         if (curStreak === 3) {
           setCurStreak(0);
@@ -106,7 +103,6 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
       setCurrentIndex(currentIndex + 1);
       setCurStreak(0);
       setMultiply(1);
-      setStreak(0);
       if (currentWord) setWrongAnswers([...wrongAnswers, currentWord]);
     }
     if (currentWord !== undefined) {
@@ -139,59 +135,74 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
 
   return (
     <>
-      <div className="sprint">
-        {!isGameStart && (
-          <StartScreen
-            game="sprint"
-            onClick={() => {
-              setIsGameStart(true);
-              setTimeLeft(30);
-            }}
-          />
-        )}
-        {isGameStart && !isGameEnd && (
-        <div className="sprint-wrapper">
-          <div className="sprint-stat">
-            <div className="score">{`score: ${score}`}</div>
-            <Badge badgeContent={curStreak} color="primary">
-              <CheckIcon />
-            </Badge>
-            <div className="timer">{`time: ${timeLeft}`}</div>
-          </div>
-          <Card className="sprint_card">
-            <h2>{ currentWord?.word }</h2>
-            <h3>{ currentTranslate?.wordTranslate }</h3>
-            <div className="buttons">
-              <Button
-                type="button"
-                id="0"
-                style={{ color: 'green' }}
-                variant="outlined"
-                onClick={() => (!isGameEnd ? CheckAnswer(true) : null)}
-              >
-                true
-              </Button>
-              <Button
-                type="button"
-                style={{ color: 'red' }}
-                id="1"
-                onClick={() => (!isGameEnd ? CheckAnswer(false) : null)}
-              >
-                false
-              </Button>
+      <Menu />
+      <div className="wrapper wrapper_sprint">
+        <GameButtons />
+        <div className="sprint">
+          {!isGameStart && (
+            <StartScreen game="sprint" onClick={() => setIsGmeStart(true)} />
+          )}
+          {isGameStart && !isGameEnd && (
+            <div className="sprint__wrapper">
+              <div className="sprint__content">
+                <div className="sprint__timer">
+                  {' '}
+                  <AccessAlarmsIcon />
+                  {`${timeLeft}`}
+                </div>
+                <div className="sprint__stat">
+                  <div className="sprint__stat-multiply">
+                    Умножение:
+                    <CloseIcon />
+                    {' '}
+                    {multiply}
+                    <div className="sprint__stat-current-score">
+
+                      {`+${multiply * 10}`}
+                    </div>
+                  </div>
+
+                  <div className="sprint__score">{`Очки: ${score}`}</div>
+                </div>
+
+                <Badge badgeContent={curStreak} color="primary">
+                  <CheckIcon />
+                </Badge>
+
+              </div>
+              <div className="sprint__words">
+                <h2>{currentWord?.word}</h2>
+                <h4>это</h4>
+                <h2>{currentTranslate?.wordTranslate}</h2>
+                <h4>?</h4>
+              </div>
+
+              <div className="sprint__btns">
+                <button
+                  className="sprint__btns-true"
+                  type="button"
+                  id="0"
+                  onClick={() => (!isGameEnd ? CheckAnswer(true) : null)}
+                >
+                  ВЕРНО
+                </button>
+                <button
+                  className="sprint__btns-false"
+                  type="button"
+                  id="1"
+                  onClick={() => (!isGameEnd ? CheckAnswer(false) : null)}
+                >
+                  НЕВЕРНО
+                </button>
+              </div>
             </div>
-          </Card>
-          <div className="sprint-stat">
-            <div className="multiply">{`x:${multiply}`}</div>
-            <div className="current-score">{`+${multiply * 10}`}</div>
-          </div>
+          )}
+          {isGameEnd && (
+            <GameResults wrong={wrongAnswers} correct={correctAnswers} />
+          )}
         </div>
-        )}
-        {isGameEnd && <GameResults wrong={wrongAnswers} correct={correctAnswers} />}
       </div>
-      <div className="bg_sprint" />
-      <div className="bg_sprint bg2" />
-      <div className="bg_sprint bg3" />
+      <BgGradient gameName="sprint" />
     </>
   );
 };

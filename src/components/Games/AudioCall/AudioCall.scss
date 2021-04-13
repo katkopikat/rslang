@@ -1,0 +1,35 @@
+.audiocall {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    user-select: none;
+    position: relative;
+}
+
+.wrapper_audiocall {
+    border-radius: 1.5rem;
+    font-family: 'Gilroy-Heavy';
+    letter-spacing: 0.1rem;
+
+    .MuiButton-contained{
+        font-family: 'Gilroy-Heavy';
+        letter-spacing: 0.1rem;
+        border-radius: 1.5rem;
+        padding: 0.5rem 2rem;
+        
+    }
+
+    .audoicall-words {
+
+        @media (max-width: 500px) {
+            display: flex;
+            flex-direction: column !important;
+            gap: 1rem;
+            align-items: center;
+        }
+    }
+}

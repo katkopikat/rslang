@@ -9,9 +9,14 @@ import GameResults from '../Components/GameResults/GameResults';
 import { IWord } from '../../../interfaces';
 import initialState from '../wordInitialState';
 import StartScreen from '../Components/GameStartScreen/StartScreen';
+import Menu from '../../Menu/Menu';
 import unigueElFilter from '../../../helpers/unigueElFilter';
+import { setLSStatistic } from '../../../api';
+import GameButtons from '../Components/Buttons/Buttons';
+import BgGradient from '../Components/BgGradient/BgGradient';
 import './Oasis.scss';
 import '../Styles/background.scss';
+import '../../MainPage/BgAnimation.scss';
 
 interface ILetterStatus {
   letter: string;
@@ -107,7 +112,6 @@ const Oasis = ({ wordsList }: IOasis) => {
     if (wordsList.length) {
       if (currentIndex === wordsList.length) {
         setEndGame(true);
-        setCorrectAnswers(unigueElFilter(correctAnswers, wrongAnswers));
       } else {
         const word = wordsList[currentIndex];
         setUserWord('');
@@ -122,17 +126,26 @@ const Oasis = ({ wordsList }: IOasis) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wordsList, currentIndex]);
 
+  useEffect(() => {
+    setCorrectAnswers(unigueElFilter(correctAnswers, wrongAnswers));
+    setLSStatistic('oasis', correctAnswers, wrongAnswers, maxStreak);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isEndGame]);
+
   return (
     <>
-      <div className="oasis">
-        {!isStartGame && (
+      <Menu />
+      <div className="wrapper wrapper_oasis">
+        <GameButtons />
+        <div className="oasis">
+          {!isStartGame && (
           <StartScreen
             game="oasis"
             onClick={() => setIsStartGame(true)}
           />
-        )}
+          )}
 
-        {!isEndGame && isStartGame && (
+          {!isEndGame && isStartGame && (
           <div className="oasis__wrapper">
             <StatusBadge correct={countCorrect} error={countWrong} />
             <Hints currentWord={currentWord} setUserWord={setUserWord} />
@@ -183,18 +196,13 @@ const Oasis = ({ wordsList }: IOasis) => {
               )}
             </form>
           </div>
-        )}
-        {isEndGame && (
+          )}
+          {isEndGame && (
           <GameResults wrong={wrongAnswers} correct={correctAnswers} />
-        )}
+          )}
+        </div>
       </div>
-      {/*
-      <BgGradient gameName="oasis" />  */}
-
-      <div className="bg_oasis" />
-      <div className="bg_oasis bg2" />
-      <div className="bg_oasis bg3" />
-
+      <BgGradient gameName="oasis" />
     </>
   );
 };

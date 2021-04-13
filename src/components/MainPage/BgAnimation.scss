@@ -66,6 +66,10 @@
   animation: 3.2s linear move infinite;
 }
 
+.bg-game .inner:before {
+  opacity: 0.5;
+}
+
 @keyframes move {
   0% {
     background-position: calc(var(--point-gap-width) / 2)

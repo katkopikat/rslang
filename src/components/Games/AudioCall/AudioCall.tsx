@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -13,6 +12,12 @@ import { API_URL } from '../../../constants';
 import GameResults from '../Components/GameResults/GameResults';
 import StartPage from '../Components/GameStartScreen/StartScreen';
 import useStyles from './styles';
+import Menu from '../../Menu/Menu';
+import GameButtons from '../Components/Buttons/Buttons';
+import BgGradient from '../Components/BgGradient/BgGradient';
+import '../Styles/background.scss';
+import '../../MainPage/BgAnimation.scss';
+import './AudioCall.scss';
 
 enum GameState {
   StartScreen,
@@ -131,81 +136,91 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
 
   if (gameState === GameState.StartScreen) {
     return (
-      <Container className={classes.root} maxWidth={false}>
-        <StartPage game="audiocall" onClick={handleStartClick} />
-        <div className="bg_audiocall" />
-        <div className="bg_audiocall bg2" />
-        <div className="bg_audiocall bg3" />
-      </Container>
+      <>
+        <Menu />
+        <div className="wrapper wrapper_audiocall">
+          <GameButtons />
+          <div className="audiocall">
+            <StartPage game="audiocall" onClick={handleStartClick} />
+            <BgGradient gameName="audiocall" />
+          </div>
+        </div>
+      </>
     );
   }
   if (gameState === GameState.GameOver) {
     return (
-      <Container className={classes.root} maxWidth={false}>
-        <GameResults
-          wrong={answers.current.wrong}
-          correct={answers.current.right}
-        />
-        <div className="bg_audiocall" />
-        <div className="bg_audiocall bg2" />
-        <div className="bg_audiocall bg3" />
-      </Container>
+      <>
+        <Menu />
+        <div className="wrapper wrapper_audiocall">
+          <GameButtons />
+          <div className="audiocall">
+            <GameResults
+              wrong={answers.current.wrong}
+              correct={answers.current.right}
+            />
+            <BgGradient gameName="audiocall" />
+          </div>
+        </div>
+      </>
     );
   }
 
   return (
     <>
-      <Container className={classes.root} maxWidth={false}>
-        <Grid container direction="column" className={classes.gameGrid}>
-          <Grid item container justify="center">
-            <Grid item>
-              {gameState === GameState.Answer ? (
-                <>
-                  <img
-                    className={classes.wordImage}
-                    src={`${API_URL}/${wordsToGuess[currentWordIndex].image}`}
-                    alt=""
-                  />
-                  <Typography variant="h4" align="center">
-                    {wordsToGuess[currentWordIndex].word}
-                    <IconButton onClick={handleSoundClick}>
-                      <VolumeUpIcon className={classes.soundIcon} />
-                    </IconButton>
-                  </Typography>
-                </>
-              ) : (
-                <IconButton onClick={handleSoundClick}>
-                  <VolumeUpIcon className={classes.soundIconBig} />
-                </IconButton>
-              )}
+      <Menu />
+      <div className="wrapper wrapper_audiocall">
+        <GameButtons />
+        <div className="audiocall">
+          <Grid container direction="column" className={classes.gameGrid}>
+            <Grid item container justify="center">
+              <Grid item>
+                {gameState === GameState.Answer ? (
+                  <>
+                    <img
+                      className={classes.wordImage}
+                      src={`${API_URL}/${wordsToGuess[currentWordIndex].image}`}
+                      alt=""
+                    />
+                    <Typography variant="h4" align="center">
+                      {wordsToGuess[currentWordIndex].word}
+                      <IconButton onClick={handleSoundClick}>
+                        <VolumeUpIcon className={classes.soundIcon} />
+                      </IconButton>
+                    </Typography>
+                  </>
+                ) : (
+                  <IconButton onClick={handleSoundClick}>
+                    <VolumeUpIcon className={classes.soundIconBig} />
+                  </IconButton>
+                )}
+              </Grid>
+            </Grid>
+            <Grid
+              item
+              container
+              justify="space-evenly"
+              className={`${classes.wordChoise} audoicall-words`}
+            >
+              {wordsChoice()}
+            </Grid>
+            <Grid item container justify="center">
+              <Grid item>
+                {gameState === GameState.Answer ? (
+                  <Button variant="contained" onClick={handleNextClick}>
+                    <ArrowRightAltIcon className={classes.arrow} />
+                  </Button>
+                ) : (
+                  <Button variant="contained" onClick={handleDontKnowClick} className="audiocall-btn">
+                    Не знаю
+                  </Button>
+                )}
+              </Grid>
             </Grid>
           </Grid>
-          <Grid
-            item
-            container
-            justify="space-evenly"
-            className={classes.wordChoise}
-          >
-            {wordsChoice()}
-          </Grid>
-          <Grid item container justify="center">
-            <Grid item>
-              {gameState === GameState.Answer ? (
-                <Button variant="contained" onClick={handleNextClick}>
-                  <ArrowRightAltIcon className={classes.arrow} />
-                </Button>
-              ) : (
-                <Button variant="contained" onClick={handleDontKnowClick}>
-                  Не знаю
-                </Button>
-              )}
-            </Grid>
-          </Grid>
-        </Grid>
-      </Container>
-      <div className="bg bg_audiocall" />
-      <div className="bg bg_audiocall bg2" />
-      <div className="bg bg_audiocall bg3" />
+        </div>
+      </div>
+      <BgGradient gameName="audiocall" />
     </>
   );
 };

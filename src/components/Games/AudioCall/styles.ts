@@ -15,9 +15,10 @@ export default makeStyles(() => ({
   soundIconBig: {
     fontSize: 90,
     borderRadius: '50%',
-    boxShadow: '0 0 20px #fff',
     margin: 20,
     color: '#fff',
+    border: '3px solid white',
+    padding: '0.5rem',
   },
   soundIcon: {
     color: '#fff',
@@ -28,7 +29,10 @@ export default makeStyles(() => ({
   answerOption: {
     transition: 'none',
     color: '#fff',
-    border: '1px solid #fff6',
+    border: '2px solid #fff6',
+    borderRadius: '1.5rem',
+    fontFamily: 'Gilroy-Regular',
+    letterSpacing: '0.05rem',
   },
   answerOptionRight: {
     background: 'lightgreen',
@@ -47,8 +51,6 @@ export default makeStyles(() => ({
     margin: '-10px 20px',
   },
   wordImage: {
-    // width: '50vw',
-    // maxWidth: 300,
     height: '50vmin',
     maxHeight: 200,
     display: 'block',
