@@ -8,7 +8,7 @@ interface IAction {
 
 const initialState = {
   words: [],
-  isLevel: true,
+  startGameFromMenu: true,
   gameIndex: 0,
 };
 
@@ -22,7 +22,7 @@ const appReducer = (state = initialState, action: IAction) => {
     case SET_IS_LEVEL:
       return {
         ...state,
-        isLevel: action.value,
+        startGameFromMenu: action.value,
       };
     case SET_GAME_INDEX:
       return {

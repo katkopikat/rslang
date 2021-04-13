@@ -38,7 +38,7 @@ const Level = ({
 
 const StartScreen = ({ game, onClick }: IStartScreen) => {
   const gamePresets: { [dynamic: string]: IGameDescription } = games;
-  const isLevel = useSelector((state: RootState) => state.app.isLevel);
+  const isLevel = useSelector((state: RootState) => state.app.startGameFromMenu);
   const dispatch = useDispatch();
 
   const [group, setGroup] = useState(0);

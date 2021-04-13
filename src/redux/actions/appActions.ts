@@ -12,9 +12,9 @@ export const fetchWords = (url: string, token: string = '') => async (dispatch: 
   dispatch(setWords(words));
 };
 
-export const setIsLevel = (isLevel: boolean) => ({
+export const setStartGameFromMenu = (startGameFromMenu: boolean) => ({
   type: SET_IS_LEVEL,
-  value: isLevel,
+  value: startGameFromMenu,
 });
 
 export const setGameIndex = (index: number) => ({

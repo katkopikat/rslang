@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  Card,
-  Badge,
-} from '@material-ui/core';
+import useSound from 'use-sound';
+import { Button, Card, Badge } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import { IWord } from '../../../interfaces';
 import { setUserWord, setLSStatistic } from '../../../api';
 import shuffleArray from '../../../helpers/shuffleArray';
 import StartScreen from '../Components/GameStartScreen/StartScreen';
 import GameResults from '../Components/GameResults/GameResults';
+import Menu from '../../Menu/Menu';
 import './Sprint.scss';
+import GameButtons from '../Components/Buttons/Buttons';
+import sounds from '../sounds';
 
 interface ISprint {
   wordsList: IWord[];
@@ -37,10 +37,16 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
   const [curStreak, setCurStreak] = useState<number>(0);
   const [maxStreak, setMaxStreak] = useState<number>(0);
 
+  // sounds
+  const [isSoundsOn, setIsSoundsOn] = useState<boolean>(true);
+  const [playCorrect] = useSound(sounds.correct);
+  const [playWrong] = useSound(sounds.wrong);
+  const [playComplete] = useSound(sounds.complete);
+
   useEffect(() => {
     console.log('useSetStat', maxStreak);
     setLSStatistic('sprint', correctAnswers, wrongAnswers, maxStreak);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isGameEnd]);
 
   useEffect(() => {
@@ -54,8 +60,10 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
         setCurrentWord(words[currentIndex]);
       } else {
         setIsGameEnd(true);
+        if (isSoundsOn) playComplete();
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [words, currentIndex]);
 
   useEffect(() => {
@@ -91,9 +99,10 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
     if (answer === isCurrentWorldCorrect) {
       setCountCorrect(countCorrect + 1);
       setCurrentIndex(currentIndex + 1);
+      if (isSoundsOn) playCorrect();
       if (currentWord) {
         setCorrectAnswers([...correctAnswers, currentWord]);
-        setScore(score + (multiply * 10));
+        setScore(score + multiply * 10);
         setStreak(streak + 1);
         if (curStreak === 3) {
           setCurStreak(0);
@@ -106,6 +115,7 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
       setCurrentIndex(currentIndex + 1);
       setCurStreak(0);
       setMultiply(1);
+      if (isSoundsOn) playWrong();
       setStreak(0);
       if (currentWord) setWrongAnswers([...wrongAnswers, currentWord]);
     }
@@ -139,59 +149,65 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
 
   return (
     <>
-      <div className="sprint">
-        {!isGameStart && (
-          <StartScreen
-            game="sprint"
-            onClick={() => {
-              setIsGameStart(true);
-              setTimeLeft(30);
-            }}
-          />
-        )}
-        {isGameStart && !isGameEnd && (
-        <div className="sprint-wrapper">
-          <div className="sprint-stat">
-            <div className="score">{`score: ${score}`}</div>
-            <Badge badgeContent={curStreak} color="primary">
-              <CheckIcon />
-            </Badge>
-            <div className="timer">{`time: ${timeLeft}`}</div>
-          </div>
-          <Card className="sprint_card">
-            <h2>{ currentWord?.word }</h2>
-            <h3>{ currentTranslate?.wordTranslate }</h3>
-            <div className="buttons">
-              <Button
-                type="button"
-                id="0"
-                style={{ color: 'green' }}
-                variant="outlined"
-                onClick={() => (!isGameEnd ? CheckAnswer(true) : null)}
-              >
-                true
-              </Button>
-              <Button
-                type="button"
-                style={{ color: 'red' }}
-                id="1"
-                onClick={() => (!isGameEnd ? CheckAnswer(false) : null)}
-              >
-                false
-              </Button>
+      <Menu />
+      <div className="wrapper wrapper_sprint">
+        <GameButtons onClick={() => setIsSoundsOn(!isSoundsOn)} />
+        <div className="sprint">
+          {!isGameStart && (
+            <StartScreen
+              game="sprint"
+              onClick={() => {
+                setIsGameStart(true);
+                setTimeLeft(30);
+              }}
+            />
+          )}
+          {isGameStart && !isGameEnd && (
+            <div className="sprint-wrapper">
+              <div className="sprint-stat">
+                <div className="score">{`score: ${score}`}</div>
+                <Badge badgeContent={curStreak} color="primary">
+                  <CheckIcon />
+                </Badge>
+                <div className="timer">{`time: ${timeLeft}`}</div>
+              </div>
+              <Card className="sprint_card">
+                <h2>{currentWord?.word}</h2>
+                <h3>{currentTranslate?.wordTranslate}</h3>
+                <div className="buttons">
+                  <Button
+                    type="button"
+                    id="0"
+                    style={{ color: 'green' }}
+                    variant="outlined"
+                    onClick={() => (!isGameEnd ? CheckAnswer(true) : null)}
+                  >
+                    true
+                  </Button>
+                  <Button
+                    type="button"
+                    style={{ color: 'red' }}
+                    id="1"
+                    onClick={() => (!isGameEnd ? CheckAnswer(false) : null)}
+                  >
+                    false
+                  </Button>
+                </div>
+              </Card>
+              <div className="sprint-stat">
+                <div className="multiply">{`x:${multiply}`}</div>
+                <div className="current-score">{`+${multiply * 10}`}</div>
+              </div>
             </div>
-          </Card>
-          <div className="sprint-stat">
-            <div className="multiply">{`x:${multiply}`}</div>
-            <div className="current-score">{`+${multiply * 10}`}</div>
-          </div>
+          )}
+          {isGameEnd && (
+            <GameResults wrong={wrongAnswers} correct={correctAnswers} />
+          )}
         </div>
-        )}
-        {isGameEnd && <GameResults wrong={wrongAnswers} correct={correctAnswers} />}
+        <div className="bg_sprint" />
+        <div className="bg_sprint bg2" />
+        <div className="bg_sprint bg3" />
       </div>
-      <div className="bg_sprint" />
-      <div className="bg_sprint bg2" />
-      <div className="bg_sprint bg3" />
     </>
   );
 };
