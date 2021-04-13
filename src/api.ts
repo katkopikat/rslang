@@ -97,7 +97,6 @@ const standardLSStatistic: ILSStatistic = {
 
 export type IStatItem = {
   date: Date,
-  // wordList: IWord[],
   newWords: number,
   allWords: number,
 };
@@ -118,7 +117,6 @@ interface IUserStatisticStringify {
 
 export const standardUserStatItem : IStatItem = {
   date: new Date(),
-  // wordList: [],
   newWords: 0,
   allWords: 0,
 };
@@ -166,8 +164,6 @@ const isToday = (checkDate:Date) => {
 };
 
 export const getUserStatistic = async (
-  // userId: string,
-  // token: string,
 ) => {
   const userId = localStorage.getItem('userId');
   const token = localStorage.getItem('token');
@@ -180,6 +176,7 @@ export const getUserStatistic = async (
     }
   }
   throw new Error('auth error');
+  // return false;
 };
 
 const getUniqWords = (main:string[], check:string[]) => {
@@ -189,9 +186,6 @@ const getUniqWords = (main:string[], check:string[]) => {
   });
   return result;
 };
-// firstArray.filter(
-  // (firstItem) => !secondArray.find((secondItem) => firstItem === secondItem),
-// );
 
 const convertToStringArray = (array:IWord[]) => array.map((item) => item.id);
 
@@ -206,9 +200,7 @@ export const upsertUserStatistic = async (
     const newBody:IUserStatistic = deepClone(oldBody);
     const allGameWords = [...correctAnswers, ...wrongAnswers];
     if (newBody.learnedWords === 0) {
-      // newBody.id = userId;
       newBody.learnedWords = allGameWords.length;
-      // console.log(newBody.optional);
       newBody.optional.stat[0].date = new Date();
       newBody.optional.wordList = convertToStringArray(allGameWords);
       newBody.optional.stat[0].newWords = allGameWords.length;
@@ -252,10 +244,6 @@ export const upsertUserStatistic = async (
         }
       }
     }
-    console.log(JSON.stringify(newBody));
-    console.log(JSON.stringify(newBody).length);
-    console.log(JSON.stringify(newBody.optional));
-    console.log(JSON.stringify(newBody.optional).length);
     const stringifyBody :IUserStatisticStringify = {
       learnedWords: newBody.learnedWords,
       optional: {
@@ -263,8 +251,6 @@ export const upsertUserStatistic = async (
         wordList: JSON.stringify(newBody.optional.wordList),
       },
     };
-    // newBody.optional.stat = JSON.stringify(newBody.optional.stat);
-    // newBody.optional.wordList = JSON.stringify(newBody.optional.wordList);
     try {
       const data = await request('PUT', `${API_URL_USERS}/${userId}/statistics`, stringifyBody, token);
       return data;
@@ -285,7 +271,6 @@ export const setUserStatistic = async (
     const getStatResult = await getUserStatistic();
     if (getStatResult.ok) {
       const oldStatResult:IUserStatisticStringify = deepClone(await getStatResult.json());
-      // const stat = JSON.parse(oldStatResult.optional.stat);
       const statResult:IUserStatistic = {
         learnedWords: oldStatResult.learnedWords,
         optional: {
@@ -293,8 +278,6 @@ export const setUserStatistic = async (
           wordList: JSON.parse(oldStatResult.optional.wordList),
         },
       };
-      console.log('lastStatRes', statResult);
-      console.log('oldStatResult', oldStatResult);
       upsertUserStatistic(statResult, correctAnswers, wrongAnswers);
     } else {
       upsertUserStatistic(undefined, correctAnswers, wrongAnswers);
@@ -312,31 +295,6 @@ export const createUserWord = async (
   const token = localStorage.getItem('token');
   const { id: wordId } = word;
   const body:IWordBody = deepClone(standardBody);
-  // const body = {
-  //   ...standardBody,
-  //   optional: {
-  //     ...standardBody.optional,
-  //     games: {
-  //       ...standardBody.optional.games,
-  //       [GameNames.sprint]: {
-  //         standardBody.optional.games[GameNames.sprint].right,
-  //         standardBody.optional.games[GameNames.sprint].wrong,
-  //       },
-  //       [GameNames.savanna]: {
-  //         standardBody.optional.games[GameNames.savanna].right,
-  //         standardBody.optional.games[GameNames.savanna].wrong,
-  //       },
-  //       [GameNames.oasis]: {
-  //         standardBody.optional.games[GameNames.oasis].right,
-  //         standardBody.optional.games[GameNames.oasis].wrong,
-  //       },
-  //       [GameNames.audioCall]: {
-  //         standardBody.optional.games[GameNames.audioCall].right,
-  //         standardBody.optional.games[GameNames.audioCall].wrong,
-  //       },
-  //     }
-  //   },
-  // };
   body.difficulty = difficulty;
   const currentGame = GameNames[game as keyof typeof GameNames];
   if (isCorrect) {
@@ -355,6 +313,7 @@ export const createUserWord = async (
     }
   }
   throw new Error('auth error');
+  // return false;
 };
 
 export const updateUserWord = async (
@@ -384,6 +343,7 @@ export const updateUserWord = async (
     }
   }
   throw new Error('auth error');
+  // return false;
 };
 
 export const getUserWord = async (
@@ -417,8 +377,6 @@ export const setUserWord = async (
       const oldResult = deepClone(await getWordResult.json());
       delete oldResult.id;
       delete oldResult.wordId;
-      // const pickedResult:IWordBody =
-      // ({difficulty, optional} = oldResult, {difficulty, optional});
       const data = await updateUserWord(
         word,
         // difficulty,
@@ -468,7 +426,7 @@ export const setLSStatistic = (
   const lastLSStat = getLSStatistic();
   if (lastLSStat) {
     const {
-      allGamesRight: lastAllGameRigh,
+      allGamesRight: lastAllGameRight,
       allGamesWrong: lastAllGameWrong,
       allNewWords: lastAllNewWords,
       wordsList: newWordList,
@@ -491,7 +449,7 @@ export const setLSStatistic = (
       }
       return item;
     });
-    const newAllGameRight = lastAllGameRigh + correctAnswers.length;
+    const newAllGameRight = lastAllGameRight + correctAnswers.length;
     const newAllGamesWrong = lastAllGameWrong + wrongAnswers.length;
     const newAllGamesRightPercent = ((newAllGameRight
        / (newAllGameRight + newAllGamesWrong)) * 100).toFixed(0);
