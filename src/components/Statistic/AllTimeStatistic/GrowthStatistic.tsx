@@ -34,10 +34,10 @@ const GrowthStatistic = ({ data } : { data: IStatItem[] }) => {
   }, [isMobile]);
 
   const dataSett = {
-    labels: datesList,
+    labels: datesList.length ? datesList : ['Вы еще ничего не учили!', 'Вы еще ничего не учили!'],
     datasets: [
       {
-        data: wordsPeriodtList,
+        data: wordsPeriodtList.length ? wordsPeriodtList : [0, 0],
         label: ' Изучено слов к этому дню ',
         backgroundColor: ['rgba(67, 121, 255, 0.9)'],
         borderColor: ['rgba(76, 203, 183, 1)'],

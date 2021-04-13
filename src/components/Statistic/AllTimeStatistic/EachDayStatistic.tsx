@@ -25,12 +25,12 @@ const EachDayStatistic = ({ data } : { data: IStatItem[] }) => {
   }, [isMobile]);
 
   const dataSett = {
-    labels: datesList,
+    labels: datesList.length ? datesList : ['Вы еще ничего не учили!'],
     datasets: [
       {
-        minBarLength: 2,
+        minBarLength: 10,
         label: 'Изученные слова',
-        data: wordsListByDay,
+        data: wordsListByDay.length ? wordsListByDay : [0],
         backgroundColor: 'rgba(76, 203, 183, 1)',
         borderColor: ['rgba(76, 203, 183, 1)'],
         borderWidth: 1,
