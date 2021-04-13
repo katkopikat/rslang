@@ -112,7 +112,7 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
         setScore(score + multiply * 10);
         setStreak(streak + 1);
         if (curStreak === 3) {
-          setCurStreak(0);
+          setCurStreak(1);
           setMultiply(multiply + 1);
         } else setCurStreak(curStreak + 1);
         if (maxStreak < streak) setMaxStreak(streak + 1);
