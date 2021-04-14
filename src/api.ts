@@ -1,6 +1,7 @@
 import request from './helpers/request';
 import { API_URL_USERS } from './constants';
 import { IWord } from './interfaces';
+import getUniqWords from './utils/checkUniq';
 
 const deepClone = require('rfdc/default');
 
@@ -175,14 +176,6 @@ export const getUserStatistic = async (
     }
   }
   throw new Error('auth error');
-};
-
-const getUniqWords = (main:string[], check:string[]) => {
-  let result: string[] = [];
-  check.forEach((item) => {
-    if (main.includes(item) === false) result = [...result, item];
-  });
-  return result;
 };
 
 const convertToStringArray = (array:IWord[]) => array.map((item) => item.id);
