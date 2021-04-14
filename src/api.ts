@@ -129,7 +129,7 @@ const standardUserStatistic: IUserStatistic = {
   },
 };
 
-const standardBody: IWordBody = {
+export const standardBody: IWordBody = {
   difficulty: 'hard',
   optional: {
     isDeleted: false,
@@ -299,7 +299,6 @@ export const createUserWord = async (
   body.difficulty = difficulty;
   const currentGame = GameNames[game as keyof typeof GameNames];
   if (isCorrect) {
-    body.optional.games[currentGame].right += 1;
     body.optional.games[currentGame].right += 1;
   } else {
     body.optional.games[currentGame].wrong += 1;
