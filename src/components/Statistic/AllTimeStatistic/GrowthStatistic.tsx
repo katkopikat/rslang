@@ -15,8 +15,6 @@ const GrowthStatistic = ({ data } : { data: IStatItem[] }) => {
   const [pointHoverRadius, setPointHoverRadius] = useState(10);
   const [fontSize, setFontSize] = useState(14);
   const [fontSizeY, setFontSizeY] = useState(10);
-  // const [datesList, setDatesList] = useState(getDatesList(data));
-  // const [wordsPeriodtList, setWordsPeriodtList] = useState(getAllWordsList(data));
 
   const datesList = getDatesList(data);
   const wordsPeriodtList = getAllWordsList(data);

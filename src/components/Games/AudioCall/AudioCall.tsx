@@ -34,7 +34,6 @@ interface IProps {
 const numWordOptions = 5;
 
 const AudioCall = ({ wordsList }: IProps): JSX.Element => {
-  // const classes = useStyles();
   const [gameState, setGameState] = useState(GameState.StartScreen);
   const [wordsToGuess, setWordsToGuess] = useState([] as IWord[]);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);

@@ -6,6 +6,8 @@ import {
   Fab,
   Popover,
 } from '@material-ui/core';
+
+import CircularProgress from '@material-ui/core/CircularProgress';
 import CheckIcon from '@material-ui/icons/Check';
 import AddIcon from '@material-ui/icons/Add';
 import { useAuth } from '../AuthContext';
@@ -34,6 +36,7 @@ const RegistrationPage: React.FC<ILoginPage> = ({ history, handleChangePage }: I
   const confirmPasswordInput = useRef<HTMLInputElement>(null);
   const signUpButton = (document.getElementById('signUpButton') as HTMLButtonElement);
   const [isLoaded, setIsLoaded] = useState('');
+  const [loadingProcess, setIsloadingProcess] = useState<boolean>(false);
   const [errors, setErrors] = useState('');
   const [openPopover, setOpenPopover] = useState(false);
 
@@ -45,6 +48,7 @@ const RegistrationPage: React.FC<ILoginPage> = ({ history, handleChangePage }: I
   const { register } = useAuth();
 
   const uploadPhoto = useCallback((event: React.ChangeEvent<{}>) => {
+    setIsloadingProcess(true);
     const input: FileList | null = (document.getElementById('upload-photo') as HTMLInputElement)
       ?.files;
     if (event && input?.length) {
@@ -52,16 +56,22 @@ const RegistrationPage: React.FC<ILoginPage> = ({ history, handleChangePage }: I
       const formData = new FormData();
       formData.append('file', file);
       formData.append('upload_preset', 'travel-app');
+
       fetch('https://api.cloudinary.com/v1_1/rssteam69/image/upload', {
         method: 'POST',
         body: formData,
       })
-        .then((response) => response.json())
+        .then((response) => (response.ok ? response.json() : Promise.reject(response)))
         .then((data) => {
           const imgURL = data.url;
           setIsLoaded(imgURL);
+          setIsloadingProcess(false);
         })
-        .catch();
+        .catch(() => {
+          setIsLoaded('Произошла ошибка. Файл слишком большой.');
+          setIsloadingProcess(false);
+          setTimeout(() => { setIsLoaded(''); }, 4000);
+        });
     }
   }, []);
 
@@ -185,7 +195,8 @@ const RegistrationPage: React.FC<ILoginPage> = ({ history, handleChangePage }: I
                 variant="extended"
                 className={`${classes.file} avatar-btn`}
               >
-                {isLoaded ? <CheckIcon /> : <AddIcon />}
+                {!loadingProcess && (isLoaded ? <CheckIcon /> : <AddIcon />)}
+                {loadingProcess && <CircularProgress />}
                 {isLoaded ? 'готово' : 'Загрузить аватар'}
               </Fab>
             </label>

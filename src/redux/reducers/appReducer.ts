@@ -32,7 +32,7 @@ const initialState = {
   page: 0,
   group: 0,
   paginationCount: 30,
-  dictActiveTab: DictTabs.Difficult,
+  dictActiveTab: DictTabs.Learning,
   viewMode: ViewMode.Textbook,
   difficultWordsCount: 0,
   deletedWordsCount: 0,

@@ -57,7 +57,6 @@ const Textbook: React.FC = () => {
   useEffect(() => {
     if (userId) {
       if (viewMode === ViewMode.Textbook) {
-        // setWordsUrl(userWordsUrl(userId, group, page, wordFilters.excludeDeleted));
         dispatch(wordsApi.fetchForUserTextbook(group, page, userId, token));
       } else if (dictActiveTab === DictTabs.Difficult) {
         dispatch(wordsApi.fetchDifficult(group, page, userId, token));
@@ -189,11 +188,6 @@ const Textbook: React.FC = () => {
             page={page + 1}
             onChange={handlePageChange}
             color="primary"
-            // renderItem={(item) => {
-            //   console.log(item);
-            //   if (item.page === 3 && item.type === 'page') return null;
-            //   return <PaginationItem {...item} />;
-            // }}
           />
           )}
           <div className={`games-card__container ${words.length ? '' : 'games-card-inactive'}`}>

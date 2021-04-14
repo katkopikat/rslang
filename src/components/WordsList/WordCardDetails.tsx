@@ -88,7 +88,6 @@ const WordCardDetails = ({
     const wordGamesData = word.userWord?.optional?.games;
     if (!wordGamesData) return gamesStats;
     return gamesStats.map((gameStat) => {
-      // const { right = 0, wrong = 0 } = wordGamesData[gameStat.key];
       const right = wordGamesData[gameStat.key]?.right || 0;
       const wrong = wordGamesData[gameStat.key]?.wrong || 0;
       return { ...gameStat, right, allTry: right + wrong };

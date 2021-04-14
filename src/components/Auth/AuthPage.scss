@@ -220,6 +220,26 @@
               path {
                 fill: #2c2647;
             }
+
+            
+            .MuiCircularProgress-colorPrimary {
+                color: #2c2647;
+            }
+        }
+
+        .MuiCircularProgress-root {
+            width: 30px !important;
+            height: 30px !important;
+            padding-top: 0.2rem;
+            margin-right: 0.2rem;
+        }
+
+        .MuiCircularProgress-colorPrimary {
+            color: #ffffff;
+        }
+
+        .MuiCircularProgress-indeterminate {
+            animation: none;
         }
     }
 
