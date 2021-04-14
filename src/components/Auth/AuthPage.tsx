@@ -7,7 +7,7 @@ import './AuthPage.scss';
 import '../MainPage/BgAnimation.scss';
 
 const AuthPage: React.FC<IAuthPage> = ({ history } : IAuthPage) => {
-  const [page, setPage] = useState('registration');
+  const [page, setPage] = useState('login');
 
   const handleChangePage = (redirectTo: string) => {
     setPage(redirectTo);
