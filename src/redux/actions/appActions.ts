@@ -12,6 +12,7 @@ import {
   SET_DIFFICULT_WORDS_COUNT,
   SET_LEARNING_WORDS_COUNT,
   SET_ADDITIONAL_WORDS,
+  SET_ADDITIONAL_WORDS_SPRINT,
   SET_ADDITIONAL_ANSWER_OPTIONS,
   SET_VIEW_MODE,
 } from '../types';
@@ -24,6 +25,11 @@ export const setWords = (words: any) => ({
 export const setAdditionalWords = (words: any) => ({
   type: SET_ADDITIONAL_WORDS,
   payload: words,
+});
+
+export const setAdditionalWordsForSprint = (value: any) => ({
+  type: SET_ADDITIONAL_WORDS_SPRINT,
+  value,
 });
 
 export const setAdditionalAnswerOptions = (words: any) => ({

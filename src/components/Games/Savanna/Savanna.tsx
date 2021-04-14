@@ -18,6 +18,7 @@ import BgGradient from '../Components/BgGradient/BgGradient';
 import './Savanna.scss';
 import '../Styles/background.scss';
 import '../../MainPage/BgAnimation.scss';
+import '../../Menu/Menu.scss';
 
 const NUMBER_OF_THE_OPTIONS: number = 4;
 const LIVES: number = 5;
@@ -193,6 +194,7 @@ const Savanna = ({ wordsList }: ISavanna) => {
     setWrongAnswers([...wrongAnswers, currentWord]);
     setClassName(classNames.fail);
     if (isSoundsOn) playSkip();
+    setStreak(0);
     setTimeout(() => {
       setNewWord();
     }, 600);

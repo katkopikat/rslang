@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import useSound from 'use-sound';
+import { useSelector, useDispatch } from 'react-redux';
 import { Badge } from '@material-ui/core';
 import CheckIcon from '@material-ui/icons/Check';
 import AccessAlarmsIcon from '@material-ui/icons/AccessAlarms';
 import CloseIcon from '@material-ui/icons/Close';
+import wordsApi from '../../../redux/actions/wordsApiActions';
+import { ViewMode } from '../../../constants';
+import { RootState } from '../../../redux/rootReducer';
+import { useAuth } from '../../AuthContext';
 import { IWord } from '../../../interfaces';
 import { setUserWord, setLSStatistic, setUserStatistic } from '../../../api';
 import shuffleArray from '../../../helpers/shuffleArray';
@@ -16,6 +21,10 @@ import './Sprint.scss';
 import '../Styles/background.scss';
 import '../../MainPage/BgAnimation.scss';
 import sounds from '../sounds';
+import { setPage } from '../../../redux/actions/appActions';
+import randomInteger from '../../../commonFunc/random';
+
+const NUMBER_OF_THE_PAGES: number = 30;
 
 interface ISprint {
   wordsList: IWord[];
@@ -48,18 +57,61 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
   const [playWrong] = useSound(sounds.wrong);
   const [playComplete] = useSound(sounds.complete);
 
+  const dispatch = useDispatch();
+  const { userId, token } = useAuth();
+
+  const group = useSelector((state: RootState) => state.app.group);
+  const page = useSelector((state: RootState) => state.app.page);
+  const viewMode = useSelector((state: RootState) => state.app.viewMode);
+  const isStartedFromMenu = useSelector(
+    (state: RootState) => state.app.startGameFromMenu,
+  );
+  const additionalWords = useSelector(
+    (state: RootState) => state.app.additionalWordsSprint,
+  );
+
   useEffect(() => {
     setLSStatistic('sprint', correctAnswers, wrongAnswers, maxStreak);
     if (isGameEnd && isGameStart) {
       setUserStatistic(correctAnswers, wrongAnswers);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isGameEnd]);
 
   useEffect(() => {
     setWords(wordsList);
     setCurrentIndex(0);
-  }, [wordsList]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isGameStart]);
+
+  useEffect(() => {
+    if (!isGameStart || isGameEnd || viewMode === ViewMode.Dictionary) return;
+    if (timeLeft > 1 && words.length - currentIndex < 3) {
+      if (!userId) {
+        dispatch(wordsApi.fetchForAdditionalWordsSprintAnon(group, page - 1));
+      }
+      if (userId && isStartedFromMenu) {
+        dispatch(
+          wordsApi.fetchForAdditionalWordsSprintUser(
+            group,
+            page - 1,
+            userId,
+            token,
+          ),
+        );
+      }
+      if (page > 0) {
+        dispatch(setPage(page - 1));
+      } else {
+        dispatch(setPage(randomInteger(0, NUMBER_OF_THE_PAGES - 1)));
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentIndex]);
+
+  useEffect(() => {
+    setWords((w) => [...w, ...additionalWords]);
+  }, [additionalWords]);
 
   useEffect(() => {
     if (words.length) {
@@ -92,15 +144,18 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
-    if (isGameEnd === false && timeLeft > 0) {
+    if (!isGameEnd && isGameStart) {
       timer = setTimeout(() => {
-        if (timeLeft > 0) setTimeLeft(timeLeft - 1);
+        setTimeLeft(timeLeft - 1);
       }, 1000);
-    } else {
+    }
+    if (timeLeft === 0) {
       setIsGameEnd(true);
+      if (isSoundsOn) playComplete();
     }
     return () => clearTimeout(timer);
-  }, [isGameEnd, timeLeft]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isGameEnd, timeLeft, isGameStart]);
 
   const CheckAnswer = async (answer: boolean) => {
     if (answer === isCurrentWorldCorrect) {
@@ -183,7 +238,6 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
                     {' '}
                     {multiply}
                     <div className="sprint__stat-current-score">
-
                       {`+${multiply * 10}`}
                     </div>
                   </div>
@@ -194,7 +248,6 @@ const Sprint: React.FC<ISprint> = ({ wordsList }: ISprint) => {
                 <Badge badgeContent={curStreak} color="primary">
                   <CheckIcon />
                 </Badge>
-
               </div>
               <div className="sprint__words">
                 <h2>{currentWord?.word}</h2>

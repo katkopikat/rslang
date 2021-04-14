@@ -8,6 +8,7 @@ import {
   setLearningWordsCount,
   setDeletedWordsCount,
   setDifficultWordsCount,
+  setAdditionalWordsForSprint,
 } from './appActions';
 
 const wordFilters = {
@@ -143,6 +144,31 @@ const fetchFilteredCounts = (userId: string, token: string) => async (
   dispatch(setLearningWordsCount(learning?.count || 0));
 };
 
+const fetchForAdditionalWordsSprintAnon = (
+  group: number,
+  page: number,
+) => async (dispatch: any) => {
+  const url = `${API_URL}/words?group=${group}&page=${page}`;
+  const response = await request('GET', url);
+  const words = await response.json();
+  dispatch(setAdditionalWordsForSprint(words));
+};
+
+const fetchForAdditionalWordsSprintUser = (
+  group: number,
+  page: number,
+  userId: string,
+  token: string,
+) => async (dispatch: any) => {
+  const filterQuery = encodeURIComponent(
+    JSON.stringify({ page, ...wordFilters.excludeDeleted }),
+  );
+  const apiQueryParams = `group=${group}&filter=${filterQuery}&wordsPerPage=0`;
+  const url = `${API_URL}/users/${userId}/aggregatedWords?${apiQueryParams}`;
+  const words = await (await request('GET', url, false, token)).json();
+  dispatch(setAdditionalWordsForSprint(words));
+};
+
 export default {
   fetchForAnonTextbook,
   fetchForUserTextbook,
@@ -152,4 +178,6 @@ export default {
   fetchFilteredCounts,
   fetchAdditionalWordsForGame,
   fetchForAdditionalAnswerOptions,
+  fetchForAdditionalWordsSprintAnon,
+  fetchForAdditionalWordsSprintUser,
 };

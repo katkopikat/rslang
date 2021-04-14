@@ -13,6 +13,7 @@ import {
   SET_LEARNING_WORDS_COUNT,
   SET_ADDITIONAL_WORDS,
   SET_ADDITIONAL_ANSWER_OPTIONS,
+  SET_ADDITIONAL_WORDS_SPRINT,
 } from '../types';
 
 interface IAction {
@@ -24,6 +25,7 @@ interface IAction {
 const initialState = {
   words: [],
   additionalWords: [],
+  additionalWordsSprint: [],
   additionalAnswerOptions: [],
   startGameFromMenu: true,
   gameIndex: 0,
@@ -48,6 +50,11 @@ const appReducer = (state = initialState, action: IAction) => {
       return {
         ...state,
         words: [...state.words, ...action.payload].slice(0, 20),
+      };
+    case SET_ADDITIONAL_WORDS_SPRINT:
+      return {
+        ...state,
+        additionalWordsSprint: action.value,
       };
     case SET_ADDITIONAL_ANSWER_OPTIONS:
       return {

@@ -85,7 +85,7 @@ const StartScreen = ({ game, onClick }: IStartScreen) => {
 
   useEffect(() => {
     if (viewMode === ViewMode.Textbook) {
-      if (userId && !isLevel) {
+      if (userId && !isLevel && page) {
         for (let i = page - 1; i >= 0; i -= 1) {
           if (words.length >= 20) break;
           dispatch(
