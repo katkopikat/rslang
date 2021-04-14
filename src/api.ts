@@ -252,10 +252,10 @@ export const upsertUserStatistic = async (
         }
       }
     }
-    console.log(JSON.stringify(newBody));
-    console.log(JSON.stringify(newBody).length);
-    console.log(JSON.stringify(newBody.optional));
-    console.log(JSON.stringify(newBody.optional).length);
+    // console.log(JSON.stringify(newBody));
+    // console.log(JSON.stringify(newBody).length);
+    // console.log(JSON.stringify(newBody.optional));
+    // console.log(JSON.stringify(newBody.optional).length);
     const stringifyBody :IUserStatisticStringify = {
       learnedWords: newBody.learnedWords,
       optional: {

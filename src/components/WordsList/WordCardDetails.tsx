@@ -165,7 +165,7 @@ const WordCardDetails = ({
             {wordGamesStats().map((game) => (
               <GameStat
                 key={game.key}
-                name={game.name} // Имя игры вида "Оазис"
+                name={game.name}
                 right={game.right}
                 allTry={game.allTry}
               />
