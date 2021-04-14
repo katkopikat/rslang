@@ -1,6 +1,7 @@
 import request from './helpers/request';
 import { API_URL_USERS } from './constants';
 import { IWord } from './interfaces';
+import getUniqWords from './utils/checkUniq';
 
 const deepClone = require('rfdc/default');
 
@@ -25,7 +26,6 @@ interface IOptionalWord {
   addTime: Date;
   allTry: number;
   games: IGames;
-  // games: { [key: string]: IOptionalGame };
 }
 
 interface IWordBody {
@@ -176,15 +176,6 @@ export const getUserStatistic = async (
     }
   }
   throw new Error('auth error');
-  // return false;
-};
-
-const getUniqWords = (main:string[], check:string[]) => {
-  let result: string[] = [];
-  check.forEach((item) => {
-    if (main.includes(item) === false) result = [...result, item];
-  });
-  return result;
 };
 
 const convertToStringArray = (array:IWord[]) => array.map((item) => item.id);
@@ -313,7 +304,6 @@ export const createUserWord = async (
     }
   }
   throw new Error('auth error');
-  // return false;
 };
 
 export const updateUserWord = async (
@@ -343,7 +333,6 @@ export const updateUserWord = async (
     }
   }
   throw new Error('auth error');
-  // return false;
 };
 
 export const getUserWord = async (
@@ -365,7 +354,6 @@ export const getUserWord = async (
 
 export const setUserWord = async (
   word:IWord,
-  // difficultyGame:string,
   game:string,
   isCorrect:boolean,
 ) => {
@@ -379,7 +367,6 @@ export const setUserWord = async (
       delete oldResult.wordId;
       const data = await updateUserWord(
         word,
-        // difficulty,
         game,
         isCorrect,
         oldResult,
@@ -398,18 +385,20 @@ export const setUserWord = async (
 };
 
 export const getLSStatistic = ():ILSStatistic|undefined => {
-  const item = localStorage.getItem('statistic');
+  const userId = localStorage.getItem('userId');
+  const item = localStorage.getItem(`statistic${userId}`);
   if (typeof item === 'string') {
     const result = JSON.parse(item);
     const dateLS = new Date(result.date);
     if (isToday(dateLS)) return result;
-    localStorage.removeItem('statistic');
+    localStorage.removeItem(`statistic${userId}`);
   }
   return undefined;
 };
 
 const updateLSStatistic = (item:ILSStatistic) => {
-  localStorage.setItem('statistic', JSON.stringify(item));
+  const userId = localStorage.getItem('userId');
+  localStorage.setItem(`statistic${userId}`, JSON.stringify(item));
 };
 
 const isNewWord = (

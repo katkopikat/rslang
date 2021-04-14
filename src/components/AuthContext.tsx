@@ -125,12 +125,11 @@ const AuthProvider: React.FC = (props) => {
       });
       return true;
     }
-    // TODO constant for errors
     if (data.status === 404) {
-      throw new Error('not found');
+      throw new Error('Неправильный логин или пароль');
     }
     if (data.status === 403) {
-      throw new Error('wrong credential');
+      throw new Error('Неправильный логин или пароль');
     }
     return false;
   };
@@ -157,7 +156,7 @@ const AuthProvider: React.FC = (props) => {
       return true;
     }
     if (data.status === 417) {
-      throw new Error('user with this e-mail exists');
+      throw new Error('Этот e-mail уже занят');
     }
     if (data.status === 422) {
       const errorsArray: Array<string> = (await data.json()).error.errors

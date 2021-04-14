@@ -14,6 +14,7 @@ import {
   SET_ADDITIONAL_WORDS,
   SET_ADDITIONAL_ANSWER_OPTIONS,
   SET_ADDITIONAL_WORDS_SPRINT,
+  SET_PAGINATION_PAGES,
 } from '../types';
 
 interface IAction {
@@ -32,7 +33,8 @@ const initialState = {
   page: 0,
   group: 0,
   paginationCount: 30,
-  dictActiveTab: DictTabs.Difficult,
+  dictActiveTab: DictTabs.Learning,
+  paginationPages: [],
   viewMode: ViewMode.Textbook,
   difficultWordsCount: 0,
   deletedWordsCount: 0,
@@ -85,6 +87,11 @@ const appReducer = (state = initialState, action: IAction) => {
       return {
         ...state,
         paginationCount: action.value,
+      };
+    case SET_PAGINATION_PAGES:
+      return {
+        ...state,
+        paginationPages: action.payload,
       };
     case SET_DICT_TAB:
       return {
