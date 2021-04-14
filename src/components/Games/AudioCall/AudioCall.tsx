@@ -12,7 +12,7 @@ import StartPage from '../Components/GameStartScreen/StartScreen';
 import Menu from '../../Menu/Menu';
 import GameButtons from '../Components/Buttons/Buttons';
 import BgGradient from '../Components/BgGradient/BgGradient';
-// import { setLSStatistic, setUserStatistic } from '../../../api';
+import { setLSStatistic, setUserStatistic } from '../../../api';
 import '../Styles/background.scss';
 import '../../MainPage/BgAnimation.scss';
 import sounds from '../sounds';
@@ -50,13 +50,13 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
   const [playWrong] = useSound(sounds.wrong);
   const [playComplete] = useSound(sounds.complete);
 
-  // useEffect(() => {
-  //   setLSStatistic('audiocall', answers.current.right, answers.current.wrong, maxStreak);
-  //   if () { // типо if (isGameEnd && isGameStart) {
-  //     setUserStatistic(answers.current.right, answers.current.wrong);
-  //   }
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [gameState]); // зависимость от конца игры
+  // game end
+  useEffect(() => {
+    if (gameState === GameState.GameOver) {
+      setLSStatistic('audioCall', answers.current.right, answers.current.wrong, maxStreak);
+      setUserStatistic(answers.current.right, answers.current.wrong);
+    }
+  }, [gameState, maxStreak]);
 
   // new game
   useEffect(() => {
