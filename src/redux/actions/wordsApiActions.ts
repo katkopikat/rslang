@@ -2,9 +2,11 @@ import request from '../../helpers/request';
 import { API_URL, WORDS_PER_PAGE } from '../../constants';
 import {
   setWords,
+  // setPage,
   setAdditionalWords,
   setAdditionalAnswerOptions,
   setPaginationCount,
+  setPaginationPages,
   setLearningWordsCount,
   setDeletedWordsCount,
   setDifficultWordsCount,
@@ -63,16 +65,25 @@ const fetchForUserTextbook = (
   page: number,
   userId: string,
   token: string,
-) => async (dispatch: any) => {
-  const filterQuery = encodeURIComponent(
-    JSON.stringify({ page, ...wordFilters.excludeDeleted }),
-  );
-  const apiQueryParams = `group=${group}&filter=${filterQuery}&wordsPerPage=0`;
-  const url = `${API_URL}/users/${userId}/aggregatedWords?${apiQueryParams}`;
-  const words = await (await request('GET', url, false, token)).json();
-  dispatch(setWords(words));
-  dispatch(setPaginationCount(30));
-};
+) => (
+  async (dispatch: any) => {
+    // const filterQuery = encodeURIComponent(JSON.stringify(
+    //   { page, ...wordFilters.excludeDeleted },
+    // ));
+    // const apiQueryParams = `group=${group}&filter=${filterQuery}&wordsPerPage=0`;
+    // const { app: { paginationPages } } = getState();
+    // const realPage = paginationPages[page]?.page || page;
+    const apiQueryParams = `group=${group}&page=${page}`;
+    const url = `${API_URL}/users/${userId}/aggregatedWords/forTextbook?${apiQueryParams}`;
+    // const url = `${API_URL}/users/${userId}/aggregatedWords?${apiQueryParams}`;
+    const [words] = await (await request('GET', url, false, token)).json();
+
+    dispatch(setWords(words.words));
+    // dispatch(setWords(words));
+    dispatch(setPaginationCount(30));
+    dispatch(setPaginationPages(words.pagination));
+  }
+);
 
 const fetchAdditionalWordsForGame = (
   group: number,

@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect, useReducer } from 'react';
 import Pagination from '@material-ui/lab/Pagination';
-
+// import PaginationItem from '@material-ui/lab/PaginationItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/rootReducer';
 import {
@@ -38,6 +38,7 @@ const Textbook: React.FC = () => {
   const group = useSelector((state: RootState) => state.app.group);
   const page = useSelector((state: RootState) => state.app.page);
   const paginationCount = useSelector((state: RootState) => state.app.paginationCount);
+  // const paginationPages = useSelector((state: RootState) => state.app.paginationPages);
   const dictActiveTab = useSelector((state: RootState) => state.app.dictActiveTab);
   const viewMode = useSelector((state: RootState) => state.app.viewMode);
   const deletedWordsCount = useSelector((state: RootState) => state.app.deletedWordsCount);
@@ -71,7 +72,9 @@ const Textbook: React.FC = () => {
     } else {
       dispatch(wordsApi.fetchForAnonTextbook(group, page));
     }
-  }, [group, page, userId, token, viewMode, dictActiveTab, wordsListNeedsUpdate, dispatch]);
+  }, [
+    group, page, userId, token, viewMode,
+    dictActiveTab, wordsListNeedsUpdate, dispatch]);
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
@@ -181,13 +184,36 @@ const Textbook: React.FC = () => {
             forceUpdate={forceUpdate}
             viewMode={viewMode}
           />
-          { words.length > 0 && (
+          { viewMode === ViewMode.Dictionary && words.length > 0 && (
           <Pagination
             className="textbook__pagination"
             count={paginationCount}
             page={page + 1}
             onChange={handlePageChange}
             color="primary"
+          />
+          )}
+          { viewMode === ViewMode.Textbook && !userId && (
+          <Pagination
+            className="textbook__pagination"
+            count={paginationCount}
+            page={page + 1}
+            onChange={handlePageChange}
+            color="primary"
+          />
+          )}
+          { viewMode === ViewMode.Textbook && userId && (
+          <Pagination
+            className="textbook__pagination"
+            count={paginationCount}
+            page={page + 1}
+            onChange={handlePageChange}
+            color="primary"
+            // renderItem={(item) => {
+            //   if (item.page === 1) console.log(item);
+            //   // if (item.type === 'page') return <PaginationItem {...item} />;
+            //   return <PaginationItem {...item} />;
+            // }}
           />
           )}
           <div className={`games-card__container ${words.length ? '' : 'games-card-inactive'}`}>
