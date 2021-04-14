@@ -92,9 +92,10 @@
       margin-bottom: 3rem;
 
       
-      @media (max-width: 500px) {
+      @media (max-width: 700px) {
         flex-direction: column;
         margin-bottom: 0;
+        text-align: center;
       }
 
       h2 {

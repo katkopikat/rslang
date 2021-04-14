@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import useSound from 'use-sound';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import VolumeUpIcon from '@material-ui/icons/VolumeUp';
+import { RootState } from '../../../redux/rootReducer';
 import { IWord } from '../../../interfaces';
 import player from '../../../utils/AudioPlayer';
 import shuffle from '../../../helpers/shuffleArray';
@@ -49,6 +51,10 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
   const [playCorrect] = useSound(sounds.correct);
   const [playWrong] = useSound(sounds.wrong);
   const [playComplete] = useSound(sounds.complete);
+
+  const additionalOptions = useSelector(
+    (state: RootState) => state.app.additionalAnswerOptions,
+  );
 
   // game end
   useEffect(() => {
@@ -110,14 +116,18 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
   useEffect(() => {
     if (!wordsToGuess.length || gameState !== GameState.Question) return;
     const guessingWord = wordsToGuess[currentWordIndex];
-    const wrongWords = shuffle<IWord>(wordsList)
+    let wordsArr: IWord[] = wordsList;
+    if (wordsList.length < 8) {
+      wordsArr = [...wordsList, ...additionalOptions];
+    }
+    const wrongWords = shuffle<IWord>(wordsArr)
       .filter((word) => word.id !== guessingWord.id)
       .slice(0, numWordOptions - 1);
     setLevelWords(
       shuffle<IWord>([guessingWord, ...wrongWords]),
     );
     player.play(guessingWord.audio);
-  }, [currentWordIndex, gameState, wordsList, wordsToGuess]);
+  }, [currentWordIndex, gameState, wordsList, wordsToGuess, additionalOptions]);
 
   useEffect(() => {
     if (gameState !== GameState.Question && gameState !== GameState.Answer) return undefined;
@@ -227,11 +237,19 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
 
             <div>
               {gameState === GameState.Answer ? (
-                <Button variant="contained" onClick={handleNextClick} className="next-btn">
+                <Button
+                  variant="contained"
+                  onClick={handleNextClick}
+                  className="next-btn"
+                >
                   Дальше
                 </Button>
               ) : (
-                <Button variant="contained" onClick={handleDontKnowClick} className="audiocall-btn">
+                <Button
+                  variant="contained"
+                  onClick={handleDontKnowClick}
+                  className="audiocall-btn"
+                >
                   Не знаю
                 </Button>
               )}
