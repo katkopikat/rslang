@@ -129,7 +129,7 @@ const standardUserStatistic: IUserStatistic = {
   },
 };
 
-const standardBody: IWordBody = {
+export const standardBody: IWordBody = {
   difficulty: 'hard',
   optional: {
     isDeleted: false,
