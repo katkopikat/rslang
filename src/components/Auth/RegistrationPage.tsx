@@ -49,7 +49,6 @@ const RegistrationPage: React.FC<ILoginPage> = ({ history, handleChangePage }: I
 
   const uploadPhoto = useCallback((event: React.ChangeEvent<{}>) => {
     setIsloadingProcess(true);
-    console.log('Начали грузить фото');
     const input: FileList | null = (document.getElementById('upload-photo') as HTMLInputElement)
       ?.files;
     if (event && input?.length) {
