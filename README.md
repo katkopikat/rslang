@@ -26,6 +26,15 @@ $ cd ../
 $ npm run dev
 ```
 
+## Tests 
+
+```
+
+$ npm install
+
+$ npm run test
+```
+
 
 ## Database
 create .env file and set data
