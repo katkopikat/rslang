@@ -1,9 +1,9 @@
 import shuffle from '../helpers/shuffleArray';
 
 it('shuffle array', () => {
-  const testArray1 = Array(30).fill().map((item, index) => index);
-  const testArray2 = Array(30).fill().map((item, index) => index);
-  const testArray3 = Array(30).fill().map((item, index) => index);
+  const testArray1 = Array(100).fill().map((item, index) => index);
+  const testArray2 = Array(100).fill().map((item, index) => index);
+  const testArray3 = Array(100).fill().map((item, index) => index);
   const result1 = shuffle(testArray1);
   const result2 = shuffle(testArray2);
   const result3 = shuffle(testArray3);
