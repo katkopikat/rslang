@@ -7,11 +7,13 @@ import './Hints.scss';
 interface IHints {
   currentWord: IWord;
   setUserWord: (hint: string) => void;
+  setWrong: (statis: boolean) => void;
 }
 
-const Hints: React.FC<IHints> = ({ currentWord, setUserWord }) => {
+const Hints: React.FC<IHints> = ({ currentWord, setUserWord, setWrong }) => {
   const showWordTranslate = () => {
     setUserWord(currentWord.wordTranslate);
+    setWrong(false);
   };
 
   const playSound = (word: IWord) => {
@@ -21,11 +23,13 @@ const Hints: React.FC<IHints> = ({ currentWord, setUserWord }) => {
 
   const showFirstLetter = () => {
     setUserWord(currentWord.word[0]);
+    setWrong(false);
   };
 
   const showLettersCount = () => {
     const str = '*'.repeat(currentWord.word.length);
     setUserWord(str);
+    setWrong(false);
   };
 
   return (

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
+import DoneIcon from '@material-ui/icons/Done';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -13,6 +14,7 @@ import { IWord } from '../../interfaces';
 import { API_URL, ViewMode } from '../../constants';
 import request from '../../helpers/request';
 import { useAuth } from '../AuthContext';
+import GameStat from './GameStat';
 
 const useStyles = makeStyles(() => ({
   cardImage: {
@@ -69,6 +71,25 @@ const WordCardDetails = ({
     const userWordsApi = `${API_URL}/users/${userId}/words/${word.id}`;
     await request('DELETE', userWordsApi, false, token);
     forceUpdate();
+  };
+
+  const wordGamesStats = () => {
+    const gamesStats = [
+      /* eslint-disable object-curly-newline */
+      { key: 'savanna', name: 'Саванна', right: 0, allTry: 0 },
+      { key: 'oasis', name: 'Оазис', right: 0, allTry: 0 },
+      { key: 'sprint', name: 'Спринт', right: 0, allTry: 0 },
+      { key: 'audioCall', name: 'Аудивызов', right: 0, allTry: 0 },
+      /* eslint-enable object-curly-newline */
+    ];
+    const wordGamesData = word.userWord?.optional?.games;
+    if (!wordGamesData) return gamesStats;
+    return gamesStats.map((gameStat) => {
+      // const { right = 0, wrong = 0 } = wordGamesData[gameStat.key];
+      const right = wordGamesData[gameStat.key]?.right || 0;
+      const wrong = wordGamesData[gameStat.key]?.wrong || 0;
+      return { ...gameStat, right, allTry: right + wrong };
+    });
   };
 
   if (!word) return (<></>);
@@ -134,7 +155,24 @@ const WordCardDetails = ({
           <ReactMarkdown source={showTranslate ? word?.textExampleTranslate : ''} />
 
         </div>
-
+        { userId && (
+        <>
+          <h3 className="word-subheading sub-answ">
+            Ответы в играх
+            <DoneIcon />
+          </h3>
+          <div className="word-game-statistic">
+            {wordGamesStats().map((game) => (
+              <GameStat
+                key={game.key}
+                name={game.name}
+                right={game.right}
+                allTry={game.allTry}
+              />
+            ))}
+          </div>
+        </>
+        )}
       </CardContent>
     </Card>
   );

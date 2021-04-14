@@ -12,7 +12,7 @@ import initialState from '../wordInitialState';
 import StartScreen from '../Components/GameStartScreen/StartScreen';
 import Menu from '../../Menu/Menu';
 import unigueElFilter from '../../../helpers/unigueElFilter';
-import { setLSStatistic, setUserStatistic } from '../../../api';
+import { setLSStatistic, setUserStatistic, setUserWord as setWordInDB } from '../../../api';
 import GameButtons from '../Components/Buttons/Buttons';
 import BgGradient from '../Components/BgGradient/BgGradient';
 import './Oasis.scss';
@@ -39,6 +39,9 @@ const Oasis = ({ wordsList }: IOasis) => {
   const [wrongWord, setWrong] = useState<boolean>(false);
   const [letterList, setLetterList] = useState<ILetterStatus[]>([]);
   const [disableCheckBtn, setDisableCheckBtn] = useState<boolean>(false);
+
+  const [answWithError, setAnswWithError] = useState<boolean | null >(null);
+  const [finishedCurWord, setFinishedCurWord] = useState<boolean | null >(null);
   // for results
   const [countCorrect, setCountCorrect] = useState<number>(0);
   const [countWrong, setCountWrong] = useState<number>(0);
@@ -68,15 +71,17 @@ const Oasis = ({ wordsList }: IOasis) => {
     setLetterList(letter);
   };
 
-  const showAnswer = () => {
+  const showAnswer = async () => {
     setUserWord(currentWord.word);
     setCountWrong(countWrong + 1);
     if (isSoundsOn) playWrong();
     setDisableCheckBtn(true);
     setWrongAnswers([...wrongAnswers, currentWord]);
+    setAnswWithError(true);
+    setFinishedCurWord(true);
   };
 
-  const checkAnswer = (answer: string, word: string) => {
+  const checkAnswer = async (answer: string, word: string) => {
     const userAnswer = answer.toLowerCase();
     const questWord = word.toLowerCase();
 
@@ -86,15 +91,22 @@ const Oasis = ({ wordsList }: IOasis) => {
       setCorrectSeries(correctSeries + 1);
       setUserWord('');
       setWrong(false);
-      if (isSoundsOn) playCorrect();
+      setAnswWithError(false);
+      setFinishedCurWord(true);
+
       setCorrectAnswers([...correctAnswers, currentWord]);
       setStreak(streak + 1);
+
+      if (isSoundsOn) {
+        playCorrect();
+      }
       if (maxStreak < streak + 1) {
         setMaxStreak(streak + 1);
       }
     } else {
       setUserWord('');
       setWrong(true);
+      setAnswWithError(true);
       if (isSoundsOn) playWrong();
       colorLetterInWrongWord(userAnswer, questWord);
       setWrongAnswers([...wrongAnswers, currentWord]);
@@ -108,6 +120,10 @@ const Oasis = ({ wordsList }: IOasis) => {
   };
 
   const handlePressEnter: any = (event: React.KeyboardEvent) => {
+    if (wrongWord) {
+      setWrong(false);
+    }
+
     if (event.keyCode === 13) {
       event.preventDefault();
       checkAnswer(userWord, currentWord.word);
@@ -148,6 +164,25 @@ const Oasis = ({ wordsList }: IOasis) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEndGame]);
 
+  useEffect(() => {
+    if (finishedCurWord) {
+      (async () => {
+        if (currentWord !== undefined) {
+          const result = await setWordInDB(
+            currentWord,
+            'oasis',
+            !answWithError,
+          );
+          setFinishedCurWord(false);
+          setAnswWithError(null);
+          return result;
+        }
+        return null;
+      })();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [finishedCurWord]);
+
   return (
     <>
       <Menu />
@@ -164,7 +199,7 @@ const Oasis = ({ wordsList }: IOasis) => {
           {!isEndGame && isStartGame && (
           <div className="oasis__wrapper">
             <StatusBadge correct={countCorrect} error={countWrong} />
-            <Hints currentWord={currentWord} setUserWord={setUserWord} />
+            <Hints currentWord={currentWord} setUserWord={setUserWord} setWrong={setWrong} />
             <Sentence currentWord={currentWord} />
 
             <form className="oasis__input" noValidate autoComplete="off">

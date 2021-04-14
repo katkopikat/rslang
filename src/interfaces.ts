@@ -14,8 +14,10 @@ export interface IWord {
   textMeaningTranslate: string;
   textExampleTranslate: string;
   userWord?: {
-    difficulty: string;
-    optional: {};
+    difficulty?: string;
+    optional?: {
+      games?: { [name: string]: { right: number, wrong: number } }
+    };
   };
 }
 

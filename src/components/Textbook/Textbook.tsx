@@ -133,6 +133,17 @@ const Textbook: React.FC = () => {
         {viewMode === ViewMode.Dictionary && (
         <div className="textbook__levels levels-wrapper levels-status">
           <LevelCard
+            name="Изучаемые"
+            words={`Слов: ${learningWordsCount}`}
+            abbr="И"
+            level={DictTabs.Learning}
+            activeGroup={dictActiveTab}
+            handleGroupChange={() => {
+              dispatch(setDictActiveTab(DictTabs.Learning));
+              dispatch(setPage(0));
+            }}
+          />
+          <LevelCard
             name="Сложные"
             words={`Слов: ${difficultWordsCount}`}
             abbr="C"
@@ -151,17 +162,6 @@ const Textbook: React.FC = () => {
             activeGroup={dictActiveTab}
             handleGroupChange={() => {
               dispatch(setDictActiveTab(DictTabs.Deleted));
-              dispatch(setPage(0));
-            }}
-          />
-          <LevelCard
-            name="Изучаемые"
-            words={`Слов: ${learningWordsCount}`}
-            abbr="И"
-            level={DictTabs.Learning}
-            activeGroup={dictActiveTab}
-            handleGroupChange={() => {
-              dispatch(setDictActiveTab(DictTabs.Learning));
               dispatch(setPage(0));
             }}
           />
