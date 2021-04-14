@@ -73,6 +73,25 @@ const WordCardDetails = ({
     forceUpdate();
   };
 
+  const wordGamesStats = () => {
+    const gamesStats = [
+      /* eslint-disable object-curly-newline */
+      { key: 'savanna', name: 'Саванна', right: 0, allTry: 0 },
+      { key: 'oasis', name: 'Оазис', right: 0, allTry: 0 },
+      { key: 'sprint', name: 'Спринт', right: 0, allTry: 0 },
+      { key: 'audioCall', name: 'Аудивызов', right: 0, allTry: 0 },
+      /* eslint-enable object-curly-newline */
+    ];
+    const wordGamesData = word.userWord?.optional?.games;
+    if (!wordGamesData) return gamesStats;
+    return gamesStats.map((gameStat) => {
+      // const { right = 0, wrong = 0 } = wordGamesData[gameStat.key];
+      const right = wordGamesData[gameStat.key]?.right || 0;
+      const wrong = wordGamesData[gameStat.key]?.wrong || 0;
+      return { ...gameStat, right, allTry: right + wrong };
+    });
+  };
+
   if (!word) return (<></>);
 
   return (
@@ -136,53 +155,24 @@ const WordCardDetails = ({
           <ReactMarkdown source={showTranslate ? word?.textExampleTranslate : ''} />
 
         </div>
-        <h3 className="word-subheading sub-answ">
-          Ответы в играх
-          <DoneIcon />
-        </h3>
-        <div className="word-game-statistic">
-          {/* {gamesStat.map((game) => (
-          <GameStat
-            key={}
-            name={} // Имя игры вида "Оазис"
-            right={}
-            allTry={}
-          />
-        ))} */}
-
-          {/* КОГДА БУДУТ ДАННЫЕ, ВСЁ, ЧТО СНИЗУ, СНЕСТИ! */}
-
-          <div className="game-statistic-wrapper">
-            <span className="game-name"> Саванна </span>
-            <span className="game-stat">
-              1 из 3
-            </span>
+        { userId && (
+        <>
+          <h3 className="word-subheading sub-answ">
+            Ответы в играх
+            <DoneIcon />
+          </h3>
+          <div className="word-game-statistic">
+            {wordGamesStats().map((game) => (
+              <GameStat
+                key={game.key}
+                name={game.name} // Имя игры вида "Оазис"
+                right={game.right}
+                allTry={game.allTry}
+              />
+            ))}
           </div>
-
-          <div className="game-statistic-wrapper">
-            <span className="game-name"> Оазис </span>
-            <span className="game-stat">
-              3 из 3
-            </span>
-          </div>
-
-          <div className="game-statistic-wrapper">
-            <span className="game-name"> Спринт </span>
-            <span className="game-stat">
-              2 из 4
-            </span>
-          </div>
-
-          <div className="game-statistic-wrapper">
-            <span className="game-name"> Аудивызов </span>
-
-            <span className="game-stat">
-              1 из 5
-            </span>
-          </div>
-
-          {/* ДО СЮДА! */}
-        </div>
+        </>
+        )}
       </CardContent>
     </Card>
   );

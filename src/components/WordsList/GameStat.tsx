@@ -13,7 +13,7 @@ const GameStat = ({ name, right, allTry }: IGameStat) => (
       {' '}
     </span>
     <span className="game-stat">
-      {`${right} из ${allTry}`}
+      {allTry > 0 ? `${right} из ${allTry}` : '0'}
     </span>
   </div>
 );
