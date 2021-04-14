@@ -209,11 +209,6 @@ const Textbook: React.FC = () => {
             page={page + 1}
             onChange={handlePageChange}
             color="primary"
-            // renderItem={(item) => {
-            //   if (item.page === 1) console.log(item);
-            //   // if (item.type === 'page') return <PaginationItem {...item} />;
-            //   return <PaginationItem {...item} />;
-            // }}
           />
           )}
           <div className={`games-card__container ${words.length ? '' : 'games-card-inactive'}`}>
