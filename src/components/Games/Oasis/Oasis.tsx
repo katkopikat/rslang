@@ -34,20 +34,18 @@ const Oasis = ({ wordsList }: IOasis) => {
   const [userWord, setUserWord] = useState<string>('');
   const [isStartGame, setIsStartGame] = useState<boolean>(false);
   const [isEndGame, setEndGame] = useState<boolean>(false);
+  const [finishedCurWord, setFinishedCurWord] = useState<boolean | null >(null);
   // for wrong answer
   const [wrongWord, setWrong] = useState<boolean>(false);
   const [letterList, setLetterList] = useState<ILetterStatus[]>([]);
   const [disableCheckBtn, setDisableCheckBtn] = useState<boolean>(false);
-
   const [answWithError, setAnswWithError] = useState<boolean>(false);
-  const [finishedCurWord, setFinishedCurWord] = useState<boolean | null >(null);
   // for results
   const [countCorrect, setCountCorrect] = useState<number>(0);
   const [countWrong, setCountWrong] = useState<number>(0);
   const [wrongAnswers, setWrongAnswers] = useState<IWord[]>([]);
   const [correctAnswers, setCorrectAnswers] = useState<IWord[]>([]);
   const [correctSeries, setCorrectSeries] = useState<number>(0);
-
   const [streak, setStreak] = useState<number>(0);
   const [maxStreak, setMaxStreak] = useState<number>(0);
 
@@ -57,7 +55,6 @@ const Oasis = ({ wordsList }: IOasis) => {
   const [playWrong] = useSound(sounds.wrong);
   const [playComplete] = useSound(sounds.complete);
 
-  // answers
   const colorLetterInWrongWord = (answer: string, word: string) => {
     const letter: Array<ILetterStatus> = [];
 

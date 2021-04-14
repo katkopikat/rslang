@@ -25,7 +25,6 @@ interface IOptionalWord {
   addTime: Date;
   allTry: number;
   games: IGames;
-  // games: { [key: string]: IOptionalGame };
 }
 
 interface IWordBody {
@@ -176,7 +175,6 @@ export const getUserStatistic = async (
     }
   }
   throw new Error('auth error');
-  // return false;
 };
 
 const getUniqWords = (main:string[], check:string[]) => {
@@ -313,7 +311,6 @@ export const createUserWord = async (
     }
   }
   throw new Error('auth error');
-  // return false;
 };
 
 export const updateUserWord = async (
@@ -343,7 +340,6 @@ export const updateUserWord = async (
     }
   }
   throw new Error('auth error');
-  // return false;
 };
 
 export const getUserWord = async (
@@ -365,7 +361,6 @@ export const getUserWord = async (
 
 export const setUserWord = async (
   word:IWord,
-  // difficultyGame:string,
   game:string,
   isCorrect:boolean,
 ) => {
@@ -379,7 +374,6 @@ export const setUserWord = async (
       delete oldResult.wordId;
       const data = await updateUserWord(
         word,
-        // difficulty,
         game,
         isCorrect,
         oldResult,

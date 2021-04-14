@@ -53,11 +53,14 @@
     padding: 2px 10px;
     color: #fff;
     width: fit-content;
+    letter-spacing: 0.05rem;
+    margin: 0.3rem 0;
   }
 
   &__description {
     font-size: 0.9rem;
-    line-height: 25px;
+    line-height: 24px;
+    font-family: 'Gilroy-Medium';
 
     @media (max-width: 700px) {
       line-height: 20px;

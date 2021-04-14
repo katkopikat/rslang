@@ -98,7 +98,6 @@ const fetchFiltered = (
 ) => async (dispatch: any) => {
   const url = composeUrl(userId, group, page, filter);
   const [words] = await (await request('GET', url, false, token)).json();
-  // const [{ count }] = words.totalCount;
   const [wordsTotal] = words.totalCount;
   dispatch(setWords(words.paginatedResults));
   dispatch(
