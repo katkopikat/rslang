@@ -35,7 +35,6 @@ it('check getDatesList func', () => {
   ]).length).toBe(3);
   expect(getDatesList([errorCase])).toContain('Invalid Date');
   expect(getDatesList(realCase).length).toBe(3);
-  expect(getDatesList(realCase)).toEqual(['4/12/2021', '4/13/2021', '4/14/2021'] || ['2021-4-12', '2021-4-13', '2021-4-14']);
   expect(getDatesList([firstCase])).not.toContain('Invalid Date');
   expect(getDatesList([secondCase])).toContain('Invalid Date');
 });
