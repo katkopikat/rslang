@@ -398,18 +398,20 @@ export const setUserWord = async (
 };
 
 export const getLSStatistic = ():ILSStatistic|undefined => {
-  const item = localStorage.getItem('statistic');
+  const userId = localStorage.getItem('userId');
+  const item = localStorage.getItem(`statistic${userId}`);
   if (typeof item === 'string') {
     const result = JSON.parse(item);
     const dateLS = new Date(result.date);
     if (isToday(dateLS)) return result;
-    localStorage.removeItem('statistic');
+    localStorage.removeItem(`statistic${userId}`);
   }
   return undefined;
 };
 
 const updateLSStatistic = (item:ILSStatistic) => {
-  localStorage.setItem('statistic', JSON.stringify(item));
+  const userId = localStorage.getItem('userId');
+  localStorage.setItem(`statistic${userId}`, JSON.stringify(item));
 };
 
 const isNewWord = (
