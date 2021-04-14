@@ -14,7 +14,7 @@ import StartPage from '../Components/GameStartScreen/StartScreen';
 import Menu from '../../Menu/Menu';
 import GameButtons from '../Components/Buttons/Buttons';
 import BgGradient from '../Components/BgGradient/BgGradient';
-import { setLSStatistic, setUserStatistic } from '../../../api';
+import { setUserWord, setLSStatistic, setUserStatistic } from '../../../api';
 import '../Styles/background.scss';
 import '../../MainPage/BgAnimation.scss';
 import sounds from '../sounds';
@@ -80,10 +80,12 @@ const AudioCall = ({ wordsList }: IProps): JSX.Element => {
       setStreak(streak + 1);
       if (maxStreak < streak + 1) setMaxStreak(streak + 1);
       if (isSoundsOn) playCorrect();
+      setUserWord(word, 'audioCall', true);
     } else {
       answers.current.wrong.push(guessingWord);
       setStreak(0);
       if (isSoundsOn) playWrong();
+      setUserWord(word, 'audioCall', false);
     }
   };
 
