@@ -148,9 +148,6 @@ const Oasis = ({ wordsList }: IOasis) => {
         setDisableCheckBtn(false);
       }
     }
-
-  /* if correctAnswers and wrongAnswers added in the dependencies,
-  then the component is updated, although this is not necessary */
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [wordsList, currentIndex]);
 
@@ -230,18 +227,14 @@ const Oasis = ({ wordsList }: IOasis) => {
                   <Button
                     variant="contained"
                     onBlur={() => setWrong(false)}
-                    onClick={() => {
-                      checkAnswer(userWord, currentWord.word);
-                    }}
+                    onClick={() => { checkAnswer(userWord, currentWord.word); }}
                   >
                     Проверить
                   </Button>
 
                   <Button
                     variant="contained"
-                    onClick={() => {
-                      showAnswer();
-                    }}
+                    onClick={() => { showAnswer(); }}
                   >
                     Не знаю
                   </Button>
@@ -250,9 +243,7 @@ const Oasis = ({ wordsList }: IOasis) => {
             </form>
           </div>
           )}
-          {isEndGame && (
-          <GameResults wrong={wrongAnswers} correct={correctAnswers} />
-          )}
+          {isEndGame && (<GameResults wrong={wrongAnswers} correct={correctAnswers} />)}
         </div>
       </div>
       <BgGradient gameName="oasis" />
