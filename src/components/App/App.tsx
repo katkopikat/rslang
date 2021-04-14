@@ -20,6 +20,8 @@ import shuffle from '../../commonFunc/shuffle';
 import { AuthProvider } from '../AuthContext';
 import { RootState } from '../../redux/rootReducer';
 
+import ScrollToTop from '../ScrollToTop/ScrollToTop';
+
 interface HistoryProps extends RouteComponentProps<any> {}
 
 const App: React.FC = () => {
@@ -29,6 +31,7 @@ const App: React.FC = () => {
   return (
     <>
       <Router>
+        <ScrollToTop />
         <AuthProvider>
 
           <Route
