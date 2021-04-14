@@ -24,7 +24,7 @@
             width: 9rem;
             font-size: 0.85rem;
             flex-shrink: 0;
-            background-color: #ffac0d;
+            background-color: #FFC53D;
 
             @media (max-width: 500px)  {
                 width: 8rem;
@@ -79,16 +79,10 @@
 
          .MuiFilledInput-underline {
              border: none;
-            // border-bottom: #ffffff solid 4px;
         }
-
-        // .MuiFilledInput-underline:focus {
-        //     border-bottom: #ffac0d solid 4px;
-        // }
 
          .MuiFilledInput-underline:before {
              border: none;
-            // border-bottom: 2px solid rgb(255, 255, 255);
         }
 
         .MuiFilledInput-input {

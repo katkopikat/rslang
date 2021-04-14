@@ -28,7 +28,12 @@ const DeveloperCard = ({ id }: IDeveloperCard) => {
             />
           </a>
         </div>
-        <p className="developer__tab">developer</p>
+        <p className="developer__tab">{developer[id].role}</p>
+        <div className="developer__description">
+          {developer[id].about}
+        </div>
+
+        <p className="developer__tab"> Что сделал ?</p>
         <div className="developer__description">
           {developer[id].description}
         </div>

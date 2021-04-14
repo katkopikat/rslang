@@ -15,6 +15,7 @@ import {
   SET_ADDITIONAL_WORDS_SPRINT,
   SET_ADDITIONAL_ANSWER_OPTIONS,
   SET_VIEW_MODE,
+  SET_PAGINATION_PAGES,
 } from '../types';
 
 export const setWords = (words: any) => ({
@@ -66,6 +67,11 @@ export const setGroup = (value: number) => ({
 export const setPaginationCount = (value: number) => ({
   type: SET_PAGINATION_COUNT,
   value,
+});
+
+export const setPaginationPages = (pages: any) => ({
+  type: SET_PAGINATION_PAGES,
+  payload: pages,
 });
 
 export const setDictActiveTab = (value: DictTabs) => ({
