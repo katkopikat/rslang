@@ -2,11 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { Line } from 'react-chartjs-2';
 import { IStatItem } from '../../../api';
-
-const getDatesList = (array:IStatItem[]) => array.map((item) => new Date(item.date)
-  .toLocaleDateString());
-
-const getAllWordsList = (array:IStatItem[]) => array.map((item) => item.allWords);
+import { getDatesList, getAllWordsList } from '../../../utils/convertForUserStat';
 
 const GrowthStatistic = ({ data } : { data: IStatItem[] }) => {
   const isMobile = useMediaQuery({ query: '(max-width: 500px)' });

@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 import { Bar } from 'react-chartjs-2';
 import { IStatItem } from '../../../api';
-
-const getDatesList = (array:IStatItem[]) => array.map((item) => new Date(item.date)
-  .toLocaleDateString());
-const getWordsListByDay = (array:IStatItem[]) => array.map((item) => item.newWords);
+import { getDatesList, getWordsListByDay } from '../../../utils/convertForUserStat';
 
 const EachDayStatistic = ({ data } : { data: IStatItem[] }) => {
   const datesList = getDatesList(data);
