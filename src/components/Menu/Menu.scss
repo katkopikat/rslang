@@ -290,7 +290,7 @@
     height: 100vh;
     text-align: left;
     width: 100%;
-    transition: all 0.5s ease-in;
+    transition: all 0.0s ease-in;
     opacity: 0;
     text-transform: uppercase;
     pointer-events: none;
@@ -300,19 +300,8 @@
     &_active {
       opacity: 1;
       pointer-events: all;
+      transition: all 0.5s ease-in;
     }
-  }
-
-  .navigation__line {
-    content: "";
-    position: absolute;
-    width: 60px;
-    height: 2.5px;
-    border-radius: 20px;
-    background-color: $color-primary;
-    left: -150px;
-    top: 50%;
-    transition: 0.4s;
   }
 
   .anim_three {
@@ -380,6 +369,19 @@
     }
   }
 
+  
+  .navigation__line {
+    content: "";
+    position: absolute;
+    width: 60px;
+    height: 2.5px;
+    border-radius: 20px;
+    background-color: $color-primary;
+    left: -150px;
+    top: 50%;
+    transition: 0.1s;
+  }
+
   .navigation {
     flex-direction: column;
     align-items: flex-start;
@@ -415,11 +417,12 @@
 
       &:hover::before {
         left: -80px;
+        transition: 0.3s ease;
       }
     }
 
     &__item:nth-child(3) {
-      cursor: default ;
+      cursor: default;
     } 
 
     &__item:not(:nth-child(3)) {
@@ -429,6 +432,7 @@
 
       &:hover::before {
         left: -80px;
+        transition: 0.3s ease;
       }
     }
   }
@@ -553,12 +557,13 @@
     left: 0;
     overflow: hidden;
     box-shadow: 0 30px 80px 0 rgba(91, 91, 91, 0.25);
-    transition: all 800ms cubic-bezier(0, 0.895, 0.99, 1);
+    transition: all 0ms cubic-bezier(0, 0.895, 0.99, 1);
     visibility: hidden;
 
     &_active {
       visibility: visible;
       width: 100vw;
+      transition: all 800ms cubic-bezier(0, 0.895, 0.99, 1);
     }
     
   }

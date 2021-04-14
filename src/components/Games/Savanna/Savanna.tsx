@@ -13,7 +13,7 @@ import Crystal from './Crystal/Crystal';
 import StartScreen from '../Components/GameStartScreen/StartScreen';
 import Loader from '../Components/Loader/Loader';
 import GameButtons from '../Components/Buttons/Buttons';
-import { setLSStatistic, setUserStatistic } from '../../../api';
+import { setUserWord, setLSStatistic, setUserStatistic } from '../../../api';
 import BgGradient from '../Components/BgGradient/BgGradient';
 import './Savanna.scss';
 import '../Styles/background.scss';
@@ -214,7 +214,7 @@ const Savanna = ({ wordsList }: ISavanna) => {
     }, 600);
   };
 
-  const handleClick = (id: string) => {
+  const handleClick = async (id: string) => {
     setCurrentAnswerId(id);
     setIsAnswer(true);
 
@@ -244,6 +244,15 @@ const Savanna = ({ wordsList }: ISavanna) => {
         }, 1000);
       }
     }
+    if (currentWord !== undefined) {
+      const result = await setUserWord(
+        currentWord,
+        'savanna',
+        id === currentWord.id,
+      );
+      return result;
+    }
+    return null;
   };
 
   const handleKeyPress: any = (event: React.KeyboardEvent) => {

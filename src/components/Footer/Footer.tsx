@@ -40,7 +40,6 @@ const Footer: React.FC = () => (
             </Link>
 
             <p className="column__item">Статистика</p>
-            <p className="column__item">О разработчиках</p>
           </div>
           <div className="column">
             <p className="column__title">Разработчики</p>
