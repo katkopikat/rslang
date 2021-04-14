@@ -53,7 +53,10 @@ const WordCardDetails = ({
     if (!userId) return;
     const userWordsApi = `${API_URL}/users/${userId}/words/${word.id}`;
     const updateWordParam = { optional: { isDeleted: true } };
-    const newWordParam = { ...standardBody, ...updateWordParam, difficulty: 'studied' };
+    const newWordParam = {
+      difficulty: 'studied',
+      optional: { ...standardBody.optional, isDeleted: true },
+    };
     if (word.userWord) await request('PUT', userWordsApi, updateWordParam, token);
     else await request('POST', userWordsApi, newWordParam, token);
     forceUpdate();
