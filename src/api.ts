@@ -244,6 +244,7 @@ export const upsertUserStatistic = async (
         }
       }
     }
+
     const stringifyBody :IUserStatisticStringify = {
       learnedWords: newBody.learnedWords,
       optional: {

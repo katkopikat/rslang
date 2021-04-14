@@ -197,6 +197,30 @@
         path {
             fill: #f5f5f5;
         }
+        
+        .MuiFab-label {
+            padding: 0.3rem;
+        }
+
+        .MuiFab-root {
+            text-decoration: none;
+            background-color: #2c2647;
+            color: #f0f0f0;
+    
+              path {
+                fill: #f0f0f0;
+            }
+        }
+
+        .MuiFab-root:hover {
+            text-decoration: none;
+            background-color: #f0f0f0;
+            color: #2c2647;
+    
+              path {
+                fill: #2c2647;
+            }
+        }
     }
 
     .img-link {
@@ -209,15 +233,7 @@
         text-decoration: underline;
     }
 
-    .MuiFab-root:hover {
-        text-decoration: none;
-        background-color: #f0f0f0;
-        color: #2c2647;
 
-          path {
-            fill: #2c2647;
-        }
-    }
 
     &__logo {
         font-size: 1.7rem;
@@ -302,7 +318,7 @@
 
     100% {
         left: -636px;
-        width: 157%;
+        width: 180%;
         height: 47%;
       }
 }
@@ -310,7 +326,7 @@
 @keyframes wave-login-registr {
     0% {
         left: -636px;
-        width: 157%;
+        width: 180%;
         height: 47%;
       }
 
