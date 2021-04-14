@@ -1,12 +1,18 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect, useReducer } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import Pagination from '@material-ui/lab/Pagination';
-import { ViewMode, DictTabs } from '../../constants';
-import { useAuth } from '../AuthContext';
-import { setGroup, setPage, setDictActiveTab } from '../../redux/actions/appActions';
-import wordsApi from '../../redux/actions/wordsApiActions';
+
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/rootReducer';
+import {
+  setGroup, setPage, setDictActiveTab, setViewMode,
+} from '../../redux/actions/appActions';
+import wordsApi from '../../redux/actions/wordsApiActions';
+import { useAuth } from '../AuthContext';
+
+import { ViewMode, DictTabs } from '../../constants';
+import './Textbook.scss';
+
 import WordsList from '../WordsList/WordsList';
 import GamesCards from '../GamesCards/GamesCards';
 import Levels from '../LevelsCards/Levels';
@@ -14,7 +20,6 @@ import LevelCard from '../LevelsCards/LevelCard';
 import Settings from './Settings/Settings';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import './Textbook.scss';
 
 const groupClasses: Array<string> = [
   'easy1-group',
@@ -27,24 +32,24 @@ const groupClasses: Array<string> = [
 
 const Textbook: React.FC = () => {
   const dispatch = useDispatch();
+  const { userId, token } = useAuth();
+
   const words = useSelector((state: RootState) => state.app.words);
   const group = useSelector((state: RootState) => state.app.group);
   const page = useSelector((state: RootState) => state.app.page);
   const paginationCount = useSelector((state: RootState) => state.app.paginationCount);
   const dictActiveTab = useSelector((state: RootState) => state.app.dictActiveTab);
+  const viewMode = useSelector((state: RootState) => state.app.viewMode);
   const deletedWordsCount = useSelector((state: RootState) => state.app.deletedWordsCount);
   const difficultWordsCount = useSelector((state: RootState) => state.app.difficultWordsCount);
   const learningWordsCount = useSelector((state: RootState) => state.app.learningWordsCount);
-  const { userId, token } = useAuth();
-  const [viewMode, setViewMode] = useState(ViewMode.Textbook);
+
   const [showTranslate, setShowTranslate] = useState(true);
   const [showBtns, setShowBtns] = useState(true);
   const [groupColorClass, setGroupColorClass] = useState('easy1-group');
   const [wordsListNeedsUpdate, forceUpdate] = useReducer((x) => x + 1, 0);
 
   useEffect(() => {
-    // setPage(Number(localStorage.getItem('page')) || 0);
-    // setGroup(Number(localStorage.getItem('group')) || 0);
     dispatch(setGroup(Number(localStorage.getItem('group')) || 0));
     dispatch(setPage(Number(localStorage.getItem('page')) || 0));
   }, [dispatch]);
@@ -101,7 +106,7 @@ const Textbook: React.FC = () => {
             type="button"
             className={`textbook__heading-${viewMode === ViewMode.Textbook ? 'active' : 'unactive'}`}
             onClick={() => {
-              setViewMode(ViewMode.Textbook);
+              dispatch(setViewMode(ViewMode.Textbook));
               dispatch(setPage(0));
             }}
           >
@@ -112,7 +117,7 @@ const Textbook: React.FC = () => {
             type="button"
             className={`textbook__heading-${viewMode === ViewMode.Dictionary ? 'active' : 'unactive'}`}
             onClick={() => {
-              setViewMode(ViewMode.Dictionary);
+              dispatch(setViewMode(ViewMode.Dictionary));
               dispatch(setPage(0));
             }}
           >
@@ -133,6 +138,17 @@ const Textbook: React.FC = () => {
         {viewMode === ViewMode.Dictionary && (
         <div className="textbook__levels levels-wrapper levels-status">
           <LevelCard
+            name="Изучаемые"
+            words={`Слов: ${learningWordsCount}`}
+            abbr="И"
+            level={DictTabs.Learning}
+            activeGroup={dictActiveTab}
+            handleGroupChange={() => {
+              dispatch(setDictActiveTab(DictTabs.Learning));
+              dispatch(setPage(0));
+            }}
+          />
+          <LevelCard
             name="Сложные"
             words={`Слов: ${difficultWordsCount}`}
             abbr="C"
@@ -151,17 +167,6 @@ const Textbook: React.FC = () => {
             activeGroup={dictActiveTab}
             handleGroupChange={() => {
               dispatch(setDictActiveTab(DictTabs.Deleted));
-              dispatch(setPage(0));
-            }}
-          />
-          <LevelCard
-            name="Изучаемые"
-            words={`Слов: ${learningWordsCount}`}
-            abbr="И"
-            level={DictTabs.Learning}
-            activeGroup={dictActiveTab}
-            handleGroupChange={() => {
-              dispatch(setDictActiveTab(DictTabs.Learning));
               dispatch(setPage(0));
             }}
           />

@@ -30,6 +30,9 @@ const Menu: React.FC = () => {
   useEffect(() => {
     if (currentURL.pathname.includes('/games')) {
       setIsGameMenu(true);
+      document.body.style.position = 'fixed';
+    } else {
+      document.body.style.position = '';
     }
   }, [currentURL.pathname]);
 

@@ -43,7 +43,6 @@ const Statistic = () => {
       }
     }
     fetchData();
-    // )();
   }, []);
 
   return (
@@ -63,7 +62,7 @@ const Statistic = () => {
         <BGWave classWave="charts__wave--top" />
         <div className="charts__content">
           <h1>Статистика за всё время</h1>
-          {!isAuth && (<p>Статистика доступна только авторизованным пользователям </p>)}
+          {!isAuth && (<p className="charts__unauth">Статистика доступна только авторизованным пользователям </p>)}
           <div className="charts__switch">
             <span className="switch__label"> Кол-во изученных слов </span>
             <Switch
@@ -76,27 +75,14 @@ const Statistic = () => {
           { switchChart
             ? (
               <GrowthStatistic
-                // datesList={dataUserStatisticArray || []}
-                // wordsPeriodtList={dataUserStatisticArray || []}
                 data={dataUserStatisticArray || []}
               />
             )
             : (
               <EachDayStatistic
-                // datesList={dataUserStatisticArray || []}
-                // wordsListByDay={dataUserStatisticArray || []}
                 data={dataUserStatisticArray || []}
               />
             ) }
-          { /* TODO DATA:
-                      GrowthStatistic datesList: массив дат, в которые юзер учил какие-то слова
-                      GrowthStatistic wordsPeriodtList: массив чисел, каждое число
-                                      - общее количество изученных слов к этому дню
-
-                      EachDayStatistic datesList: массив дат, в которые юзер учил какие-то слова
-                      EachDayStatistic wordsListByDay - массив чисел - кол-во слов,
-                                       изученных в эти даты по каждому дню)
-            */}
         </div>
         <svg
           className="charts__wave--bottom"
