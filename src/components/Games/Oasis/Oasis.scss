@@ -1,0 +1,131 @@
+.oasis {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    user-select: none;
+    position: relative;
+
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: rgb(248, 248, 248);
+        z-index: 3;
+    
+        
+        .MuiButton-contained {
+            border-radius: 35px;
+            margin: 0.9rem;
+            width: 9rem;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            background-color: #FFC53D;
+
+            @media (max-width: 500px)  {
+                width: 8rem;
+            }
+        }
+    
+        .MuiButton-label {
+            font-family: 'Gilroy-SemiBold';
+        }
+    
+        p {
+            font-family: 'Gilroy-Bold';
+            padding: 3rem;
+            font-size: 1.5rem;
+
+            @media (max-width: 750px)  {
+                font-size: 1.3rem;
+            }
+
+            @media (max-width: 500px)  {
+                padding: 0 1.5rem 1.5rem;
+                font-size: 1.1rem;
+            }
+        }
+    }
+
+    &__btns {
+        display: flex;
+        justify-content: center;
+        max-width: 90vw;
+    }
+
+    &__input {
+        display:  flex;
+        flex-direction: column;
+        max-width: 95vw;
+
+        .MuiFilledInput-root {
+            outline: none;
+            background-color: rgb(255, 255, 255);
+            cursor: pointer;
+            border-radius: 4px;
+            
+        }
+
+        .MuiFilledInput-root:hover, .MuiFilledInput-root:focus {
+            outline: none;
+             background-color: rgb(255, 255, 255);
+             border-color: #ffac0d;
+             cursor: pointer;
+         }
+
+         .MuiFilledInput-underline {
+             border: none;
+        }
+
+         .MuiFilledInput-underline:before {
+             border: none;
+        }
+
+        .MuiFilledInput-input {
+            padding: 0.5rem 1rem;
+            background-color: rgb(255, 255, 255);
+        }
+
+         input {
+            background-color: rgb(255, 255, 255);
+            text-transform: lowercase;
+            font-size: 1.5rem;
+            letter-spacing: 0.1rem;
+            font-family: 'Gilroy-Bold';
+         }
+
+         .answer {
+            text-transform: lowercase;
+            letter-spacing: 0.1rem;
+            font-size: 1.5rem;
+            font-family: 'Gilroy-Bold';
+            position: absolute;
+            padding: 0.5rem 1rem;
+            z-index: 2;
+            border: none;
+        
+            .correct {
+                color: #35c77f;
+            }
+
+            .wrong {
+                color: #f50057;
+                opacity: 1;
+            }
+        }
+    }
+
+    .MuiBadge-colorPrimary {
+        color: #fff;
+        background-color: #35c77f;
+    }
+
+}
+
+.wrapper_oasis {
+    position: relative;
+}

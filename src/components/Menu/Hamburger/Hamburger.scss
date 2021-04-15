@@ -1,0 +1,71 @@
+@import "../../../styles/variables";
+
+.hamburger {
+  z-index: 10;
+  display: none;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  @media (max-width: 600px) {
+    display: block;
+  }
+
+  &_visible {
+    display: block;
+  }
+
+  .line--1,
+  .line--3 {
+    --total-length: 126.64183044433594;
+  }
+  .line--2 {
+    --total-length: 70;
+  }
+
+  &__inner {
+    display: block;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    transition: all 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
+
+    &:active,
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &__path {
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    --length: 24;
+    --offset: -38;
+    stroke-dasharray: var(--length) var(--total-length);
+    stroke-dashoffset: var(--offset);
+    transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+  }
+}
+
+.hamburger_open > svg {
+  .hamburger {
+    display: block;
+  }
+  .hamburger__path {
+    stroke: rgb(113, 113, 113);
+  }
+  .line--1,
+  .line--3 {
+    --length: 22.627416998;
+    --offset: -94.1149185097;
+  }
+  .line--2 {
+    --length: 0;
+    --offset: -50;
+  }
+}

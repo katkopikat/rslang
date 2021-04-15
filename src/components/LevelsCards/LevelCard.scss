@@ -1,0 +1,226 @@
+@import '../../styles/variables';
+
+.levels-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    margin-bottom: 2rem;
+
+    @media (max-width: 1100px) {
+        flex-wrap: wrap;
+    }
+}
+
+
+.level-card {
+    height: 70px;
+    width: 220px;
+    background-color: #f3f4f8;
+    display: flex;
+    border-radius: 0.5rem;
+    color: #2c2647;
+    font-size: 1rem;
+    font-family: 'Gilroy-Heavy';
+    justify-content: space-between;
+    padding: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1.2rem;
+    position: relative;
+    align-items: center;
+    overflow: hidden;
+    border: none;
+    cursor: pointer;
+    transition: all easy 0.5s;
+
+    
+    @media (max-width: 1100px) {
+        flex-grow: 1;
+    }
+
+    @media (max-width: 600px) {
+        width: 140px;
+    }
+
+    @media (max-width: 500px) {
+        height: 55px;
+    }
+
+    &:focus, &:active {
+        border: none;
+        outline: none;
+    }
+
+    &-left {
+        text-align: left;
+        z-index: 2;
+
+        h2 { 
+            font-family: 'Gilroy-Bold';
+            font-size: 1.3rem;
+            color: #2c2647;
+
+            @media (max-width: 600px) {
+                font-size: 1.1rem;
+            }
+        }
+
+        p {
+            font-family: 'Gilroy-RegularItalic';
+            font-size: 0.8rem;
+        }
+    }
+
+    &-right {
+        z-index: 2;
+
+        h2 { 
+            font-family: 'Gilroy-Heavy';
+            font-size: 1.5rem;
+            color: #2c2647;
+
+            @media (max-width: 600px) {
+                font-size: 1.2rem;
+            }
+
+        }
+
+    }
+
+    .circle {
+        border-radius: 53px;
+        height: 110px;
+        width: 110px;
+        position: absolute;
+        top: -1rem;
+        right: -2.5rem;
+        overflow: hidden;
+    }
+
+    &:nth-child(1) {
+        .circle {
+            background-color: $color-level-one;
+        }
+    }
+
+    &:nth-child(2) {
+        .circle {
+            background-color: $color-level-two;
+        }
+    }
+
+    &:nth-child(3) {
+        .circle {
+             background-color: $color-level-three;
+        }
+    }
+
+    &:nth-child(4) {
+        .circle {
+            background-color: $color-level-four;
+        }
+    }
+
+    &:nth-child(5) {
+        .circle {
+            background-color: $color-level-five;
+        }
+    }
+
+    &:nth-child(6) {
+        .circle {
+            background-color: $color-level-six;
+        }
+    }
+}
+
+.levels-status {
+    .level-card {
+        flex-direction: row-reverse;
+            .circle {
+                background-color: #2c2647;
+                right: 0;
+                left: -2.5rem;
+        }
+
+        .level-card-right h2 {
+            color: #f3f4f8;
+        }
+    }
+}
+
+
+.levels-wrapper {
+    .level-card--unactive {
+        background-color: #f3f4f8;
+        border: none;
+        outline: none;
+    
+        .level-card-left {
+            color: #d0d0d0;
+        }
+    
+        .level-card-right h2, .level-card-left h2 {
+            color: #d6d3d3;
+        }
+    
+        .circle {
+            background-color: #ececec;
+        }
+    
+        &:focus, &:active {
+            border: none;
+        }
+    }
+
+    .level-card--unactive:hover {
+        .level-card-left {
+             h2, p { 
+                color: #2c2647;
+            }
+        }
+    
+        .level-card-right {
+            h2 { 
+                color: #2c2647;
+            }
+    
+        }
+    
+        &:nth-child(1) {
+            .circle {
+                background-color: $color-level-one;
+            }
+        }
+    
+        &:nth-child(2) {
+            .circle {
+                background-color: $color-level-two;
+            }
+        }
+    
+        &:nth-child(3) {
+            .circle {
+                 background-color: $color-level-three;
+            }
+        }
+    
+        &:nth-child(4) {
+            .circle {
+                background-color: $color-level-four;
+            }
+        }
+    
+        &:nth-child(5) {
+            .circle {
+                background-color: $color-level-five;
+            }
+        }
+    
+        &:nth-child(6) {
+            .circle {
+                background-color: $color-level-six;
+            }
+        }
+    }
+}
+

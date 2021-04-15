@@ -1,0 +1,31 @@
+@import "../../styles/variables";
+
+.header-anim.greeting {
+  height: 15vh;
+  position: relative;
+  overflow: hidden;
+
+  background: linear-gradient(
+    -45deg,
+    $color-primary,
+    rgb(107, 97, 220),
+    rgb(80, 71, 174),
+    $color-primary
+  );
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  z-index: 0;
+  }
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+

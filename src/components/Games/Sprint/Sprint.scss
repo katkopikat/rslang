@@ -1,0 +1,209 @@
+.sprint {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  &__timer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.5rem;
+    margin-bottom: 3rem;
+
+    @media (max-width: 500px) {
+      margin-bottom: 1rem;
+  }
+
+    svg {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  &__stat {
+    display: flex;
+    margin-bottom: 1.5rem;
+
+    @media (max-width: 500px) {
+      flex-direction: column;
+      gap: 1rem;
+      margin-bottom: 1rem;
+  }
+
+
+    &-multiply {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      border: 3px solid #f0f0f0a1;
+      padding: 0.4rem 1rem;
+      border-radius: 2rem;
+      margin-right: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1rem;
+
+      @media (max-width: 500px) {
+        margin-right: 0;
+      }
+
+      svg {
+        font-size: 1.2rem;
+        margin: 0 0.5rem;
+      }
+    }
+
+    &-current-score {
+      margin-left: 1rem;
+    }
+  }
+
+  &__score {
+    font-size: 0.9rem;
+    border: 3px solid #ffc53d;
+    padding: 0.4rem 1rem;
+    border-radius: 2rem;
+    color: #ffc53d;
+    font-family: 'Gilroy-Bold';
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+  }
+
+  &__words {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      letter-spacing: 0.15rem;
+      margin-bottom: 3rem;
+
+      
+      @media (max-width: 700px) {
+        flex-direction: column;
+        margin-bottom: 0;
+        text-align: center;
+      }
+
+      h2 {
+        color: #FFC53D;
+        font-size: 3rem;
+        font-family: 'Gilroy-SemiBold';
+        padding: 0.5rem;
+
+        @media (max-width: 500px) {
+          font-size: 2.5rem;
+          padding: 0.2rem;
+        }
+     }
+
+      h4:first-of-type{
+        color: white;
+        margin: 0.3rem;
+        font-family: 'Gilroy-Regular';
+        font-size: 0.9rem;
+        letter-spacing: 0.2rem;
+      }
+
+      h4:last-of-type {
+        color: white;
+        margin: 0.3rem;
+        font-family: 'Gilroy-Regular';
+        font-size: 1.4rem;
+        letter-spacing: 0.2rem;
+      }
+  }
+
+  &__btns {
+    color: white;
+    font-family: 'Gilroy-Medium';
+    font-size: 1rem;
+    border-radius: none;
+    margin-top: 5rem;
+
+         
+    @media (max-width: 500px) {
+      margin-top: 2rem;
+    }
+
+    &-true, &-false {
+      padding: 0.6rem 1.3rem;
+      background: none;
+      font-size: 0.9rem;
+      font-family: 'Gilroy-SemiBold';
+      letter-spacing: 0.05rem;
+      cursor: pointer;
+    }
+
+      &-true {  
+        color: #35c77f;
+        border: 3px solid #35c77f;
+        border-bottom-left-radius: 1.5rem;
+        border-top-left-radius: 1.5rem;
+        border-right: none;
+
+        @media (max-width: 500px) {
+          padding: 0.5rem 1.1rem;
+          border: 2px solid #35c77f;
+          font-size: 0.8rem;
+          border-right: none;
+        }
+          
+
+        &:hover {
+          background-color: #35c77f;
+          color: white;
+        }
+      }
+
+      &-false {
+        border: 3px solid #f50057;
+        border-top-right-radius: 1.5rem;
+        border-bottom-right-radius: 1.5rem;
+        color: #f50057;
+
+        
+        @media (max-width: 500px) {
+          padding: 0.5rem 1.1rem;
+          border: 2px solid #f50057;
+          font-size: 0.8rem;
+        }
+          
+
+        &:hover {
+          background-color: #f50057;
+          color: white;
+        }
+      }
+  }
+
+  .MuiBadge-root {
+    svg {
+      font-size: 4rem;
+      opacity: 0.1;
+    }
+  }
+
+  .MuiBadge-colorPrimary {
+    color: black;
+    background-color: #ffc53d;
+  }
+
+}
+
+.wrapper_sprint {
+  position: relative;
+}

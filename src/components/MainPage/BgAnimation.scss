@@ -1,0 +1,83 @@
+:root {
+  --gird-width: 30px;
+  --gird-height: 30px;
+  --line-color: #999;
+  --dot-color: rgba(255, 255, 255, 0.483);
+  --dot-size: 2px;
+  --point-gap-width: calc(var(--gird-width) * 4);
+  --point-gap-height: calc(var(--gird-height) * 4);
+}
+
+.inner:before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.inner:after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  bottom: 0;
+  left: -15%;
+  right: -15%;
+  mix-blend-mode: soft-light;
+}
+
+.inner {
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+.inner:before,
+.inner:after {
+  background-image: radial-gradient(
+    var(--dot-color) 1.5px,
+    transparent 2px
+  );
+  background-size: var(--point-gap-width) var(--point-gap-height);
+  background-position: calc(var(--point-gap-width) / 2)
+    calc(var(--point-gap-height) / 2);
+}
+
+.inner:after {
+  transform: scale(1.1, 1.1);
+}
+
+.inner:before {
+  transform: scale(1.3, 1.3);
+}
+
+.anim:after {
+  animation: 12.8s linear move infinite;
+}
+
+.anim .inner:after {
+  animation: 6.4s linear move infinite;
+}
+
+.anim .inner:before {
+  animation: 3.2s linear move infinite;
+}
+
+.bg-game .inner:before {
+  opacity: 0.5;
+  transform: rotate(318deg);
+}
+
+@keyframes move {
+  0% {
+    background-position: calc(var(--point-gap-width) / 2)
+      calc(var(--point-gap-height) / 2);
+  }
+  100% {
+    background-position: calc(var(--point-gap-width) / 2)
+      calc(var(--point-gap-height) / 2 * -1);
+  }
+}

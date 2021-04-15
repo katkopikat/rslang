@@ -1,0 +1,309 @@
+@import "../../styles/variables";
+
+
+.statistic {
+    &__wrapper {
+        background-color: $color-light-m;
+        position: relative;
+
+        h1 {
+            text-align: center;
+            z-index: 1;
+            position: relative;
+            margin-top: 2rem;
+            margin-bottom: 3rem;
+            
+            @media (max-width: 800px) {
+                font-size: 1.4rem;
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    &__wave--top {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25%;
+            width: 100%;
+
+        path {
+            fill: #fff;
+        } 
+    }
+        
+    &__wave--bottom {
+            position: absolute;
+            bottom: -2%;
+            left: 0;
+            height: 20%;
+            width: 100%;
+            transform: rotate(180deg);
+
+            path {
+                fill: #fff;
+            }
+         }
+
+    &__today {
+        color: #2c2647;
+        justify-content: center;
+        display: flex;
+        margin-bottom: 2rem;
+        position: relative;
+
+        h3 {
+            font-size: 1.2rem;
+            padding: 0.3rem 0;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            font-family: 'Gilroy-Regular';
+            margin: 0 6rem;
+
+            @media (max-width: 900px) {
+                margin: 0 2.5rem;
+            }
+
+            @media (max-width: 600px) {
+                margin: 0 0.8rem;
+                font-size: 0.8rem;
+            }
+        }
+    
+        h2 {
+            margin-left: 1rem;
+            font-family: 'Gilroy-SemiBold';
+            margin-top: -0.5rem;
+            font-size: 1.5rem;
+            opacity: 0.8;
+        }
+    
+        b {
+            font-size: 6rem;
+            font-family: 'Gilroy-Heavy';
+
+            @media (max-width: 600px) {
+                font-size: 5rem;
+            }
+        }
+    }
+
+    path {
+        stroke: none;
+    }
+}
+
+.statistic-container {
+    width: 70vw;
+    padding: 1.5rem 3rem;
+    margin: 0 auto;
+    border-radius: 8px;
+    display: flex;
+
+    canvas {
+        border-radius: 10px;
+        padding: 2rem 1rem;
+    }
+}
+
+.charts {
+    &__container {
+        max-width: 65vw;
+
+        @media (max-width: 500px) {
+            max-width: 80vw;
+        }
+    }
+
+    &__wrapper {
+        position: relative;
+        background-color: #524cb7;
+
+        h1 {
+            color: white;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+            font-family: 'Gilroy-Bold';
+
+            @media (max-width: 800px) {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 6rem 2rem;
+        margin: 0 auto;
+        padding-bottom: 3rem;
+        margin-bottom: 6rem;
+        max-width: 65vw;
+
+        @media (max-width: 700px) {
+            padding: 2rem 1rem;
+        }
+
+
+        @media (max-width: 500px) {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            max-width: 80vw;
+        }
+    
+        h1 {
+            @media (max-width: 800px) {
+                font-size: 1.1rem;
+            }
+        }
+    }
+
+    &__wave--top {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 10%;
+        width: 100%;
+
+        path {
+            fill: #fff;
+        }
+    }
+    
+    &__wave--bottom {
+        position: absolute;
+        bottom: -21%;
+        left: 0;
+        height: 25%;
+        width: 100%;
+        z-index: 4;
+
+        path {
+            fill: #524cb7;
+        }
+    }
+
+    &__switch {
+        font-size: 0.8rem;
+        margin-bottom: 3rem;
+
+        @media (max-width: 500px) {
+            font-size: 0.6rem;
+            margin-bottom: 1rem;
+        }
+        
+        .switch__label {
+            opacity: 0.8;
+        }
+
+        .switch__label:hover {
+            opacity: 1;
+            cursor: pointer;
+        }
+
+        .MuiSwitch-root {
+
+            @media (max-width: 800px) {
+                transform: scale(0.85);
+            }
+
+            @media (max-width: 500px) {
+                transform: scale(0.7);
+            }
+        }
+
+        .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track {
+            background-color: #8b86e2;
+        }
+
+        .MuiSwitch-colorSecondary.Mui-checked {
+            color: #4ccbb7;
+        }
+    }
+
+    &__unauth {
+        font-family: 'Gilroy-Regular';
+        font-size: 0.8rem;
+        opacity: 0.7;
+        letter-spacing: 0.1rem;
+        margin-bottom: 1rem;
+        text-align: center;
+
+        @media (max-width: 800px) {
+            font-size: 0.7rem;
+            margin: 0.3rem;
+        }
+        
+        @media (max-width: 600px) {
+            font-size: 0.6rem;
+            margin: 0.3rem;
+        }
+
+
+        @media (max-width: 500px) {
+            font-size: 0.5rem;
+            margin: 0.3rem;
+        }
+    }
+}
+
+.games-statistic-wrapper {
+    display: flex;
+    position: relative;
+    z-index: 2;
+
+    
+    @media (max-width: 1000px) {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    @media (max-width: 700px) {
+        flex-direction: column;
+    }
+}
+
+.game-statistic-card {
+    font-family: 'Gilroy-Regular';
+    font-size: 1.1rem;
+    color: #2c2647;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    margin: 1rem;
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    overflow: hidden;
+
+    h2 {
+        font-family: 'Gilroy-Heavy';
+        margin-bottom: 0.5rem;
+        z-index: 2;
+	}
+
+    h3 {
+        font-family: 'Gilroy-Regular';
+        font-size: 0.9rem;
+        padding: 0.3rem 0;
+        z-index: 2;
+        display: flex;
+        align-items: flex-start;
+	}
+
+    svg {
+        margin-right: 0.5rem;
+    }
+
+    .circle {
+        border-radius: 114px;
+        height: 200px;
+        width: 200px;
+        position: absolute;
+        top: 3rem;
+        right: -4.5rem;
+        background-color: #ffca68;
+    }  
+}

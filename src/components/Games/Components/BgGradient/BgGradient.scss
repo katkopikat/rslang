@@ -1,0 +1,71 @@
+
+
+.bg {
+    animation: slide 20s ease-in-out infinite alternate;
+    bottom: 0;
+    left: -50%;
+    opacity: .5;
+    position: fixed;
+    right: -50%;
+    top: 0;
+    z-index: -1;
+  }
+  
+  .bg2 {
+    animation-direction:alternate-reverse;
+    animation-duration:20s;
+  }
+  
+  .bg3 {
+    animation-duration:15s;
+  }
+
+  .bg:after {
+    animation: grain 10s steps(5) infinite;
+    background-image: url(https://sonictonic.io/wp-content/uploads/2019/11/white-noise.jpg);
+    content: "";
+    height: 300%;
+    left: -50%;
+    opacity: 0.015;
+    position: fixed;
+    top: -110%;
+    width: 300%;
+  }
+  
+@keyframes grain {
+    0%, 100% { transform:translate(0, 0) }
+    10% { transform:translate(-5%, -10%) }
+    20% { transform:translate(-15%, 5%) }
+    30% { transform:translate(7%, -25%) }
+    40% { transform:translate(-5%, 25%) }
+    50% { transform:translate(-15%, 10%) }
+    60% { transform:translate(15%, 0%) }
+    70% { transform:translate(0%, 15%) }
+    80% { transform:translate(3%, 35%) }
+    90% { transform:translate(-10%, 10%) }
+  }
+
+  @keyframes slide {
+    0% {
+      transform:translateX(-25%);
+    }
+    100% {
+      transform:translateX(25%);
+    }
+  }
+
+.game-bg-oasis {
+    background-image: linear-gradient(315deg, #070948 50%, #181b71 50%);
+}
+
+.game-bg-savanna {
+    background-image: linear-gradient(315deg, #1dc4a2 50%, #006e58 50%);
+}
+
+.game-bg-audocall{
+    background-image: linear-gradient(315deg, #070948 50%, #181b71 50%);
+}
+
+.game-bg-sprint{
+    background-image: linear-gradient(315deg, #001a86 50%, #325aff 50%)
+}

@@ -1,0 +1,282 @@
+@import '../../styles/variables';
+
+
+.card-word {
+    position: relative;
+    width: 180px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 1rem 0 0 1rem;
+    background-color: #f3f4f8;
+    border-radius: 5px;
+    border: none;
+    overflow: hidden;
+    transition: all 0.3s;
+
+    &:hover {
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+
+    h2 {
+        font-size: 1.3rem;
+        font-family: 'Gilroy-SemiBold';
+        margin-bottom: 0;
+        color: #2c2647;
+    }
+
+    p {
+        font-size: 1rem;
+        font-family: 'Gilroy-Medium';
+        color: #2c2647;
+        text-align: left;
+        // word-break: break-all;
+    }
+
+    @media (max-width: 600px) {
+        width: 150px;
+        height: 80px;
+        padding: 0.6rem 0 0 1rem;
+
+        h2 {
+            font-size: 1rem;
+        }
+
+        p {
+            font-size: 0.9rem;
+        }
+    }
+
+    @media (max-width: 500px) {
+        width: 140px;
+
+        h2 {
+            font-size: 0.95rem;
+        }
+
+        p {
+            font-size: 0.9rem;
+        }
+    }
+}
+
+.easy1-group {
+    .card-word:hover,
+    .active-word,
+    .MuiPaginationItem-textPrimary.Mui-selected,
+    .userActionButton {
+        background-color: $color-level-one;
+    }
+}
+
+.easy2-group {
+	.card-word:hover,
+    .active-word,
+    .MuiPaginationItem-textPrimary.Mui-selected,
+    .userActionButton {
+        background-color: $color-level-two;
+    }
+}
+
+.medium1-group {
+    .card-word:hover,
+    .active-word,
+    .MuiPaginationItem-textPrimary.Mui-selected,
+    .userActionButton  {
+        background-color: $color-level-three;
+    }
+}
+
+.medium2-group {
+    .card-word:hover,
+    .active-word,
+    .MuiPaginationItem-textPrimary.Mui-selected,
+    .userActionButton  {
+        background-color: $color-level-four;
+    }
+}
+
+.hard1-group {
+    .card-word:hover,
+    .active-word,
+    .MuiPaginationItem-textPrimary.Mui-selected,
+    .userActionButton   {
+        color: white !important;
+        background-color: $color-level-five;
+    }
+}
+
+.hard2-group {
+    .card-word:hover,
+    .active-word,
+    .MuiPaginationItem-textPrimary.Mui-selected,
+    .userActionButton   {
+        background-color: $color-level-six;
+        color: white !important;;
+    }
+}
+
+
+#card-details {
+    color: #2c2647;
+    background-color: #f3f4f8;
+    width: 400px;
+    box-shadow: none;
+    border-top-left-radius: 11rem;
+
+    @media (max-width: 600px) {
+        width: 280px;
+        border-top-left-radius: 8rem;
+        margin-bottom: 1rem;
+    }
+    
+
+        .word {
+            &-word {
+                font-size: 2.5rem;
+                font-family: 'Gilroy-SemiBold';
+
+                @media (max-width: 600px) {
+                    font-size: 2rem;
+                }
+            }
+
+            &-transcription {
+                font-size: 1.2rem;
+                font-family: 'Gilroy-Medium';
+                font-weight:600;
+                letter-spacing: 0.1em;
+
+                @media (max-width: 600px) {
+                    font-size: 1.1rem;
+                }
+            }
+
+            &-translate {
+                font-size: 1.5rem;
+                font-family: 'Gilroy-SemiBold';
+
+                @media (max-width: 600px) {
+                    font-size: 1.2rem;
+                }
+            }
+
+            &-subheading {
+                font-size: 1.2rem;
+                font-family: 'Gilroy-Bold';
+                margin-bottom: 1rem;
+
+                @media (max-width: 600px) {
+                    font-size: 1.1rem;
+                    margin-bottom: 0.7rem;
+                }
+            }
+
+            &-description {
+                font-size:  1rem;
+                font-family: 'Gilroy-Regular' !important;
+
+                @media (max-width: 600px) {
+                    font-size: 0.85rem;
+                }
+
+                p {
+                    margin-bottom: 0.6rem;
+                }
+            }
+
+            &-image {
+                height: 200px;
+                border-bottom-right-radius: 11rem;
+                border-top-left-radius: 11rem;
+
+                @media (max-width: 600px) {
+                    height: 150px;
+                    border-bottom-right-radius: 8rem;
+                    border-top-left-radius: 8rem;
+                }
+            }
+
+            &-subheading.sub-answ {
+                margin-bottom: 0.8rem;
+                margin-top: 1.4rem;
+                display: flex;
+                align-items: center;
+
+                svg {
+                    margin-left: 0.5rem;
+                }
+            }
+
+            &-game-statistic {
+                    display: flex;
+                    justify-content: space-between;
+
+                .game-statistic-wrapper {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+
+                    .game-stat {
+                        font-size: 1rem;
+                        display: flex;
+                        align-items: center;
+                    }
+                }
+
+                .game-name {
+                    font-size: 0.85rem;
+                    background-color: #2c2647;
+                    display: inline-block;
+                    width: fit-content;
+                    font-family: 'Gilroy-Regular';
+                    padding: 0.3rem 0.6rem;
+                    border-radius: 26px;
+                    color: #fffffe;
+                    margin-bottom: 0.5rem;
+                    letter-spacing: 0.05rem;
+                }
+            }
+        }
+
+        .MuiCardActions-root {
+            padding: 0;
+            margin-bottom: 2rem;
+
+            @media (max-width: 600px) {
+               margin-bottom: 1rem;
+            }
+
+            button {
+                font-family: 'Gilroy-SemiBold';
+                border-radius: 50px;
+                border: none;
+
+                @media (max-width: 600px) {
+                    .MuiButton-label {
+                        font-size: 0.6rem;
+                    }
+                }
+            }
+        }
+
+        .MuiPaper-root {
+            border-top-left-radius: 11rem !important;
+        }
+}
+
+.difficult-word:after {
+    content: '\25CF';
+    color: #333333;
+    position: absolute;
+    top: 50px;
+    right: -17px;
+    font-size: 70px;
+}

@@ -1,0 +1,91 @@
+$dark-font: #2c2647;
+$yellow-btn: #FFC53D;
+$footer: #1d1835;
+$bg-color: #f3f5f9;
+$primaryColor : #4379FF;
+$cocoBackground : #FBFCFF;
+$inactive: #d0d0d0;
+
+body {
+background-color: bg-color;
+}
+
+.textbook {
+	&__heading {
+		display: flex;
+
+		&-active {
+			color: $dark-font;
+		}
+		
+		&-unactive {
+			color: $inactive;
+		}
+	
+		&-active:hover,
+		&-unactive:hover {
+		color: $yellow-btn;
+		}
+	
+		&-active:focus,
+		&-active:active,
+		&-unactive:focus,
+		&-unactive:active {
+			outline: none;
+		}
+	
+		button {
+			font-size: 2rem;
+			font-family: 'Gilroy-Heavy';
+			border: none;
+			background-color: #fbfcff;
+			margin-top: 1rem;
+			cursor: pointer;
+
+			&:first-child {
+				padding-right: 0.5rem;
+			}
+
+			&:first-child::after {
+				content: " | ";
+				font-family: 'Gilroy-Bold';
+				color: #d0d0d0;
+			}
+	
+			@media (max-width: 500px) {
+				font-size: 1.5rem;
+			}
+		}
+
+		svg {
+			color: $yellow-btn;
+		}
+	}
+	
+	&__subheading {
+		color: #2c2647;
+		font-family: 'Gilroy-SemiBold';
+		font-size: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	&__pagination {
+		display: flex;
+		justify-content: center;
+		margin: 2rem 0;
+	}
+
+	&__levels {
+		display: flex;
+		gap: 1rem;
+	}
+
+	.wordslist-nowords {
+		margin-top: 0.5rem;
+		margin-bottom: 4rem;
+		font-size: 1rem;
+		font-family: 'Gilroy-RegularItalic';
+		color: #2c2647;
+	}
+}
+
